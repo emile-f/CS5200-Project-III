@@ -1,0 +1,418 @@
+customerID,name,smoker,drinkLevel,dressCodeID,ambience,budget
+1,Roselle Motherwell,0,abstemious,1,family,medium
+2,Darin Binnion,0,abstemious,1,family,high
+3,Glennie Satyford,0,abstemious,2,family,low
+4,Amalee Oxenham,1,abstemious,3,family,medium
+5,Linn Osmund,0,abstemious,1,family,medium
+6,Magnum Cuolahan,0,abstemious,1,friends,medium
+7,Kassia Kennsley,0,abstemious,1,friends,medium
+8,Ulrika ducarme,0,abstemious,2,family,medium
+9,Freddy Marchington,0,abstemious,3,solitary,medium
+10,Theodoric Gumly,0,abstemious,3,friends,medium
+11,Llywellyn Folbigg,0,abstemious,1,family,medium
+12,Bayard Lorenzetto,0,abstemious,5,friends,medium
+13,Hart Clatworthy,0,abstemious,5,friends,medium
+14,Shel Hedderly,0,abstemious,2,friends,medium
+15,Leta Jedrzaszkiewicz,0,abstemious,1,family,medium
+16,Tabatha Voules,0,abstemious,1,family,medium
+17,Irving Harmstone,0,abstemious,1,family,medium
+18,Dougie Rollitt,0,abstemious,1,family,medium
+19,Lin Handford,0,abstemious,2,friends,low
+20,Barby Salisbury,0,abstemious,1,solitary,low
+21,Jordon Juris,0,abstemious,3,family,medium
+22,Silas Martinek,0,abstemious,5,?,?
+23,Dreddy Cahn,0,abstemious,5,?,?
+24,Alta Blamey,0,abstemious,5,?,?
+25,Edita Enriquez,0,abstemious,2,solitary,low
+26,Cole Steinham,0,abstemious,2,solitary,low
+27,Gail Ferrarotti,0,abstemious,1,solitary,?
+28,Merola Syrad,0,abstemious,1,solitary,medium
+29,Roscoe Frogley,0,abstemious,1,friends,medium
+30,Samara Duerdin,0,abstemious,3,family,medium
+31,Alyce Lundbeck,0,abstemious,2,family,medium
+32,Hendrik Float,0,abstemious,2,friends,medium
+33,Andros Jori,0,abstemious,3,family,medium
+34,Carly Bellon,0,abstemious,3,friends,medium
+35,Rosaline Frankland,0,abstemious,3,friends,medium
+36,Mirelle Bernadzki,0,abstemious,2,family,medium
+37,Sammy Feilden,0,abstemious,2,family,medium
+38,Jessica Domanek,0,abstemious,2,family,medium
+39,Pascal Stockoe,0,abstemious,2,family,medium
+40,Lennie Mityashin,0,abstemious,2,family,medium
+41,Christie Kamien,0,abstemious,2,family,medium
+42,Cos Alliott,0,abstemious,2,family,medium
+43,Rowney Penman,0,abstemious,2,family,medium
+44,Lissa Penhearow,0,abstemious,2,family,medium
+45,Brita Gribble,0,abstemious,2,family,medium
+46,Agatha Kinzett,0,abstemious,2,family,medium
+47,Rhody Dering,0,abstemious,2,family,medium
+48,Donalt Cejka,0,abstemious,2,family,medium
+49,Paolina Kinnin,0,abstemious,2,family,medium
+50,Barry Calkin,0,abstemious,2,family,medium
+51,Edmund Christou,0,abstemious,2,family,medium
+52,Larine Dinley,0,abstemious,2,family,medium
+53,Linoel Bandiera,0,abstemious,2,family,medium
+54,Gerhardine Sweeting,0,abstemious,3,family,low
+55,Corrie Cooke,0,abstemious,3,family,medium
+56,Sharla Ridulfo,0,abstemious,3,family,medium
+57,Luciana Rens,0,abstemious,3,family,medium
+58,Thorsten Hamilton,0,abstemious,3,family,medium
+59,Anselm Inger,0,abstemious,3,family,medium
+60,Quintana Silcox,0,abstemious,3,family,medium
+61,Karin Maylard,0,abstemious,3,family,medium
+62,Filip Giffen,0,abstemious,1,family,medium
+63,Stacee Blaylock,0,abstemious,3,solitary,low
+64,Nickie Fader,0,abstemious,3,friends,medium
+65,Ervin Haughton,0,abstemious,2,solitary,medium
+66,Dorette Torvey,0,abstemious,2,solitary,medium
+67,Elbert Coronado,0,abstemious,1,friends,medium
+68,Townsend Sonnenschein,0,abstemious,1,friends,medium
+69,Quintina Blakeway,0,abstemious,5,?,?
+70,Binky Abrahmovici,0,abstemious,2,solitary,medium
+71,Jodie Lindholm,0,abstemious,1,friends,high
+72,Lonny Seally,0,abstemious,1,friends,high
+73,Hersch Covert,0,abstemious,3,friends,high
+74,Robbie MacFie,0,abstemious,1,family,medium
+75,Teresita Ellgood,0,abstemious,3,family,medium
+76,Tadeas South,0,abstemious,3,family,medium
+77,Stormy Leeming,0,abstemious,1,solitary,medium
+78,Riannon Worcester,0,abstemious,3,family,medium
+79,Lynsey Tiery,0,abstemious,1,friends,medium
+80,Jeanie Bullivent,0,abstemious,1,friends,medium
+81,Gay Deaton,0,abstemious,1,family,medium
+82,Rustie Knibb,0,abstemious,3,family,medium
+83,Shirline Cardno,0,abstemious,1,friends,medium
+84,Fabio Short,0,abstemious,1,friends,medium
+85,Elmo Igonet,0,abstemious,1,friends,medium
+86,Wallache Luebbert,0,abstemious,1,friends,medium
+87,Juliet Douche,0,abstemious,2,solitary,medium
+88,Red Meaking,0,abstemious,2,solitary,medium
+89,Trix Kightly,0,abstemious,2,solitary,medium
+90,Bowie Ollet,0,abstemious,2,solitary,medium
+91,Jeniffer Arrington,0,abstemious,2,solitary,medium
+92,Bordie Gallihaulk,0,abstemious,2,solitary,medium
+93,Marisa Kenen,0,abstemious,2,solitary,medium
+94,Jase Sibbet,0,abstemious,2,solitary,medium
+95,Koren Carillo,0,abstemious,2,solitary,medium
+96,Kata Gledhill,0,abstemious,2,solitary,medium
+97,Duffie Lewcock,0,abstemious,2,solitary,medium
+98,Tierney Minister,0,abstemious,2,solitary,medium
+99,Carolina Olivier,0,abstemious,2,solitary,medium
+100,Ottilie Tomasian,0,abstemious,2,solitary,medium
+101,Tirrell Innerstone,0,abstemious,2,solitary,medium
+102,Laurence Deveraux,0,abstemious,2,solitary,medium
+103,Noe Ledgley,0,abstemious,2,solitary,medium
+104,Gabbey Carine,0,abstemious,2,solitary,medium
+105,Dasya Ashwin,0,abstemious,2,solitary,medium
+106,Alard Leidecker,0,abstemious,2,solitary,medium
+107,Land Eagland,0,abstemious,2,solitary,medium
+108,Thacher Mayell,0,abstemious,2,solitary,medium
+109,Murvyn Cockley,0,abstemious,2,solitary,medium
+110,Dud Arbor,0,abstemious,2,solitary,medium
+111,Cathyleen Presley,0,abstemious,2,solitary,medium
+112,Valentine Sier,0,abstemious,2,solitary,medium
+113,Janeen MacMaykin,0,abstemious,2,solitary,medium
+114,Eilis Valentine,0,abstemious,2,solitary,medium
+115,Mamie Comben,0,abstemious,2,solitary,medium
+116,Emmet Westphal,0,abstemious,2,solitary,medium
+117,Julianna Wield,0,abstemious,2,solitary,medium
+118,Edwin Briscoe,0,abstemious,2,solitary,medium
+119,Tonya Moughtin,0,abstemious,2,solitary,medium
+120,Izzy Copsey,0,abstemious,2,solitary,medium
+121,Gallard Jaffra,0,abstemious,2,solitary,medium
+122,Richart Swatridge,0,abstemious,2,solitary,medium
+123,Julie Paddie,0,abstemious,2,solitary,medium
+124,Peterus Youngs,0,abstemious,2,solitary,medium
+125,Kendra Penwell,0,abstemious,2,solitary,medium
+126,Angelita McCombe,0,abstemious,2,solitary,medium
+127,Berke Le Brun,0,abstemious,2,solitary,medium
+128,Ive Tatam,0,abstemious,2,solitary,medium
+129,Weylin Farlambe,0,abstemious,2,solitary,medium
+130,Sonia Bank,0,abstemious,2,solitary,medium
+131,Ardenia Werny,0,abstemious,2,solitary,medium
+132,Franklyn Gather,0,abstemious,2,solitary,medium
+133,Beaufort Matschke,0,abstemious,2,solitary,medium
+134,Ike Giamitti,0,abstemious,2,solitary,medium
+135,Theda Abbatt,0,abstemious,2,solitary,medium
+136,Chas Groomebridge,0,abstemious,2,solitary,medium
+137,Gilbertine Peddie,0,abstemious,2,solitary,medium
+138,Karen Swinfen,0,abstemious,2,solitary,medium
+139,Stesha Charlet,0,abstemious,2,solitary,medium
+140,Geri Bubeer,0,abstemious,2,solitary,medium
+141,Christie Whitland,0,casual drinker,2,family,medium
+142,Angelica Yoslowitz,0,casual drinker,1,friends,medium
+143,Phyllis Herety,0,casual drinker,1,friends,medium
+144,Biddie Drohan,0,casual drinker,3,family,medium
+145,Gavan Obbard,0,casual drinker,3,friends,medium
+146,Horatius Ellery,0,casual drinker,3,friends,medium
+147,Judie Marcinkowski,0,casual drinker,1,friends,low
+148,Win Belhomme,0,casual drinker,1,friends,low
+149,Murdoch Sneller,0,casual drinker,1,friends,low
+150,Marcelle Scapelhorn,0,casual drinker,1,friends,low
+151,Hilda Robertz,0,casual drinker,1,friends,low
+152,Tess Girardini,0,casual drinker,1,friends,low
+153,Reidar Rothschild,0,casual drinker,1,friends,low
+154,Jaimie Potkins,0,casual drinker,1,friends,low
+155,Brennen Paulou,0,casual drinker,1,friends,low
+156,Dillon Woodsford,0,casual drinker,1,friends,low
+157,Granger Beaney,0,casual drinker,1,friends,low
+158,Denis Masic,0,casual drinker,1,friends,low
+159,Minnnie Storms,0,casual drinker,1,friends,low
+160,Berton Shilstone,0,casual drinker,1,friends,low
+161,Concettina De Gogay,0,casual drinker,1,friends,low
+162,Carola Gras,0,casual drinker,1,friends,low
+163,Thomasa Jowle,0,casual drinker,3,friends,low
+164,Lorrie Curmi,0,casual drinker,2,friends,low
+165,Sunshine Benardeau,0,casual drinker,1,family,medium
+166,Kori Foucher,0,casual drinker,1,family,medium
+167,Fidelio Arber,0,casual drinker,2,friends,low
+168,Helenka Rickis,0,casual drinker,1,?,medium
+169,Janine Harle,0,casual drinker,1,family,low
+170,Myrle Brame,0,casual drinker,1,family,low
+171,Briny Heyworth,0,casual drinker,1,family,medium
+172,Odell Fanton,0,casual drinker,1,family,medium
+173,Robinetta Dalla,0,casual drinker,3,friends,medium
+174,Christopher Schultheiss,0,casual drinker,3,friends,medium
+175,Elsworth Bullan,0,casual drinker,3,friends,low
+176,Irina Braganca,0,casual drinker,3,solitary,medium
+177,Micheal Aireton,0,casual drinker,2,friends,medium
+178,Mariana Prester,0,casual drinker,2,friends,medium
+179,Helena Pigford,0,casual drinker,1,family,medium
+180,Ros Marques,0,casual drinker,3,friends,medium
+181,Bertie Greenman,0,casual drinker,2,solitary,low
+182,Anita Sazio,0,casual drinker,3,family,medium
+183,Nelle Haselup,0,casual drinker,3,family,medium
+184,Mikel Richardt,0,casual drinker,3,family,medium
+185,Lenore Tully,0,casual drinker,3,family,medium
+186,Minnie Nusche,0,casual drinker,3,family,medium
+187,Georgine Maha,0,casual drinker,3,family,medium
+188,Cyril Grelak,0,casual drinker,3,family,medium
+189,Joy Blackman,0,casual drinker,3,family,medium
+190,Inglebert McDermid,0,casual drinker,3,family,medium
+191,Krispin Poon,0,casual drinker,3,family,medium
+192,Falito Baud,0,casual drinker,3,family,medium
+193,Elliott Dmych,0,casual drinker,3,family,medium
+194,Karilynn Swetland,0,casual drinker,3,family,medium
+195,Lanae Nisot,0,casual drinker,3,family,medium
+196,Iosep Maslin,0,casual drinker,3,family,medium
+197,Jennee Reiling,0,casual drinker,3,family,medium
+198,Carma Bendel,0,casual drinker,2,family,low
+199,Dedra Monget,0,casual drinker,1,friends,low
+200,Hertha Avramov,0,casual drinker,1,friends,low
+201,Maurizia Towsey,0,casual drinker,1,friends,low
+202,Dorelle Gillam,0,casual drinker,1,friends,low
+203,Forbes Cholton,1,casual drinker,3,family,low
+204,Dirk Egiloff,0,casual drinker,3,family,medium
+205,Audie Moulds,0,casual drinker,2,family,medium
+206,Filia Southerns,0,casual drinker,2,friends,low
+207,Lilias Bousfield,0,casual drinker,2,family,low
+208,Nertie Vittle,0,casual drinker,1,family,medium
+209,Danica Ottley,0,casual drinker,4,friends,high
+210,Irina Grishagin,0,casual drinker,4,friends,high
+211,Alex Salmoni,0,casual drinker,4,friends,high
+212,Truman Saltern,0,casual drinker,4,friends,high
+213,Verne Andriuzzi,0,casual drinker,2,solitary,4
+214,Mathilda Semken,0,casual drinker,2,solitary,?
+215,Neila Doog,0,casual drinker,3,family,medium
+216,Audy Josephsen,0,casual drinker,1,family,medium
+217,Leslie Halladey,1,casual drinker,1,family,medium
+218,Mitch Storton,0,casual drinker,2,family,low
+219,Daven Kippin,0,casual drinker,2,family,low
+220,Felic Hanscomb,0,casual drinker,2,family,low
+221,Doretta Beston,0,casual drinker,2,family,low
+222,Serena Vedishchev,0,casual drinker,2,family,low
+223,Alvan Hubbocks,0,casual drinker,2,family,low
+224,Stearne Collinson,0,casual drinker,2,family,low
+225,Warren Mcmanaman,0,casual drinker,2,family,low
+226,Deerdre Pardie,0,casual drinker,2,family,low
+227,Zebadiah Grishkov,0,casual drinker,2,family,low
+228,Zola Heales,0,casual drinker,2,family,low
+229,Rube Skeffington,0,casual drinker,2,family,low
+230,Bale Brooke,0,casual drinker,2,family,low
+231,Way Cromer,0,casual drinker,2,family,low
+232,Goran Jedrzejczak,0,casual drinker,2,family,low
+233,Aileen Whylie,0,casual drinker,2,family,low
+234,Trina Priddey,0,casual drinker,2,family,low
+235,Hillie Dykas,0,casual drinker,2,family,low
+236,Reta Stampfer,0,casual drinker,2,family,low
+237,Anya Breens,0,casual drinker,2,family,low
+238,Findley Caskey,1,casual drinker,2,family,low
+239,August Clarridge,0,casual drinker,2,family,low
+240,Noam Silber,0,casual drinker,2,family,low
+241,Maxie Keggin,0,casual drinker,2,family,low
+242,Bertram Fitzsimon,0,casual drinker,2,family,low
+243,Addison Shyram,0,casual drinker,2,family,low
+244,Dniren Vial,0,casual drinker,2,family,low
+245,Donalt Comsty,0,casual drinker,2,family,low
+246,Florenza Ende,0,casual drinker,2,family,low
+247,Chev MacCaull,0,casual drinker,2,family,low
+248,Merle Beynkn,0,casual drinker,2,family,low
+249,Clemmie Gudde,0,casual drinker,2,family,low
+250,George Udy,0,casual drinker,2,family,low
+251,Svend Guppey,0,casual drinker,2,family,low
+252,Judah Lugden,0,casual drinker,2,family,low
+253,Franny Siddaley,0,casual drinker,2,family,low
+254,Jonathon McGowan,0,casual drinker,2,family,low
+255,Tyrus Harrington,0,casual drinker,2,family,low
+256,Celestia MacMorland,0,casual drinker,2,family,low
+257,Jerad Bearman,0,casual drinker,2,family,low
+258,Denver Bradnocke,0,casual drinker,2,family,low
+259,Jeffrey Edwardes,0,casual drinker,2,family,low
+260,Maurizia Hainge,0,casual drinker,2,family,low
+261,Alix Norrie,0,casual drinker,2,family,low
+262,Prudy Applebee,0,casual drinker,2,family,low
+263,Correna Pittle,0,casual drinker,2,family,low
+264,Eleni Edmund,0,casual drinker,2,family,low
+265,Mart Jiroutka,0,casual drinker,2,family,low
+266,Daryle Kearn,0,casual drinker,2,family,low
+267,Brand Farny,0,casual drinker,2,family,low
+268,Maure Bogue,0,casual drinker,2,family,low
+269,Nataniel Inchbald,0,casual drinker,2,family,low
+270,Sarine Toxell,0,casual drinker,2,family,low
+271,Nanci Matyushkin,0,casual drinker,2,family,low
+272,Burgess Echallier,0,casual drinker,2,family,low
+273,Packston Pattini,0,casual drinker,2,family,low
+274,Desmond Cumpton,0,casual drinker,2,family,low
+275,Giulio Wimmers,0,casual drinker,2,family,low
+276,Yolanda Hembling,0,casual drinker,2,family,low
+277,Ruggiero Giacomelli,0,casual drinker,2,family,low
+278,Abbey Dowty,0,casual drinker,2,family,low
+279,Jeanelle Keeler,0,casual drinker,2,family,low
+280,Steffi Fowell,0,casual drinker,2,family,low
+281,Pennie Davidavidovics,0,casual drinker,2,family,low
+282,Alix Bowering,0,casual drinker,2,family,low
+283,Phillida Herley,1,casual drinker,2,family,low
+284,Derwin Wichard,1,casual drinker,2,family,low
+285,Derward Brisse,0,casual drinker,2,family,low
+286,Reinold Ree,0,casual drinker,2,family,low
+287,Lauritz Gibard,0,casual drinker,2,family,low
+288,Delaney Birtle,0,casual drinker,2,family,low
+289,Elysha Fiddian,0,casual drinker,2,family,low
+290,Luigi Colley,0,casual drinker,2,family,low
+291,Cindee Restill,0,casual drinker,2,family,low
+292,Deane Stainsby,0,casual drinker,2,family,low
+293,Edeline Downgate,0,casual drinker,2,family,low
+294,Andres Tuther,0,casual drinker,2,family,low
+295,Blakeley Josskoviz,0,casual drinker,2,family,low
+296,Silva Brisland,0,casual drinker,2,family,low
+297,Emmott Shorte,0,casual drinker,2,family,low
+298,Wheeler Schubert,0,casual drinker,2,family,low
+299,Dexter Leinster,0,casual drinker,2,family,low
+300,Delila Joutapaitis,0,casual drinker,2,family,low
+301,Richard Chestnutt,0,casual drinker,2,family,low
+302,Koren Tidridge,0,casual drinker,2,family,low
+303,Gayle Matonin,0,casual drinker,2,family,low
+304,Melisande Jordi,0,casual drinker,2,family,low
+305,Marisa Billyard,0,casual drinker,2,family,low
+306,Corina Brisley,0,casual drinker,2,family,low
+307,Zachery Camillo,0,casual drinker,2,family,low
+308,Lyman Burbudge,0,casual drinker,2,family,low
+309,Abbey Oake,0,casual drinker,2,family,low
+310,Hank Maykin,0,casual drinker,2,family,low
+311,Dominique Middleton,1,casual drinker,2,family,low
+312,Preston Rasor,0,casual drinker,2,family,low
+313,Felicle Grzegorzewicz,0,casual drinker,2,family,low
+314,Adler Glossup,0,casual drinker,2,family,low
+315,Britte Marc,0,casual drinker,2,family,low
+316,Lucien Stockill,0,casual drinker,2,family,low
+317,Ervin Swendell,0,casual drinker,2,family,low
+318,Chrysa Howson,0,casual drinker,2,family,low
+319,Wilburt Greenrodd,0,casual drinker,2,family,low
+320,Caprice Elphey,0,casual drinker,2,family,low
+321,Hanna Curuclis,0,casual drinker,2,family,low
+322,Allister Dale,0,casual drinker,2,friends,low
+323,Noam Barehead,0,casual drinker,3,family,medium
+324,Kamillah Cottrell,0,casual drinker,3,family,medium
+325,Doll Ferrant,0,casual drinker,3,family,medium
+326,Retha Davenhill,0,casual drinker,3,family,medium
+327,Dunstan Meddick,0,casual drinker,1,family,medium
+328,Rosita Turneaux,0,casual drinker,1,family,medium
+329,Francyne Hutchence,0,casual drinker,3,friends,low
+330,Rebecca Sones,0,casual drinker,2,friends,medium
+331,Carling Muggeridge,1,casual drinker,2,friends,medium
+332,Tadeas Crone,0,casual drinker,2,friends,medium
+333,Corette Watkinson,0,casual drinker,2,friends,medium
+334,Loise Moncrieffe,0,casual drinker,2,friends,medium
+335,Elly Hegge,0,casual drinker,2,friends,medium
+336,Berny Bowdidge,0,casual drinker,2,friends,medium
+337,Celinka Danilchik,0,casual drinker,2,friends,medium
+338,Kristan Maccree,0,casual drinker,2,friends,medium
+339,Sybille Dalligan,0,casual drinker,2,friends,medium
+340,Sarajane Whiley,0,casual drinker,2,friends,medium
+341,Gilberta Twidale,0,casual drinker,2,friends,medium
+342,Roberta Stanbridge,0,casual drinker,2,friends,medium
+343,Skippie Garber,0,casual drinker,2,friends,medium
+344,Mela Parmby,0,casual drinker,2,friends,medium
+345,Deina Grugerr,0,casual drinker,2,friends,medium
+346,Laurene Allanby,1,casual drinker,2,friends,medium
+347,Margaretta Chisman,0,social drinker,1,family,low
+348,Birk Tedder,0,social drinker,3,friends,low
+349,Elvina Ambrogiotti,0,social drinker,3,family,medium
+350,Natty Skelly,0,social drinker,2,family,high
+351,Marlow Nemchinov,0,social drinker,2,family,high
+352,Adan Latch,0,social drinker,2,solitary,medium
+353,Ado Joust,0,social drinker,2,solitary,medium
+354,Karleen De Maine,0,social drinker,2,solitary,medium
+355,Merrilee Halfhide,0,social drinker,3,family,low
+356,Brina Burras,0,social drinker,3,family,medium
+357,Max Powder,0,social drinker,1,friends,medium
+358,Robbin Cokayne,0,social drinker,1,friends,medium
+359,Horton Grayland,0,social drinker,4,friends,low
+360,Wilden Crotch,0,social drinker,3,family,medium
+361,Nicki Lay,0,social drinker,2,family,medium
+362,Gerladina Johns,0,social drinker,1,family,low
+363,Cleve Stanmore,0,social drinker,3,family,medium
+364,Dominique Cauderlie,0,social drinker,3,family,medium
+365,Marve Buey,0,social drinker,3,family,medium
+366,Bunny Clawley,0,social drinker,1,family,medium
+367,Killie Adriano,0,social drinker,4,family,medium
+368,Augusto Casale,0,social drinker,4,family,medium
+369,Brandea Leetham,0,social drinker,4,family,medium
+370,Lanna Dafydd,0,social drinker,4,family,medium
+371,Jeanna Bloxland,0,social drinker,4,family,medium
+372,Candida Studd,0,social drinker,4,family,medium
+373,Alanah Chettle,0,social drinker,1,family,medium
+374,Rhody Bygott,0,social drinker,1,family,medium
+375,Horacio Lowerson,0,social drinker,1,?,low
+376,Stanfield Petrushka,0,social drinker,1,family,medium
+377,Kendall Monroe,0,social drinker,1,family,medium
+378,Concordia Hardware,0,social drinker,1,family,medium
+379,Marthena Ainge,0,social drinker,1,friends,medium
+380,Renaud Groomebridge,0,social drinker,1,friends,low
+381,Jessamine Pinks,0,social drinker,3,family,low
+382,Doe Beedon,0,social drinker,3,solitary,low
+383,Katerine Masdin,0,social drinker,3,solitary,low
+384,Daphne Hammor,0,social drinker,3,solitary,low
+385,Talbert Fawdry,0,social drinker,3,solitary,low
+386,Alex Baugh,0,social drinker,3,solitary,low
+387,Duky Vany,0,social drinker,3,solitary,low
+388,Maxie Hamon,0,social drinker,3,solitary,low
+389,Hana Kelshaw,0,social drinker,3,solitary,low
+390,Drew Wafer,1,social drinker,3,solitary,low
+391,Ardra Fihelly,0,social drinker,3,solitary,low
+392,Carly Keeting,0,social drinker,1,family,medium
+393,Ethan Barnsdale,0,social drinker,1,family,medium
+394,Alan Stroobant,0,social drinker,2,family,medium
+395,Antonella Maffioni,0,social drinker,1,friends,low
+396,Rab Mathivon,0,social drinker,1,family,low
+397,Cornell Bransom,0,social drinker,1,friends,medium
+398,Donielle Johnston,0,social drinker,1,family,medium
+399,Leia Hazley,0,social drinker,2,family,medium
+400,Tye Swadlinge,0,social drinker,2,family,medium
+401,Pet Ducket,0,social drinker,2,family,medium
+402,Kelly Lamzed,0,social drinker,2,family,medium
+403,Gannie Hendron,0,social drinker,1,friends,medium
+404,Gabrielle Khristoforov,0,social drinker,1,friends,medium
+405,Delly Klementz,0,social drinker,2,family,medium
+406,Marleen Beckford,0,social drinker,3,friends,medium
+407,Claresta Manion,0,social drinker,1,friends,medium
+408,Gene Blodg,0,social drinker,1,friends,medium
+409,August Godbert,0,social drinker,1,family,low
+410,Lotty Guild,0,social drinker,2,family,medium
+411,Artair Minerdo,0,social drinker,1,family,medium
+412,Celestine Trenholm,1,social drinker,1,family,medium
+413,Blanca Smeed,0,social drinker,1,family,medium
+414,Evonne Daymond,0,social drinker,1,family,medium
+415,Johanna Lorman,0,social drinker,1,family,medium
+416,Ellette Benedick,0,social drinker,1,family,medium
+417,Reade Lacky,1,social drinker,3,family,low
