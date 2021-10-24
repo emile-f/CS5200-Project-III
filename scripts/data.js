@@ -4,7 +4,7 @@ var cuisine = ['Chinese', 'American', 'Continental', 'Cuban', 'French', 'Greek',
     'Indian', 'Indonesian', 'Italian', 'Japanese', 'Lebanese', 'Malaysian', 'Mexican',
     'Pakistani', 'Russian', 'Singapore', 'Spanish', 'Thai', 'Tibetan', 'Vietnamese'];
 
-var data = [['paymentMethodsRestaurantID', 'restID', 'paymentMethodsID']]
+var data = [['cuisineRestaurantID', 'restID', 'cuisineId']]
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -18,10 +18,11 @@ for (let step = 1; step < 501; step++) {
     var alreadyDone = [];
     for (let s = 0; s < amount; s++) {
         var inner = [i, step];
-        var n = getRandomInt(1, 5);
+        var n = getRandomInt(1, 20);
         while (alreadyDone.includes(n)) {
-            n = getRandomInt(1, 5);
+            n = getRandomInt(1, 20);
         }
+        alreadyDone.push(n);
         inner.push(n);
         data.push(inner);
         i++;
@@ -31,6 +32,6 @@ for (let step = 1; step < 501; step++) {
 let csvContent = ''
     + data.map(e => e.join(",")).join("\n");
 
-fs.writeFileSync('data-PaymentMethodsRestaurant.csv', csvContent);
+fs.writeFileSync('data-CuisineRestaurant.csv', csvContent);
 
 
