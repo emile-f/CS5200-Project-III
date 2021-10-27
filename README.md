@@ -39,6 +39,11 @@ You will be working in pairs for this project, but the submission must be made i
 - CRUD operation on the ratings provided by customer to the restaurant
 - Query/filter reviews based on cost, service, parking, waiting time, and overall rating
 
+# Documents:
+
+- [project document .docx](docs/CS5200 project 1.docx)
+- [project document .pdf](docs/CS5200 project 1.pdf)
+
 # Made by
 https://github.com/Misha-Mody
 
