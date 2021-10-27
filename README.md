@@ -44,6 +44,22 @@ You will be working in pairs for this project, but the submission must be made i
 - [project document .docx](./docs/CS5200%20project%201.docx)
 - [project document .pdf](./docs/CS5200%20project%201.pdf)
 
+# Conceptual Model:
+
+![Conceptual Model](./diagrams/UML.png)
+
+# logical Model:
+
+![Logical Model](./diagrams/ERD.png)
+
+# SQL data definition statements:
+
+- [Create table statements](./db/create.sql)
+
+# Populate the tables with test data:
+
+- [Database](./db/data.db)
+
 # Made by
 https://github.com/Misha-Mody
 
