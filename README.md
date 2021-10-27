@@ -41,8 +41,8 @@ You will be working in pairs for this project, but the submission must be made i
 
 # Documents:
 
-- [project document .docx](docs/CS5200 project 1.docx)
-- [project document .pdf](docs/CS5200 project 1.pdf)
+- [project document .docx](./docs/CS5200%20project%201.docx)
+- [project document .pdf](./docs/CS5200%20project%201.pdf)
 
 # Made by
 https://github.com/Misha-Mody
