@@ -23,6 +23,22 @@ You will be working in pairs for this project, but the submission must be made i
 
 (20 pts) Create a basic Node + Express application that let's you create, display, modify and delete at least two of the tables with a foreign key between then. No need to have a polished interface, and you can use the code created in class as a starting point
 
+# Project proposal
+
+@Emile Ferrand and @Misha Mody will be creating a Restaurant - Review Management System where Customers can search and query restaurants aligning to their preference and Restaurants can manage the Ratings/ Feedback and types of Customers they receive.
+
+## @Misha Mody split would be:
+
+- CRUD operations on the Restaurant Table
+- CRUD operations on the Services and Facilities provided by the restaurant
+- Query/filter restaurants based on name, food type, working hours, accepted payment methods, Facilities 
+
+## @Emile Ferrand will be working on:
+
+- CRUD operations on the customer table
+- CRUD operation on the ratings provided by customer to the restaurant
+- Query/filter reviews based on cost, service, parking, waiting time, and overall rating
+
 # Made by
 https://github.com/Misha-Mody
 
