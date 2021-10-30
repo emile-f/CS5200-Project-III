@@ -1,4 +1,4 @@
-# CS5200-Project-I
+# CS5200-Project-I RestaurantReview Management
 Project I / Design &amp; Implement a Relational Database
 
 ## Overview
