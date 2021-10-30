@@ -1,7 +1,7 @@
 # CS5200-Project-I RestaurantReview Management
 Project I / Design &amp; Implement a Relational Database
 
-## Overview
+## Overview of Project
 In this practicum you will build a database for a problem of your choice. You will describe the requirements for the project, build a conceptual data model, a logical data model, a relational schema, followed by implementing the relational schema in SQLite3, as well as a simple interface using Node.
 
 ## Format
