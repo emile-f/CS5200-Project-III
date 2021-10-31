@@ -53,6 +53,43 @@ async function getRatings(filter, page, pageSize) {
     }
 }
 
+async function getRating(id) {
+    const db = await open({
+        filename: "./db/database.db",
+        driver: sqlite3.Database,
+    });
+
+    const stmt = await db.prepare(`
+    SELECT 
+        Rating.ratingId AS id,
+        Restaurant.restID as restaurantId, 
+        Customer.customerId as customerId,
+        Rating.cost,
+        Rating.Food,
+        Rating.Service,
+        Rating.parking,
+        Rating.waiting,
+        review.review,
+        review.reviewID as reviewId
+    FROM Rating
+    INNER JOIN Customer on Customer.customerID=Rating.customerId
+    INNER JOIN Restaurant on Restaurant.restID=Rating.restID
+    left JOIN review on review.ratingId= Rating.ratingId
+    WHERE Rating.ratingId = @id
+    `);
+
+    const params = {
+        "@id": id
+    };
+
+    try {
+        return await stmt.all(params);
+    } finally {
+        await stmt.finalize();
+        db.close();
+    }
+}
+
 async function getRatingsCount(filter) {
     const db = await open({
         filename: "./db/database.db",
@@ -83,6 +120,72 @@ async function getRatingsCount(filter) {
         return (await stmt.get(params)).count;
     } finally {
         await stmt.finalize();
+        db.close();
+    }
+}
+
+async function updateRating(rating) {
+    const db = await open({
+        filename: "./db/database.db",
+        driver: sqlite3.Database,
+    });
+
+    const stmt = await db.prepare(`
+    UPDATE Rating
+    SET restID = @restID, 
+        customerID = @customerID, 
+        cost = @cost, 
+        Food = @Food, 
+        Service = @Service, 
+        parking = @parking,
+        waiting = @waiting, 
+        overall = @overall
+    WHERE ratingId = @id;
+    `);
+
+    const query = {
+        "@restID": rating.restID,
+        "@customerID": rating.customerID,
+        "@cost": rating.cost,
+        "@Food": rating.Food,
+        "@Service": rating.Service,
+        "@parking": rating.parking,
+        "@waiting": rating.waiting,
+        "@overall": rating.overall,
+        "@id": rating.ratingId,
+    };
+
+    let reviewStmt;
+    let queryReview;
+
+    try {
+        if (rating.review) {
+            const t = await stmt.run(query);
+            console.log('Done with update on rating table', t)
+            if (!rating.reviewId) { // when not set insert
+                reviewStmt = await db.prepare(`INSERT INTO
+                Review(ratingId, review)
+                VALUES(@id, @review);`);
+                queryReview = {
+                    "@id": rating.ratingId,
+                    "@review": rating.review,
+                };
+            } else {
+                reviewStmt = await db.prepare(`UPDATE Review
+                SET review = @review
+                WHERE reviewID = @id;`);
+                queryReview = {
+                    "@review": rating.review,
+                    "@id": rating.reviewId,
+                };
+            }
+            return await reviewStmt.run(queryReview);
+        } else {
+            return await stmt.run(query);
+        }
+    } finally {
+        await stmt.finalize();
+        if (reviewStmt) { await reviewStmt.finalize(); }
         db.close();
     }
 }
@@ -132,5 +235,7 @@ async function insertRating(rating) {
 }
 
 module.exports.getRatings = getRatings;
+module.exports.getRating = getRating;
 module.exports.getRatingsCount = getRatingsCount;
 module.exports.insertRating = insertRating;
+module.exports.updateRating = updateRating;
