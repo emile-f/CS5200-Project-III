@@ -87,5 +87,35 @@ async function getRatingsCount(filter) {
     }
 }
 
+async function insertRating(rating) {
+    const db = await open({
+        filename: "./db/database.db",
+        driver: sqlite3.Database,
+    });
+
+    const stmt = await db.prepare(`INSERT INTO
+    Rating(restID, customerID, cost, Food, Service, parking, waiting, overall)
+      VALUES (@restID, @customerID, @cost, @Food, @Service, @parking, @waiting, @overall);`);
+
+    const query = {
+        "@restID": rating.restID,
+        "@customerID": rating.customerID,
+        "@cost": rating.cost,
+        "@Food": rating.Food,
+        "@Service": rating.Service,
+        "@parking": rating.parking,
+        "@waiting": rating.waiting,
+        "@overall": rating.overall,
+    };
+
+    try {
+        return await stmt.run(query);
+    } finally {
+        await stmt.finalize();
+        db.close();
+    }
+}
+
 module.exports.getRatings = getRatings;
 module.exports.getRatingsCount = getRatingsCount;
+module.exports.insertRating = insertRating;

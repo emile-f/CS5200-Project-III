@@ -2,6 +2,8 @@ let express = require("express");
 let router = express.Router();
 
 const myDB = require("../db/MySqliteDBRating");
+const myDBCustomer = require("../db/MySqliteDBCustomer");
+const myDBRestaurant = require("../db/MySqliteDBRestaurant");
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
@@ -20,16 +22,63 @@ router.get("/", async function (req, res, next) {
 
     try {
         let total = await myDB.getRatingsCount(filter);
-
-        
-
-
         const ratings = await myDB.getRatings(filter, page, pageSize);
         res.render("ratings", { filter, ratings, currentPage: page, lastPage: Math.ceil(total / pageSize), });
     } catch (err) {
         next(err);
     }
 
+});
+
+router.get("/add", async function (req, res, next) {
+    const customers = await myDBCustomer.getCustomers();
+    const restaurants = await myDBRestaurant.getRestaurants();
+    res.render('add-rating', { customers, restaurants });
+});
+
+router.post("/add", async function (req, res, next) {
+    console.log('test', req.body);
+
+    if (!req.body.customer) {
+        next({ message: "Please provide a customer" });
+        return
+    }
+
+    if (!req.body.restaurant) {
+        next({ message: "Please provide a restaurant" });
+        return
+    }
+    let overall = 0;
+
+    try {
+        overall = (parseInt(req.body.cost) + parseInt(req.body.food)
+            + parseInt(req.body.service) + parseInt(req.body.parking) + parseInt(req.body.waiting)) / 5
+    } catch (error) {
+        next({ message: "Failed to calculate overall score" });
+        return
+    }
+
+    const rating = {
+        restID: parseInt(req.body.restaurant),
+        customerID: parseInt(req.body.customer),
+        cost: parseInt(req.body.cost),
+        Food: parseInt(req.body.food),
+        Service: parseInt(req.body.service),
+        parking: parseInt(req.body.parking),
+        waiting: parseInt(req.body.waiting),
+        overall: overall
+    };
+
+    console.log('rating', rating);
+
+    try {
+        const insertRating = await myDB.insertRating(rating);
+        console.log("Inserted", insertRating);
+        res.redirect('/rating');
+    } catch (err) {
+        console.log("Error inserting", err);
+        next(err);
+    }
 });
 
 module.exports = router;
