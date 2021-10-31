@@ -234,8 +234,45 @@ async function insertRating(rating) {
     }
 }
 
+async function deleteRating(ratingId) {
+    const db = await open({
+        filename: "./db/database.db",
+        driver: sqlite3.Database,
+    });
+
+    const stmt = await db.prepare(`
+    DELETE FROM Rating
+    WHERE ratingId = @id;
+    `);
+
+    const query = {
+        "@id": ratingId,
+    };
+
+    let reviewStmt;
+    let queryReview;
+
+    try {
+        const t = await stmt.run(query);
+        console.log('Done with deleting on rating table', t)
+        reviewStmt = await db.prepare(`
+                DELETE FROM Review
+                WHERE ratingID = @id;`);
+        queryReview = {
+            "@id": ratingId,
+        };
+
+        return await reviewStmt.run(queryReview);
+    } finally {
+        await stmt.finalize();
+        if (reviewStmt) { await reviewStmt.finalize(); }
+        db.close();
+    }
+}
+
 module.exports.getRatings = getRatings;
 module.exports.getRating = getRating;
 module.exports.getRatingsCount = getRatingsCount;
 module.exports.insertRating = insertRating;
 module.exports.updateRating = updateRating;
+module.exports.deleteRating = deleteRating;

@@ -147,4 +147,14 @@ router.post("/add", async function (req, res, next) {
     }
 });
 
+router.get("/delete", async function (req, res, next) {
+    if (!req.query.id) {
+        next({ message: "Please provide a rating id" });
+        return
+    }
+    const ratingId = req.query.id;
+    await myDB.deleteRating(ratingId);
+    res.redirect('/rating');
+});
+
 module.exports = router;
