@@ -17,30 +17,37 @@
         <a class="nav-link active" aria-current="page" href="/rating/add">Add rating</a>
 
         <form action="/rating/">
-            <div class="input-group">
+            <div>
                 <label for="cost">Cost: </label>
                 <input class="form-control" type="number" name="cost" min="0" , max="5" value="<%= filter.cost %>" />
-
+            </div>
+            <div>
                 <label for="cost">Food: </label>
                 <input class="form-control" type="number" name="food" min="0" , max="5" value="<%= filter.food %>" />
 
+            </div>
+            <div>
                 <label for="cost">Service: </label>
                 <input class="form-control" type="number" name="service" min="0" , max="5"
                     value="<%= filter.service %>" />
-
+            </div>
+            <div>
                 <label for="cost">Parking: </label>
                 <input class="form-control" type="number" name="parking" min="0" , max="5"
                     value="<%= filter.parking %>" />
-
+            </div>
+            <div>
                 <label for="cost">Waiting time: </label>
                 <input class="form-control" type="number" name="waiting" min="0" , max="5"
                     value="<%= filter.waiting %>" />
-
-                <label for="cost">)Overall: </label>
+            </div>
+            <div>
+                <label for="cost">Overall: </label>
                 <input class="form-control" type="number" name="overall" min="0" , max="5"
                     value="<%= filter.overall %>" />
-                <button type="submit" class="btn-primary btn">Filter</button>
             </div>
+
+            <div><button type="submit" class="btn-primary btn">Filter</button></div>
         </form>
 
         <div class="list-group">
@@ -60,6 +67,11 @@
                     <small>🅿️ <%= rating.parking %>/5</small>
                     <small>⏱ <%= rating.waiting %>/5</small>
                     <small>📈 <%= rating.overall %>/5</small>
+                    <div class="d-flex w-100 justify-content-between">
+                        <small>
+                            <%= rating.review ? rating.review : 'No review available' %>
+                        </small>
+                    </div>
                 </a>
                 <% } %>
         </div>

@@ -66,7 +66,8 @@ router.post("/add", async function (req, res, next) {
         Service: parseInt(req.body.service),
         parking: parseInt(req.body.parking),
         waiting: parseInt(req.body.waiting),
-        overall: overall
+        overall: overall,
+        review: req.body.review
     };
 
     console.log('rating', rating);

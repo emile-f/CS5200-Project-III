@@ -93,9 +93,11 @@ async function insertRating(rating) {
         driver: sqlite3.Database,
     });
 
-    const stmt = await db.prepare(`INSERT INTO
-    Rating(restID, customerID, cost, Food, Service, parking, waiting, overall)
-      VALUES (@restID, @customerID, @cost, @Food, @Service, @parking, @waiting, @overall);`);
+    const stmt = await db.prepare(`
+    INSERT INTO
+        Rating(restID, customerID, cost, Food, Service, parking, waiting, overall)
+    VALUES (@restID, @customerID, @cost, @Food, @Service, @parking, @waiting, @overall);
+    `);
 
     const query = {
         "@restID": rating.restID,
@@ -108,10 +110,23 @@ async function insertRating(rating) {
         "@overall": rating.overall,
     };
 
+    let reviewStmt;
     try {
-        return await stmt.run(query);
+        if (rating.review) {
+            await stmt.run(query);
+            reviewStmt = await db.prepare(`INSERT INTO
+                Review(ratingId, review)
+                VALUES((SELECT last_insert_rowid()), @review);`);
+            const queryReview = {
+                "@review": rating.review,
+            };
+            return await reviewStmt.run(queryReview);
+        } else {
+            return await stmt.run(query);
+        }
     } finally {
         await stmt.finalize();
+        if (reviewStmt) { await reviewStmt.finalize(); }
         db.close();
     }
 }
