@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Ratings</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Ratings</h1>
+
+        <!-- const filter = {
+                cost: req.query.cost || 0,
+                food: req.query.food || 0,
+                service: req.query.service || 0,
+                parking: req.query.parking || 0,
+                waiting: req.query.waiting || 0,
+                overall: req.query.overall || 0
+                } -->
+
+        <form action="/rating/">
+            <div class="input-group">
+                <label for="cost">Cost: </label>
+                <input class="form-control" type="number" name="cost" min="0" , max="5" value="<%= filter.cost %>" />
+
+                <label for="cost">Food: </label>
+                <input class="form-control" type="number" name="food" min="0" , max="5" value="<%= filter.food %>" />
+
+                <label for="cost">Service: </label>
+                <input class="form-control" type="number" name="service" min="0" , max="5"
+                    value="<%= filter.service %>" />
+
+                <label for="cost">Parking: </label>
+                <input class="form-control" type="number" name="parking" min="0" , max="5"
+                    value="<%= filter.parking %>" />
+
+                <label for="cost">Waiting time: </label>
+                <input class="form-control" type="number" name="waiting" min="0" , max="5"
+                    value="<%= filter.waiting %>" />
+
+                <label for="cost">)Overall: </label>
+                <input class="form-control" type="number" name="overall" min="0" , max="5"
+                    value="<%= filter.overall %>" />
+                <button type="submit" class="btn-primary btn">Filter</button>
+            </div>
+        </form>
+
+        <div class="list-group">
+            <% for (let rating of ratings) { %>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">
+                            <%= rating.restaurantName %>
+                        </h5>
+                        <small>
+                            <%= rating.customerName %>
+                        </small>
+                    </div>
+                    <small>💵 <%= rating.cost %>/5</small>
+                    <small>🍔 <%= rating.Food %>/5</small>
+                    <small>👩‍🔧 <%= rating.Service %>/5</small>
+                    <small>🅿️ <%= rating.parking %>/5</small>
+                    <small>⏱ <%= rating.waiting %>/5</small>
+                    <small>📈 <%= rating.overall %>/5</small>
+                </a>
+                <% } %>
+        </div>
+
+        <%- include("./pagination.ejs", { currentPage, lastPage, filter }) %>
+    </div>
+
+</body>
+
+</html>

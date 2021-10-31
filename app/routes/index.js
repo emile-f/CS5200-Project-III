@@ -3,10 +3,15 @@ let router = express.Router();
 
 const myDB = require("../db/mySqliteDB.js");
 
+const customerRoute = require('./customer');
+const ratingRoute = require('./rating');
+
 /* GET home page. */
 router.get("/", async function (req, res, next) {
-  const restaurant = await myDB.getRestaurants();
-  res.render("index", { restaurants: restaurant });
+  res.render("index");
 });
+
+router.use('/customer', customerRoute)
+router.use('/rating', ratingRoute)
 
 module.exports = router;
