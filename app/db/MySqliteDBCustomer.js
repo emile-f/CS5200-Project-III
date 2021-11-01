@@ -107,6 +107,46 @@ async function insertCustomer(customer) {
     }
 }
 
+async function deleteCustomer(customerId) {
+    const db = await open({
+        filename: "./db/database.db",
+        driver: sqlite3.Database,
+    });
+
+    const stmt = await db.prepare(`
+    DELETE FROM Customer
+    WHERE customerID = @id;
+    `);
+
+    const paymentStmt = await db.prepare(`
+    DELETE FROM PaymentMethodsCustomer
+    WHERE customerId = @id;
+    `);
+
+
+    const cuisineStmt = await db.prepare(`
+    DELETE FROM CuisineCustomer
+    WHERE customerId = @id;
+    `);
+
+
+    const query = {
+        "@id": customerId,
+    };
+
+    try {
+        await stmt.run(query);
+        await paymentStmt.run(query);
+        await cuisineStmt.run(query);
+        return 'done'
+    } finally {
+        await stmt.finalize();
+        await paymentStmt.finalize();
+        await cuisineStmt.finalize();
+        db.close();
+    }
+}
+
 async function getCuisines() {
     const db = await open({
         filename: "./db/database.db",
@@ -169,3 +209,4 @@ module.exports.getCuisines = getCuisines;
 module.exports.getPaymentMethods = getPaymentMethods;
 module.exports.getDressCodes = getDressCodes;
 module.exports.insertCustomer = insertCustomer;
+module.exports.deleteCustomer = deleteCustomer;

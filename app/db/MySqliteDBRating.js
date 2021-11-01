@@ -20,8 +20,8 @@ async function getRatings(filter, page, pageSize) {
         Rating.overall,
         review.review
     FROM Rating
-    INNER JOIN Customer on Customer.customerID=Rating.customerId
-    INNER JOIN Restaurant on Restaurant.restID=Rating.restID
+    left JOIN Customer on Customer.customerID=Rating.customerId
+    left JOIN Restaurant on Restaurant.restID=Rating.restID
     left JOIN review on review.ratingId= Rating.ratingId
     WHERE Rating.cost >= @cost
     AND Rating.Food >= @food

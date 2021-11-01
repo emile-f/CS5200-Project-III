@@ -47,4 +47,14 @@ router.post("/add", async function (req, res, next) {
     }
 });
 
+router.get("/delete", async function (req, res, next) {
+    if (!req.query.id) {
+        next({ message: "Please provide a customer id" });
+        return
+    }
+    const customerId = req.query.id;
+    await myDB.deleteCustomer(customerId);
+    res.redirect('/customer');
+});
+
 module.exports = router;
