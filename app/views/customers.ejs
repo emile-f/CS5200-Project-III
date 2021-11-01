@@ -14,48 +14,34 @@
     <div class="container">
 
         <h1>Customers LIST</h1>
+
+        <a class="nav-link active" aria-current="page" href="/customer/add">Add Customer</a>
+
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover table-responsive ">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">NAME</th>
-                        <th scope="col">SMOKER</th>
-                        <th scope="col">DRINKLEVEL</th>
-                        <th scope="col">DRESSCODE</th>
-                        <th scope="col">AMBIENCE</th>
-                        <th scope="col">BUDGET</th>
+                        <th scope="col">EDIT</th>
+                        <th scope="col">DELETE</th>
                     </tr>
                 </thead>
                 <tbody>
-
-
                     <% customers.forEach((c)=>{ %>
                         <tr>
                             <th scope="row">
-                                <%= c.customerID %>
+                                <%= c.id %>
                             </th>
                             <td>
                                 <%= c.name %>
                             <td>
-                            <td>
-                                <%= c.smoker %>
-                            </td>
-                            <td>
-                                <%= c.drinkLevel %>
-                            </td>
-                            <td>
-                                <%= c.dressCodeID %>
-                            </td>
-                            <td>
-                                <%= c.ambience %>
-                            </td>
-                            <td>
-                                <%= c.budget %>
-                            </td>
+                            <td><a class="btn btn-outline-primary" href="<%= `/customer/edit?id=${c.id}` %>">Edit
+                                    customer</a></td>
+                            <td><a class="btn btn-outline-danger" href="<%= `/customer/delete?id=${c.id}` %>">Delete
+                                    customer</a></td>
                         </tr>
                         <% }) %>
-
                 </tbody>
             </table>
         </div>
