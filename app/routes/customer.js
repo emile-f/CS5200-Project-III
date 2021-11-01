@@ -16,6 +16,20 @@ router.get("/add", async function (req, res, next) {
     res.render('add-customer', { cuisines, paymentMethods, dressCodes });
 });
 
+router.get("/edit", async function (req, res, next) {
+    if (!req.query.id) {
+        next({ message: "Please provide a customer id" });
+        return
+    }
+    const customerId = req.query.id;
+    const customer = await myDB.getCustomer(customerId);
+    console.log('customer', customer);
+    const cuisines = await myDB.getCuisines();
+    const paymentMethods = await myDB.getPaymentMethods();
+    const dressCodes = await myDB.getDressCodes();
+    res.render('edit-customer', { customer: customer[0], cuisines, paymentMethods, dressCodes });
+});
+
 router.post("/add", async function (req, res, next) {
     console.log('test', req.body);
 

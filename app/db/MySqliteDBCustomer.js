@@ -20,6 +20,41 @@ async function getCustomers() {
     }
 }
 
+async function getCustomer(customerId) {
+    const db = await open({
+        filename: "./db/database.db",
+        driver: sqlite3.Database,
+    });
+
+    const stmt = await db.prepare(`
+    SELECT 
+        Customer.customerId,  
+        Customer.name,  
+        Customer.smoker,
+        Customer.drinkLevel,
+        Customer.ambience,
+        Customer.dressCodeID,
+        Customer.budget,
+        GROUP_CONCAT(DISTINCT CuisineCustomer.cuisineId) as cuisines,
+        GROUP_CONCAT(DISTINCT PaymentMethodsCustomer.paymentMethodsID) as paymentMethods
+    FROM Customer
+    INNER join CuisineCustomer on CuisineCustomer.customerId=Customer.customerId
+    INNER join PaymentMethodsCustomer on PaymentMethodsCustomer.customerId=Customer.customerId
+    WHERE Customer.customerId = @id
+    `);
+
+    const query = {
+        "@id": customerId,
+    };
+
+    try {
+        return await stmt.all(query);
+    } finally {
+        await stmt.finalize();
+        db.close();
+    }
+}
+
 async function insertCustomer(customer) {
     const db = await open({
         filename: "./db/database.db",
@@ -210,3 +245,4 @@ module.exports.getPaymentMethods = getPaymentMethods;
 module.exports.getDressCodes = getDressCodes;
 module.exports.insertCustomer = insertCustomer;
 module.exports.deleteCustomer = deleteCustomer;
+module.exports.getCustomer = getCustomer;
