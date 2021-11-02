@@ -4,5 +4,44 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+.form-element {
+  display: flex;
+  position: relative;
+  margin: 5px 0;
+  line-height: 38px;
+}
+.form-element.column {
+  flex-direction: column;
+}
+
+.form-element > label {
+  line-height: 38px;
+}
+.form-element > input,
+.form-element > select {
+  width: 150px;
+  position: absolute;
+  left: 250px;
+}
+.form-element > [type="checkbox"] {
+  margin-top: 12.5px;
+}
+.form-element > textarea {
+  position: absolute;
+  left: 150px;
+  width: 50%;
+}
+.form-element > a {
+  position: absolute;
+  left: 400px;
+}
+
+.list-group {
+  margin-bottom: 15px;
+}
+
+.form {
 }

@@ -31,7 +31,7 @@ router.get("/", async function (req, res, next) {
 });
 
 router.get("/add", async function (req, res) {
-  const customers = await myDBCustomer.getCustomers();
+  const customers = await myDBCustomer.getCustomersAll();
   const restaurants = await myDBRestaurant.getRestaurants();
   res.render("add-rating", { customers, restaurants });
 });

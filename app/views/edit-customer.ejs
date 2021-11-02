@@ -4,136 +4,138 @@
 
 <%- include("../templates/head.ejs") %>
 
-<body>
+  <body>
 
-  <%- include("../templates/navBar.ejs") %>
-  
-    <div class="container">
+    <%- include("../templates/navBar.ejs") %>
+
+      <div class="container">
         <h3>Edit Customer</h3>
         <form action="/customer/edit" method="POST">
-            <input required hidden class="form-control" type="text" name="customerID"
-                value="<%= customer.customerID %>" />
-            <input required hidden class="form-control" type="text" name="originalCuisines"
-                value="<%= customer.cuisines %>" />
-            <input required hidden class="form-control" type="text" name="originalPaymentMethods"
-                value="<%= customer.paymentMethods %>" />
-            <div>
-                <label class="form-label" for="name">
-                    Name:
-                    <input value="<%= customer.name %>" required class="form-control" type="text" name="name" />
-                </label>
-            </div>
-            <div>
-                <label class="form-label" for="smoker">
-                    Are you a smoker:
-                    <input checked="<%= customer.smoker == 1 ? true : false %>" type="checkbox" name="smoker"
-                        value="smoker">
-                </label>
-            </div>
+          <input required hidden class="form-control" type="text" name="customerID"
+            value="<%= customer.customerID %>" />
+          <input required hidden class="form-control" type="text" name="originalCuisines"
+            value="<%= customer.cuisines %>" />
+          <input required hidden class="form-control" type="text" name="originalPaymentMethods"
+            value="<%= customer.paymentMethods %>" />
+          <div>
+            <label class="form-label form-element" for="name">
+              Name:
+              <input value="<%= customer.name %>" required class="form-control" type="text" name="name" />
+            </label>
+          </div>
+          <div>
+            <label class="form-label form-element" for="smoker">
+              Are you a smoker:
+              <input checked="<%= customer.smoker == 1 ? true : false %>" type="checkbox" name="smoker" value="smoker">
+            </label>
+          </div>
 
-            <div>
-                <label class="form-label" for="drinkLevel">
-                    How much do you drink:
-                    <select name="drinkLevel" required class="form-control" id="drinkLevel">
-                        <option <%=customer.drinkLevel=='abstemious' ? 'selected' : '' %> value="abstemious">
-                            abstemious
-                        </option>
-                        <option <%=customer.drinkLevel=='casual drinker' ? 'selected' : '' %>
-                            value="casual drinker">
-                            casual drinker
-                        </option>
-                        <option <%=customer.drinkLevel=='social drinker' ? 'selected' : '' %>
-                            value="social drinker">
-                            social drinker
-                        </option>
-                    </select>
-                </label>
-            </div>
-            <div>
-                <label for="dressCode" class="form-label">
-                    Preferred dress code:
-                    <select name="dressCode" required class="form-control" id="dressCode">
-                        <% for (let dressCode of dressCodes) { %>
-                            <option <%=customer.dressCodeID==dressCode.dressCodeID ? 'selected' : '' %>
-                                value="<%= dressCode.dressCodeID %>">
-                                    <%= dressCode.dressCode %>
-                            </option>
-                            <% } %>
-                    </select>
-                </label>
-            </div>
-            <div>
-                <label class="form-label" for="ambience">
-                    What is the ambience you like:
-                    <select name="ambience" required class="form-control" id="ambience">
-                        <option <%=customer.ambience=='family' ? 'selected' : '' %> value="family">
-                            family
-                        </option>
-                        <option <%=customer.ambience=='friends' ? 'selected' : '' %> value="friends">
-                            friends
-                        </option>
-                        <option <%=customer.ambience=='solitary' ? 'selected' : '' %> value="solitary">
-                            solitary
-                        </option>
-                    </select>
-                </label>
-            </div>
+          <div>
+            <label class="form-label form-element" for="drinkLevel">
+              How much do you drink:
+              <select name="drinkLevel" required class="form-control" id="drinkLevel">
+                <option <%=customer.drinkLevel=='abstemious' ? 'selected' : '' %> value="abstemious">
+                  abstemious
+                </option>
+                <option <%=customer.drinkLevel=='casual drinker' ? 'selected' : '' %>
+                  value="casual drinker">
+                  casual drinker
+                </option>
+                <option <%=customer.drinkLevel=='social drinker' ? 'selected' : '' %>
+                  value="social drinker">
+                  social drinker
+                </option>
+              </select>
+            </label>
+          </div>
+          <div>
+            <label for="dressCode" class="form-label form-element">
+              Preferred dress code:
+              <select name="dressCode" required class="form-control" id="dressCode">
+                <% for (let dressCode of dressCodes) { %>
+                  <option <%=customer.dressCodeID==dressCode.dressCodeID ? 'selected' : '' %>
+                    value="<%= dressCode.dressCodeID %>">
+                      <%= dressCode.dressCode %>
+                  </option>
+                  <% } %>
+              </select>
+            </label>
+          </div>
+          <div>
+            <label class="form-label form-element" for="ambience">
+              What is the ambience you like:
+              <select name="ambience" required class="form-control" id="ambience">
+                <option <%=customer.ambience=='family' ? 'selected' : '' %> value="family">
+                  family
+                </option>
+                <option <%=customer.ambience=='friends' ? 'selected' : '' %> value="friends">
+                  friends
+                </option>
+                <option <%=customer.ambience=='solitary' ? 'selected' : '' %> value="solitary">
+                  solitary
+                </option>
+              </select>
+            </label>
+          </div>
 
-            <div>
-                <label class="form-label" for="budget">
-                    What is your budget:
-                    <select name="budget" required class="form-control" id="budget">
-                        <option <%=customer.budget=='medium' ? 'selected' : '' %> value="medium">
-                            medium
-                        </option>
-                        <option <%=customer.budget=='high' ? 'selected' : '' %> value="high">
-                            high
-                        </option>
-                        <option <%=customer.budget=='low' ? 'selected' : '' %> value="low">
-                            low
-                        </option>
-                    </select>
-                </label>
-            </div>
+          <div>
+            <label class="form-label form-element" for="budget">
+              What is your budget:
+              <select name="budget" required class="form-control" id="budget">
+                <option <%=customer.budget=='medium' ? 'selected' : '' %> value="medium">
+                  medium
+                </option>
+                <option <%=customer.budget=='high' ? 'selected' : '' %> value="high">
+                  high
+                </option>
+                <option <%=customer.budget=='low' ? 'selected' : '' %> value="low">
+                  low
+                </option>
+              </select>
+            </label>
+          </div>
 
-            <div>
-                <label class="form-label" for="paymentMethod">
-                    Preferred payment methods:
-                    <br>
-                    <% var splitPayments = customer.paymentMethods.split(','); %>
-                    <% for (let method of paymentMethods) { %>
-                            <% var checked=false; %>
-                                <% for (let index=0; index < splitPayments.length; index++) {
-                                    if(splitPayments[index]==method.paymentMethodsID){ checked=true; } } %>
-                                    <input <%= checked ? 'checked' : '' %> type="checkbox" name="paymentMethod"
-                                        value="<%= method.paymentMethodsID %>">
-                                    <label for="<%= method.paymentMethodsID %>">
-                                        <%= method.method %>
-                                    </label><br>
-                                    <% } %>
-                </label>
-            </div>
+          <div>
+            <label class="form-label form-element column" for="paymentMethod">
+              Preferred payment methods:
+              <% var splitPayments=customer.paymentMethods.split(','); %>
+                <% for (let method of paymentMethods) { %>
+                  <% var checked=false; %>
+                    <% for (let index=0; index < splitPayments.length; index++) {
+                      if(splitPayments[index]==method.paymentMethodsID){ checked=true; } } %>
+                      <div class="form-element">
+                        <input <%=checked ? 'checked' : '' %> type="checkbox" name="paymentMethod"
+                        value="<%= method.paymentMethodsID %>">
+                          <label for="<%= method.paymentMethodsID %>">
+                            <%= method.method %>
+                          </label>
+                      </div>
+                      <% } %>
+            </label>
+          </div>
 
-            <div>
-                <label class="form-label" for="cuisine">
-                    Preferred Cuisines:
-                    <br>
-                    <% var splitCuisines = customer.cuisines.split(','); %>
-                    <% for (let cuisine of cuisines) { %>
-                            <% var checked=false; %>
-                            <% for (let index=0; index < splitCuisines.length; index++) {
-                                    if(splitCuisines[index]==cuisine.cuisineID){ checked=true; } } %>
-                        <input <%= checked ? 'checked' : '' %> type="checkbox" name="cuisine" value="<%= cuisine.cuisineID %>">
-                        <label for="<%= cuisine.cuisineID %>">
+          <div>
+            <label class="form-label form-element column" for="cuisine">
+              Preferred Cuisines:
+              <% var splitCuisines=customer.cuisines.split(','); %>
+                <% for (let cuisine of cuisines) { %>
+                  <% var checked=false; %>
+                    <% for (let index=0; index < splitCuisines.length; index++) {
+                      if(splitCuisines[index]==cuisine.cuisineID){ checked=true; } } %>
+                      <div class="form-element">
+                        <input <%=checked ? 'checked' : '' %> type="checkbox" name="cuisine" value="<%=
+                          cuisine.cuisineID %>">
+                          <label for="<%= cuisine.cuisineID %>">
                             <%= cuisine.cuisine %>
-                        </label><br>
-                        <% } %>
-                </label>
-            </div>
+                          </label>
+                      </div>
+                      <% } %>
+            </label>
+          </div>
 
-            <button type="submit" class="btn btn-outline-primary">Edit Customer</button>
+          <button type="submit" class="btn btn-outline-primary">Edit Customer</button>
         </form>
-    </div>
-</body>
+      </div>
+  </body>
 
 </html>

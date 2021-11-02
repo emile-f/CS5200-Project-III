@@ -3,88 +3,91 @@
 
 <%- include("../templates/head.ejs") %>
 
-<body>
+  <body>
 
-  <%- include("../templates/navBar.ejs") %>
+    <%- include("../templates/navBar.ejs") %>
 
-    <div class="container">
+      <div class="container">
         <h3>Add Rating</h3>
-        <form action="/rating/add" method="POST">
+        <form id="rating" action="/rating/add" method="POST">
 
-            <div>
-                <label for="customer" class="form-label">
-                    Customer name:
-                    <input required class="form-control" id="customer" name="customer" list="customers"
-                        placeholder="Type to search for customer name...">
-                    <datalist id="customers">
-                        <% for (let customer of customers) { %>
-                            <option value="<%= customer.id %>">
-                                <%= customer.name %>
-                            </option>
-                            <% } %>
-                    </datalist>
-                </label>
-                <a class="nav-link active" aria-current="page" href="/customer/add">New customer</a>
-            </div>
+          <div class="form-element">
+            <label for="customer" class="form-label form-element">
+              Customer name:
+              <input required class="form-control" id="customer" name="customer" list="customers"
+                placeholder="Type to search for customer name...">
+              <datalist id="customers">
+                <% for (let customer of customers) { %>
+                  <option value="<%= customer.id %>">
+                    <%= customer.name %>
+                  </option>
+                  <% } %>
+              </datalist>
+            </label>
+            <a class="nav-link active" aria-current="page" href="/customer/add">New customer</a>
+          </div>
 
-            <div>
-                <label for="restaurant" class="form-label">
-                    Restaurant name:
-                    <input required class="form-control" id="restaurant" name="restaurant" list="restaurants"
-                        placeholder="Type to search for restaurant name...">
-                    <datalist id="restaurants">
-                        <% for (let restaurant of restaurants) { %>
-                            <option value="<%= restaurant.id %>">
-                                <%= restaurant.name %>
-                            </option>
-                            <% } %>
-                    </datalist>
-                </label>
-                <a class="nav-link active" aria-current="page" href="/restaurant/add">New restaurant</a>
-            </div>
+          <div class="form-element">
+            <label for="restaurant" class="form-label form-element">
+              Restaurant name:
+              <input required class="form-control" id="restaurant" name="restaurant" list="restaurants"
+                placeholder="Type to search for restaurant name...">
+              <datalist id="restaurants">
+                <% for (let restaurant of restaurants) { %>
+                  <option value="<%= restaurant.id %>">
+                    <%= restaurant.name %>
+                  </option>
+                  <% } %>
+              </datalist>
+            </label>
+            <a class="nav-link active" aria-current="page" href="/restaurant/add">New restaurant</a>
+          </div>
 
-            <div>
-                <label class="form-label" for="cost">
-                    Cost:
-                    <input required class="form-control" type="number" name="cost" min="0" , max="5" />
-                </label>
-            </div>
-            <div>
-                <label class="form-label" for="cost">
-                    Food:
-                    <input required class="form-control" type="number" name="food" min="0" , max="5" />
-                </label>
-            </div>
+          <div>
+            <label class="form-label form-element" for="cost">
+              Cost:
+              <input required class="form-control" type="number" name="cost" min="0" , max="5" />
+            </label>
+          </div>
+          <div>
+            <label class="form-label form-element" for="cost">
+              Food:
+              <input required class="form-control" type="number" name="food" min="0" , max="5" />
+            </label>
+          </div>
 
-            <div>
-                <label class="form-label" for="cost">
-                    Service:
-                    <input required class="form-control" type="number" name="service" min="0" , max="5" />
-                </label>
-            </div>
-            <div>
-                <label class="form-label" for="cost">
-                    Parking:
-                    <input required class="form-control" type="number" name="parking" min="0" , max="5" />
-                </label>
-            </div>
-            <div>
-                <label class="form-label" for="cost">
-                    Waiting time:
-                    <input required class="form-control" type="number" name="waiting" min="0" , max="5" />
-                </label>
-            </div>
+          <div>
+            <label class="form-label form-element" for="cost">
+              Service:
+              <input required class="form-control" type="number" name="service" min="0" , max="5" />
+            </label>
+          </div>
+          <div>
+            <label class="form-label form-element" for="cost">
+              Parking:
+              <input required class="form-control" type="number" name="parking" min="0" , max="5" />
+            </label>
+          </div>
+          <div>
+            <label class="form-label form-element" for="cost">
+              Waiting time:
+              <input required class="form-control" type="number" name="waiting" min="0" , max="5" />
+            </label>
+          </div>
 
-            <div>
-                <label class="form-label" for="review">
-                    Review:
-                    <input class="form-control" type="text" name="review" placeholder="Optional ..." />
-                </label>
-            </div>
-
+          <div>
+            <label class="form-label form-element" for="review">
+              Review:
+              <textarea rows="4" cols="50" form="rating" class="form-control" name="review"
+                placeholder="Optional ..."></textarea>
+            </label>
+            </label>
+          </div>
+          <div style=" margin-top: 100px;">
             <button type="submit" class="btn btn-outline-primary">Add Rating</button>
+          </div>
         </form>
-    </div>
-</body>
+      </div>
+  </body>
 
 </html>

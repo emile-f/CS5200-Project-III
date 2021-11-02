@@ -3,86 +3,86 @@
 
 <%- include("../templates/head.ejs") %>
 
-<body>
+  <body>
 
-  <%- include("../templates/navBar.ejs") %>
+    <%- include("../templates/navBar.ejs") %>
 
 
-    <div class="container">
+      <div class="container">
 
         <h1>Ratings</h1>
 
         <a class="nav-link active" aria-current="page" href="/rating/add">Add rating</a>
 
-        <form action="/rating/">
-            <div>
-                <label for="cost">Cost: </label>
-                <input class="form-control" type="number" name="cost" min="0" , max="5" value="<%= filter.cost %>" />
-            </div>
-            <div>
-                <label for="cost">Food: </label>
-                <input class="form-control" type="number" name="food" min="0" , max="5" value="<%= filter.food %>" />
+        <form class="form" action="/rating/">
+          <div class="form-element">
+            <label for="cost">Cost: </label>
+            <input class="form-control" type="number" name="cost" min="0" , max="5" value="<%= filter.cost %>" />
+          </div>
+          <div class="form-element">
+            <label for="cost">Food: </label>
+            <input class="form-control" type="number" name="food" min="0" , max="5" value="<%= filter.food %>" />
 
-            </div>
-            <div>
-                <label for="cost">Service: </label>
-                <input class="form-control" type="number" name="service" min="0" , max="5"
-                    value="<%= filter.service %>" />
-            </div>
-            <div>
-                <label for="cost">Parking: </label>
-                <input class="form-control" type="number" name="parking" min="0" , max="5"
-                    value="<%= filter.parking %>" />
-            </div>
-            <div>
-                <label for="cost">Waiting time: </label>
-                <input class="form-control" type="number" name="waiting" min="0" , max="5"
-                    value="<%= filter.waiting %>" />
-            </div>
-            <div>
-                <label for="cost">Overall: </label>
-                <input class="form-control" type="number" name="overall" min="0" , max="5"
-                    value="<%= filter.overall %>" />
-            </div>
+          </div>
+          <div class="form-element">
+            <label for="cost">Service: </label>
+            <input class="form-control" type="number" name="service" min="0" , max="5" value="<%= filter.service %>" />
+          </div>
+          <div class="form-element">
+            <label for="cost">Parking: </label>
+            <input class="form-control" type="number" name="parking" min="0" , max="5" value="<%= filter.parking %>" />
+          </div>
+          <div class="form-element">
+            <label for="cost">Waiting time: </label>
+            <input class="form-control" type="number" name="waiting" min="0" , max="5" value="<%= filter.waiting %>" />
+          </div>
+          <div class="form-element">
+            <label for="cost">Overall: </label>
+            <input class="form-control" type="number" name="overall" min="0" , max="5" value="<%= filter.overall %>" />
+          </div>
 
-            <div><button type="submit" class="btn-primary btn">Filter</button></div>
+          <div class="form-element">
+            <button type="submit" class="btn-primary btn">Filter</button>
+          </div>
         </form>
 
         <div class="list-group">
-            <% for (let rating of ratings) { %>
-                <div class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">
-                            <%= rating.restaurantName ? rating.restaurantName : 'Restaurant removed' %>
-                        </h5>
-                        <small>
-                            <%= rating.customerName ? rating.customerName : 'Customer removed' %>
-                        </small>
-                    </div>
-                    <small>💵 <%= rating.cost %>/5</small>
-                    <small>🍔 <%= rating.Food %>/5</small>
-                    <small>👩‍🔧 <%= rating.Service %>/5</small>
-                    <small>🅿️ <%= rating.parking %>/5</small>
-                    <small>⏱ <%= rating.waiting %>/5</small>
-                    <small>📈 <%= rating.overall %>/5</small>
-                    <div class="d-flex w-100 justify-content-between">
-                        <small class="mb-1">
-                            <%= rating.review ? rating.review : 'No review available' %>
-                        </small>
-                    </div>
-                    <div class="d-flex w-100 justify-content-between">
-                        <a title="<%= (!rating.restaurantName || !rating.customerName) ? 'Customer or restaurant removed no editing possible': '' %>"  class="btn <%= (!rating.restaurantName || !rating.customerName) ? 'disabled': '' %> btn-outline-primary" href="<%= `/rating/edit?id=${rating.id}` %>">Edit
-                            rating</a>
-                        <a class="btn btn-outline-danger" href="<%= `/rating/delete?id=${rating.id}` %>">Delete
-                            rating</a>
-                    </div>
-                </div>
-                <% } %>
+          <% for (let rating of ratings) { %>
+            <div class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">
+                  <%= rating.restaurantName ? rating.restaurantName : 'Restaurant removed' %>
+                </h5>
+                <small>
+                  <%= rating.customerName ? rating.customerName : 'Customer removed' %>
+                </small>
+              </div>
+              <small>💵 <%= rating.cost %>/5</small>
+              <small>🍔 <%= rating.Food %>/5</small>
+              <small>👩‍🔧 <%= rating.Service %>/5</small>
+              <small>🅿️ <%= rating.parking %>/5</small>
+              <small>⏱ <%= rating.waiting %>/5</small>
+              <small>📈 <%= rating.overall %>/5</small>
+              <div class="d-flex w-100 justify-content-between">
+                <small class="mb-1">
+                  <%= rating.review ? rating.review : 'No review available' %>
+                </small>
+              </div>
+              <div class="d-flex w-100 justify-content-between">
+                <a title="<%= (!rating.restaurantName || !rating.customerName) ? 'Customer or restaurant removed no editing possible': '' %>"
+                  class="btn <%= (!rating.restaurantName || !rating.customerName) ? 'disabled': '' %> btn-outline-primary"
+                  href="<%= `/rating/edit?id=${rating.id}` %>">Edit
+                  rating</a>
+                <a class="btn btn-outline-danger" href="<%= `/rating/delete?id=${rating.id}` %>">Delete
+                  rating</a>
+              </div>
+            </div>
+            <% } %>
         </div>
 
         <%- include("./pagination-rating.ejs", { currentPage, lastPage, filter }) %>
-    </div>
+      </div>
 
-</body>
+  </body>
 
 </html>
