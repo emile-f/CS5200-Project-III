@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <title>Restaurant</title>
+    <script type="text/javascript">
+
+function validate() {
+   let elements = document.getElementsByClassName("fn");
+   let btn = document.getElementById("edit").value;
+   if(btn == "Save"){
+      document.getElementById("editform").submit();
+   }
+   else{
+    document.getElementById("edit").value="Save";
+       for(let i=0; i<elements.length; i++) { 
+        elements[i].disabled = !elements[i].disabled;
+    }  
+   }
+    
+
+}
+</script>
+
+</head>
+<body>
+   <%- include("navBar.ejs") %>
+  <div class="container">
+
+  <div class="row">
+       <div class="row" style="margin-top: 20px;">
+    
+    <h1> RESTAURANT INFORMATION </h1>  
+
+  </div>
+         <div  style="margin-top: 20px; display: inline-flex;">
+    
+      <% c.forEach((r)=>{ %>
+     <div style="margin-left:10px;"> <span class="badge bg-warning text-dark"><%= r.cuisine %></span></div>
+  
+ <%  }) %>
+
+  </div>
+
+  
+
+    <form action="<%= '/restaurants/update/' + r.restID %>" id="editform" method="POST">
+
+        <div class="row">
+          <input  disabled="true" value= "<%=r.restID %>" name="restID" type="hidden" class="form-control fn" />
+        </div>
+
+        <div style="padding:3px; margin: 10px;"  class="row">
+
+        <div class="row">
+          <h4>LOCATION:</h4>
+          <div class="col-sm-12 col-lg-6">
+              <label class="form-label  " 
+                >Name:
+                <input size="50"  required="true" name="name" type="text" class="fn form-control form-control-lg" disabled="true" value= "<%=r.name %>"
+              /></label>
+            
+          </div>
+             <div class="col-sm-12 col-lg-6"> 
+          <label class="form-label">Address:
+            <input
+               size="50"
+              disabled="true" value= "<%=r.address %>"
+              required="true"
+              name="address"
+              type="text"
+              class="form-control form-control-lg  fn"
+          /></label>
+        </div>       
+
+        </div>
+          
+        
+
+      <div class="row">
+
+        <div class="col-sm-12 col-lg-6"> 
+              <label class="form-label"
+              >City:
+              <input
+                disabled="true" value= "<%=r.city%>"
+                required="true"
+                name="city"
+                type="text"
+                class="form-control form-control-lg fn"
+            /></label>
+
+        </div>
+
+        <div class="col-sm-12 col-lg-6"> 
+            <label class="form-label"
+              >State:
+              <input
+                disabled="true" value= "<%=r.state%>"
+                required="true"
+                name="state"
+                type="text"
+                class="form-control form-control-lg fn"
+            /></label>
+
+        </div>        
+      </div>
+          <div class="row">
+
+        <div class="col-sm-12 col-lg-6"> 
+            <label class="form-label"
+              >Country:
+              <input
+                disabled="true" value= "<%=r.country%>"
+                required="true"
+                name="country"
+                type="text"
+                class="form-control form-control-lg fn"
+            /></label>
+
+
+        </div>
+
+        <div class="col-sm-12 col-lg-6"> 
+            
+            <label class="form-label"
+              >ZIP:
+              <input
+               
+                disabled="true" value= "<%=r.zip %>"
+                required="true"
+                name="zip"
+                type="text"
+                class="form-control form-control-lg  fn"
+            /></label>
+
+        </div>        
+      </div>
+    
+
+        <div style="margin-top: 50px;" class="mb-3 row">
+ 
+          <div class="col-lg-6 col-sm-12">
+          
+          <h4>WORKING TIMINGS:</h4>
+
+          <div class="row">
+            <div class="col-lg-6 col-sm-6">
+            <label class="form-label"
+              >OPEN HOURS
+              <input
+                disabled="true" value= "<%=r.openHours%>"
+                required="true"
+                name="openHours"
+                type="text"
+                class="form-control fn"
+            ></label>
+          </div>
+            <div class="col-lg-6 col-sm-6">
+            <label class="form-label"
+             >CLOSE HOURS
+              <input
+                disabled="true" value= "<%=r.closeHours%>" 
+                required="true"
+                name="closeHours"
+                type="text"
+                class="form-control fn"
+            ></label>
+          </div>
+            </div>
+
+          </div>
+
+        <div class="col-lg-6 col-sm-12">
+          <h4>PRICE RANGE:</h4>
+          <div class="row">
+            <div class="col-lg-6 col-sm-6">
+            <label class="form-label"
+              >MINIMUM PRICE RANGE
+              <input
+                disabled="true" value= "<%=r.priceRangeMin%>"
+                required="true"
+                name="priceRangeMin"
+                type="number"
+                class="form-control fn"
+            /></label>
+          </div>
+            <div class="col-lg-6 col-sm-6">
+            <label class="form-label"
+              >MAXIMUM PRICE RANGE
+              <input
+                disabled="true" value= "<%=r.priceRangeMax%>"
+                required="true"
+                name="priceRangeMax"
+                type="number"
+                class="form-control fn"
+            /></label>
+          </div>
+          </div>
+      </div>
+     </div>
+
+     <div style="margin-top: 20px;" class="row">
+            <h3>DRESS PREFERENCE <%= r.dressCodeID %></h3>
+
+            <div class="col-lg-3">
+            <% if(r.dressCodeID == 1){%>
+            <input disabled="true" type="radio" name="dressCodeID" id="gridRadios1" value="1" checked class="fn"/>
+            <label for="gridRadios1"> No Preference </label>
+            <% } else {%>
+            <input disabled="true" type="radio" name="dressCodeID" id="gridRadios1" value="1" class="fn"/>
+            <label for="gridRadios1"> No Preference </label>   <% }%>          
+          </div>
+          <div class="col-lg-3">
+              <% if(r.dressCodeID ==2){%>
+            <input disabled="true" type="radio" name="dressCodeID" id="gridRadios2" value="2" checked class="fn" />
+            <label for="gridRadios2"> Informal </label>  <% }else{%>
+             <input disabled="true" type="radio" name="dressCodeID" id="gridRadios2" value="2" class="fn" />
+            <label for="gridRadios2"> Informal </label>  <% }%>           
+          </div>
+          <div class="col-lg-3">
+             <% if(r.dressCodeID == 3){%>
+            <input disabled="true" type="radio" name="dressCodeID" id="gridRadios3" value="3" checked class="fn" />
+            <label for="gridRadios3"> Formal </label><% }else{%>
+             <input disabled="true" type="radio" name="dressCodeID" id="gridRadios3" value="3" class="fn" />
+            <label for="gridRadios3"> Formal </label><% }%>           
+          </div>
+          <div class="col-lg-3"> 
+            <% if(r.dressCodeID == 4){%>
+            <input disabled="true" type="radio" name="dressCodeID" id="gridRadios3" value="3" checked class="fn" />
+            <label for="gridRadios3"> Elegant </label><% }else{%>
+            <input disabled="true" type="radio" name="dressCodeID" id="gridRadios3" value="3" class="fn" />
+            <label for="gridRadios3"> Elegant </label><% }%>
+          </div>       
+
+     </div>
+    </div>
+           
+      </form>
+
+    </div>
+
+<div style="margin-top: 40px;" class="row"> 
+  <h1> ADDITIONAL INFORMATION</h1>
+   <div style="margin-left: 0px;" class="row">
+          <div  style="margin-top:30px">
+          <h3>FACILITIES</h3>
+               <% if(s.alcohol == 1){%>
+            <div class="form-check form-switch form-check-inline">
+              <input disabled="true" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+              <label class="form-check-label" for="flexSwitchCheckChecked">Alcohol</label>
+            </div>           
+
+
+            <% } else {%>
+            <div class="form-check form-switch form-check-inline">
+              <input disabled="true" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+              <label class="form-check-label" for="flexSwitchCheckChecked">Alcohol</label>
+            </div> 
+            <%}%>
+
+        <% if(s.smoking == 1){%>
+
+            <div class="form-check form-switch form-check-inline">
+              <input disabled="true" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+              <label class="form-check-label" for="flexSwitchCheckChecked">Smoking</label>
+            </div>
+      
+      <% } else {%>
+
+            <div class="form-check form-switch form-check-inline">
+              <input disabled="true" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+              <label class="form-check-label" for="flexSwitchCheckChecked">Smoking</label>
+            </div>
+
+      <%}%>
+
+      <% if(f.parkingSpace == 1){%>
+
+            <div class="form-check form-switch form-check-inline">
+              <input disabled="true" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+              <label class="form-check-label" for="flexSwitchCheckChecked">Parking</label>
+            </div>
+      
+      <% } else {%>
+
+            <div class="form-check form-switch form-check-inline">
+              <input disabled="true" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+              <label class="form-check-label" for="flexSwitchCheckChecked">Parking</label>
+            </div>
+
+      <%}%>
+    </div>
+
+    <div style="margin-top:30px">
+  <h3> SEATING AREA</h3>
+           <% if(f.seatingArea == "open"){%>
+            <input disabled type="radio" class="btn-check" name="options-outlined" id="f" checked autocomplete="off">
+            <label class="btn btn-outline-success" for="f">Open</label>
+            <input disabled type="radio" class="btn-check" name="options-outlined" id="g"  autocomplete="off">
+            <label class="btn btn-outline-success" for="g">Close</label>
+            <% } else {%>
+            <input disabled type="radio" class="btn-check" name="options-outlined" id="f"  autocomplete="off">
+            <label class="btn btn-outline-success" for="f">Open</label>
+            <input disabled type="radio" class="btn-check" name="options-outlined" id="g" checked autocomplete="off">
+            <label class="btn btn-outline-success" for="g"> Close</label>
+            <%}%>
+    </div>
+
+
+    <div style="margin-top:30px">
+      <h3>AMBIENCE</h3>
+              <select class="form-select" aria-label="Ambience" disabled>
+                <% if(f.ambience === "Family"){%>
+                  <option value="1" selected>Family</option>
+            <% } else {%>
+                  <option value="1">Family</option>
+             <%}%>  
+
+          <% if(f.ambience === "Friends"){%>
+                <option value="2" selected>Friends</option>
+            <% } else {%>
+                  <option value="2">Friends</option>
+             <%}%>  
+
+            <% if(f.ambience === "Solitary"){%>
+                <option value="3" selected>Solitary</option>
+            <% } else {%>
+                  <option value="3">Solitary</option>
+             <%}%>  
+              </select>
+    </div>
+
+
+    <div style="margin-top:30px">
+          <h3>WORKING DAYS</h3>
+
+
+           <% if(w.includes('Monday')){
+            %>
+            <input disabled  type="checkbox" class="btn-check" id="btn1" checked autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn1">MON</label>
+            <% } else {%> 
+            <input disabled type="checkbox" class="btn-check" id="btn1" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn1">MON</label> 
+            <% }%> 
+
+            <% if(w.includes('Tuesday')){
+            %>
+            <input disabled  type="checkbox" class="btn-check" id="btn2" checked autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn2">TUE</label>
+            <% } else {%> 
+            <input disabled type="checkbox" class="btn-check" id="btn2" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn2">TUE</label> 
+            <% }%>
+
+            <% if(w.includes('Wednesday')){
+            %>
+            <input disabled  type="checkbox" class="btn-check" id="btn3" checked autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn3">WED</label>
+            <% } else {%> 
+            <input disabled type="checkbox" class="btn-check" id="btn3" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn3">WED</label> 
+            <% }%>
+
+            <% if(w.includes('Thursday')){
+            %>
+            <input disabled  type="checkbox" class="btn-check" id="btn4" checked autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn4">THU</label>
+            <% } else {%> 
+            <input disabled type="checkbox" class="btn-check" id="btn4" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn4">THU</label> 
+            <% }%>
+            <% if(w.includes('Friday')){
+            %>
+            <input disabled  type="checkbox" class="btn-check" id="btn5" checked autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn5">FRI</label>
+            <% } else {%> 
+            <input disabled type="checkbox" class="btn-check" id="btn5" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn5">FRI</label> 
+            <% }%>
+            <% if(w.includes('Saturday')){
+            %>
+            <input disabled  type="checkbox" class="btn-check" id="btn6" checked autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn6">SAT</label>
+            <% } else {%> 
+            <input disabled type="checkbox" class="btn-check" id="btn6" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn6">SAT</label> 
+            <% }%>
+            <% if(w.includes('Sunday')){
+            %>
+            <input disabled  type="checkbox" class="btn-check" id="btn7" checked autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn7">SUN</label>
+            <% } else {%> 
+            <input disabled type="checkbox" class="btn-check" id="btn7" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn7">SUN</label> 
+            <% }%>
+    </div>
+  </div>
+
+
+
+
+
+      </div>
+    
+
+</div>
+
+</body>
+</html>
+
