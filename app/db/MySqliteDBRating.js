@@ -1,6 +1,9 @@
 const sqlite3 = require("sqlite3");
 const { open } = require("sqlite");
 
+// UPDATE NEEDED in DB SCHEMA 
+// CHANGE THE customerID column from NOT NULL to allow NULL so we can set the customer ID to null when deleting customer
+
 async function getRatings(filter, page, pageSize) {
     const db = await open({
         filename: "./db/database.db",
@@ -72,7 +75,7 @@ async function getRating(id) {
         review.review,
         review.reviewID as reviewId
     FROM Rating
-    INNER JOIN Customer on Customer.customerID=Rating.customerId
+    LEFT JOIN Customer on Customer.customerID=Rating.customerId
     INNER JOIN Restaurant on Restaurant.restID=Rating.restID
     left JOIN review on review.ratingId= Rating.ratingId
     WHERE Rating.ratingId = @id

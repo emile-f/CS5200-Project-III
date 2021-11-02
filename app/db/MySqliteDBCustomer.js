@@ -291,6 +291,12 @@ async function deleteCustomer(customerId) {
         driver: sqlite3.Database,
     });
 
+    const ratingStmt = await db.prepare(`
+    UPDATE Rating
+    SET customerID = NULL
+    WHERE customerID = @id;
+    `);
+
     const stmt = await db.prepare(`
     DELETE FROM Customer
     WHERE customerID = @id;
@@ -301,18 +307,17 @@ async function deleteCustomer(customerId) {
     WHERE customerId = @id;
     `);
 
-
     const cuisineStmt = await db.prepare(`
     DELETE FROM CuisineCustomer
     WHERE customerId = @id;
     `);
-
 
     const query = {
         "@id": customerId,
     };
 
     try {
+        await ratingStmt.run(query);
         await stmt.run(query);
         await paymentStmt.run(query);
         await cuisineStmt.run(query);
