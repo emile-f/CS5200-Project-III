@@ -30,6 +30,79 @@ router.get("/edit", async function (req, res, next) {
     res.render('edit-customer', { customer: customer[0], cuisines, paymentMethods, dressCodes });
 });
 
+router.post("/edit", async function (req, res, next) {
+    console.log('test edit', req.body);
+
+    const removedPayments = [];
+    const addedPayments = [];
+
+    // Set variables
+    const originalPaymentsMethods = req.body.originalPaymentMethods.split(',');
+    const PaymentsMethods = req.body.paymentMethod;
+
+    // Get removed payments
+    for (let i = 0; i < originalPaymentsMethods.length; i++) {
+        if (!PaymentsMethods.includes(originalPaymentsMethods[i])) {
+            removedPayments.push(originalPaymentsMethods[i])
+        }
+    }
+
+    // Get added payments
+    for (let i = 0; i < PaymentsMethods.length; i++) {
+        if (!originalPaymentsMethods.includes(PaymentsMethods[i])) {
+            addedPayments.push(PaymentsMethods[i])
+        }
+    }
+
+    const removedCuisine = [];
+    const addedCuisine = [];
+
+    // Set variables
+    const originalCuisines = req.body.originalCuisines.split(',');
+    const cuisine = req.body.cuisine;
+
+    // Get removed payments
+    for (let i = 0; i < originalCuisines.length; i++) {
+        if (!cuisine.includes(originalCuisines[i])) {
+            removedCuisine.push(originalCuisines[i])
+        }
+    }
+
+    // Get added payments
+    for (let i = 0; i < cuisine.length; i++) {
+        if (!originalCuisines.includes(cuisine[i])) {
+            addedCuisine.push(cuisine[i])
+        }
+    }
+
+    const customer = {
+        customerId: parseInt(req.body.customerID),
+        name: req.body.name,
+        smoker: req.body.smoker === 'smoker' ? 1 : 0,
+        drinkLevel: req.body.drinkLevel,
+        dressCodeID: parseInt(req.body.dressCode),
+        ambience: req.body.ambience,
+        budget: req.body.budget,
+        removedPayments,
+        addedPayments,
+        addedCuisine,
+        removedCuisine
+    };
+
+
+
+    console.log('customer', customer);
+
+    try {
+        const insertCustomer = await myDB.editCustomer(customer);
+        console.log("Inserted", insertCustomer);
+        res.redirect('/customer');
+    } catch (err) {
+        console.log("Error inserting", err);
+        next(err);
+    }
+});
+
 router.post("/add", async function (req, res, next) {
     console.log('test', req.body);
 

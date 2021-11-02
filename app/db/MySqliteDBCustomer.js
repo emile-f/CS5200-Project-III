@@ -142,6 +142,135 @@ async function insertCustomer(customer) {
     }
 }
 
+async function editCustomer(customer) {
+    const db = await open({
+        filename: "./db/database.db",
+        driver: sqlite3.Database,
+    });
+
+    const stmt = await db.prepare(`
+    UPDATE Customer
+    SET name = @name,
+        smoker = @smoker,
+        drinkLevel = @drinkLevel,
+        dressCodeID =  @dressCodeID,
+        ambience = @ambience,
+        budget = @budget
+    WHERE customerId = @id;
+    `);
+
+    const paymentStmtAdded = await db.prepare(`
+    INSERT INTO
+        PaymentMethodsCustomer(customerId,paymentMethodsID)
+    VALUES (@id, @paymentMethodsID);
+    `);
+
+    const paymentStmtDelete = await db.prepare(`
+    DELETE FROM PaymentMethodsCustomer
+    WHERE customerId = @id AND paymentMethodsID = @paymentId;
+    `);
+
+    const cuisineStmtAdded = await db.prepare(`
+    INSERT INTO
+    CuisineCustomer(customerId,cuisineId)
+    VALUES (@id, @cuisineId);
+    `);
+
+    const cuisineStmtDelete = await db.prepare(`
+    DELETE FROM CuisineCustomer
+    WHERE customerId = @id AND cuisineId = @cuisineId;
+    `);
+
+    const query = {
+        "@id": customer.customerId,
+        "@name": customer.name,
+        "@smoker": customer.smoker,
+        "@drinkLevel": customer.drinkLevel,
+        "@dressCodeID": customer.dressCodeID,
+        "@ambience": customer.ambience,
+        "@budget": customer.budget
+    };
+
+    const paymentMethodQueriesAdded = [];
+    for (let index = 0; index < customer.addedPayments.length; index++) {
+        console.log('add', {
+            "@id": customer.customerId,
+            "@paymentMethodsID": parseInt(customer.addedPayments[index])
+        });
+        paymentMethodQueriesAdded.push({
+            "@id": customer.customerId,
+            "@paymentMethodsID": parseInt(customer.addedPayments[index])
+        });
+    }
+
+    const paymentMethodQueriesRemoved = [];
+    for (let index = 0; index < customer.removedPayments.length; index++) {
+        console.log('remove', {
+            "@id": customer.customerId,
+            "@paymentMethodsID": parseInt(customer.removedPayments[index])
+        });
+        paymentMethodQueriesRemoved.push({
+            "@id": customer.customerId,
+            "@paymentMethodsID": parseInt(customer.removedPayments[index])
+        });
+    }
+
+    const cuisineQueriesAdded = [];
+    for (let index = 0; index < customer.addedCuisine.length; index++) {
+        cuisineQueriesAdded.push({
+            "@id": customer.customerId,
+            "@cuisineId": parseInt(customer.addedCuisine[index])
+        });
+    }
+
+    const cuisineQueriesRemoved = [];
+    for (let index = 0; index < customer.removedCuisine.length; index++) {
+        cuisineQueriesRemoved.push({
+            "@id": customer.customerId,
+            "@cuisineId": parseInt(customer.removedCuisine[index])
+        });
+    }
+
+    try {
+        // update customer
+        await stmt.run(query);
+        console.log('done updating customer table');
+
+        // remove paymentMethods
+        for (let index = 0; index < paymentMethodQueriesRemoved.length; index++) {
+            await paymentStmtDelete.run(paymentMethodQueriesRemoved[index]);
+        }
+        console.log('done removing paymentMethods');
+
+        // insert paymentMethods
+        for (let index = 0; index < paymentMethodQueriesAdded.length; index++) {
+            await paymentStmtAdded.run(paymentMethodQueriesAdded[index]);
+        }
+        console.log('done inserting paymentMethods');
+
+        // remove cuisines
+        for (let index = 0; index < cuisineQueriesRemoved.length; index++) {
+            await cuisineStmtDelete.run(cuisineQueriesRemoved[index]);
+        }
+        console.log('done removing cuisines');
+
+        // insert cuisines
+        for (let index = 0; index < cuisineQueriesAdded.length; index++) {
+            await cuisineStmtAdded.run(cuisineQueriesAdded[index]);
+        }
+        console.log('done inserting cuisines');
+
+        return 'done'
+    } finally {
+        await stmt.finalize();
+        await paymentStmtAdded.finalize();
+        await paymentStmtDelete.finalize();
+        await cuisineStmtAdded.finalize();
+        await cuisineStmtDelete.finalize();
+        db.close();
+    }
+}
+
 async function deleteCustomer(customerId) {
     const db = await open({
         filename: "./db/database.db",
@@ -246,3 +375,4 @@ module.exports.getDressCodes = getDressCodes;
 module.exports.insertCustomer = insertCustomer;
 module.exports.deleteCustomer = deleteCustomer;
 module.exports.getCustomer = getCustomer;
+module.exports.editCustomer = editCustomer;
