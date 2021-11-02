@@ -4,9 +4,19 @@ let router = express.Router();
 const myDB = require("../db/MySqliteDBCustomer");
 
 /* GET home page. */
-router.get("/", async function (req, res) {
-  const customers = await myDB.getCustomers();
-  res.render("customers", { customers });
+router.get("/", async function (req, res, next) {
+
+  const page = +req.query.page || 1;
+  const pageSize = +req.query.pageSize || 24;
+
+  try {
+    let total = await myDB.getCustomersCount();
+    const customers = await myDB.getCustomers(page, pageSize);
+    res.render("customers", { customers, currentPage: page, lastPage: Math.ceil(total / pageSize) });
+  } catch (err) {
+    next(err);
+  }
+
 });
 
 router.get("/add", async function (req, res) {

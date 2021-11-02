@@ -1,7 +1,8 @@
 const sqlite3 = require("sqlite3");
 const { open } = require("sqlite");
 
-async function getCustomers() {
+
+async function getCustomersAll() {
   const db = await open({
     filename: "./db/database.db",
     driver: sqlite3.Database,
@@ -14,6 +15,51 @@ async function getCustomers() {
 
   try {
     return await stmt.all();
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
+
+async function getCustomers(page, pageSize) {
+  const db = await open({
+    filename: "./db/database.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`
+    SELECT name,customerId as id FROM Customer
+    ORDER BY name ASC
+    LIMIT @pageSize
+    OFFSET @offset;
+    `);
+
+  const params = {
+    "@pageSize": pageSize,
+    "@offset": (page - 1) * pageSize
+  };
+
+  try {
+    return await stmt.all(params);
+  } finally {
+    await stmt.finalize();
+    db.close();
+  }
+}
+
+async function getCustomersCount() {
+  const db = await open({
+    filename: "./db/database.db",
+    driver: sqlite3.Database,
+  });
+
+  const stmt = await db.prepare(`
+    SELECT COUNT(*) AS count
+    FROM Customer
+    `);
+
+  try {
+    return (await stmt.get()).count;
   } finally {
     await stmt.finalize();
     db.close();
@@ -388,6 +434,7 @@ async function getDressCodes() {
 }
 
 module.exports.getCustomers = getCustomers;
+module.exports.getCustomersAll = getCustomersAll;
 module.exports.getCuisines = getCuisines;
 module.exports.getPaymentMethods = getPaymentMethods;
 module.exports.getDressCodes = getDressCodes;
@@ -395,3 +442,4 @@ module.exports.insertCustomer = insertCustomer;
 module.exports.deleteCustomer = deleteCustomer;
 module.exports.getCustomer = getCustomer;
 module.exports.editCustomer = editCustomer;
+module.exports.getCustomersCount = getCustomersCount;
