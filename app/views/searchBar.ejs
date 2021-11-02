@@ -1,0 +1,44 @@
+
+<form action="/restaurants/">
+<div class="row">
+<div class = "col-lg-5">
+  <div style="margin:10px 10px 10px 0;"class="input-group">
+    <input
+      id="n"
+      class="form-control"
+      type="text"
+      name="q"
+      placeholder="Search By Name"
+      value="<%= query %>"
+    />
+    <button type="submit" class="btn-success btn">Search</button>
+  </div>
+    </div>
+<div class = "col-lg-5">
+  <div style="margin:10px 10px 10px 0; "class="input-group">
+    <input
+      id = "s"
+      class="form-control"
+      type="text"
+      name="z"
+      placeholder="Search By ZIP"
+      value="<%= zip %>"
+    />
+    <button type="submit" class="btn-success btn">Search</button>
+  </div>
+  </div>
+  <div class="col-lg-2">
+<a><button style="margin:10px 10px 10px 0;" class="btn btn-danger" id="a"> X</button></a>
+
+  </div>
+</div>
+</form>
+
+<script>
+document.getElementById("a").onclick = function(){myScript()};
+function myScript(){
+  document.getElementById("s").value ="";
+  document.getElementById("n").value ="";
+}
+</script>
+

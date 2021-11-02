@@ -8,16 +8,17 @@ async function connect() {
 	});
 }
 
-async function getRestaurants(query, page, pageSize) {
+async function getRestaurants(zip, query, page, pageSize) {
 	const db = await connect();
 	const stmt = await db.prepare(`
     SELECT * FROM Restaurant
-    WHERE name LIKE @query
+    WHERE name LIKE @query AND zip LIKE @zip
     LIMIT @pageSize
     OFFSET @offset;
     `);
 
 	const params = {
+		"@zip": zip + "%",
 		"@query": query + "%",
 		"@pageSize": pageSize,
 		"@offset": (page - 1) * pageSize,
@@ -93,8 +94,11 @@ async function createRestaurant(r) {
 }
 
 async function updateRestaurant(r) {
-	const db = await connect();
-	const stmt = await db.prepare(`UPDATE 
+	let stmt;
+	let db;
+	try {
+		db = await connect();
+		stmt = await db.prepare(`UPDATE 
     Restaurant SET
     restID = :restID,
     name=:name,
@@ -111,21 +115,26 @@ async function updateRestaurant(r) {
     WHERE
     restID = :restID
   `);
-	stmt.bind({
-		":restID": r.restID,
-		":name": r.name,
-		":address": r.address,
-		":zip": r.zip,
-		":city": r.city,
-		":state": r.state,
-		":country": r.country,
-		":dressCodeID": r.dressCodeID,
-		":priceRangeMin": r.priceRangeMin,
-		":priceRangeMax": r.priceRangeMax,
-		":openHours": r.openHours,
-		":closeHours": r.closeHours,
-	});
-	return await stmt.run();
+		stmt.bind({
+			":restID": r.restID,
+			":name": r.name,
+			":address": r.address,
+			":zip": r.zip,
+			":city": r.city,
+			":state": r.state,
+			":country": r.country,
+			":dressCodeID": r.dressCodeID,
+			":priceRangeMin": r.priceRangeMin,
+			":priceRangeMax": r.priceRangeMax,
+			":openHours": r.openHours,
+			":closeHours": r.closeHours,
+		});
+
+		return await stmt.run();
+	} finally {
+		stmt.finalize();
+		db.close();
+	}
 }
 
 async function viewServices(restID) {
@@ -190,6 +199,34 @@ W.restID = :restID;
 	return await stmt.all();
 }
 
+async function getDistinctCuisine() {
+	const db = await connect();
+	const stmt = await db.prepare(`SELECT cuisine from Cuisine
+		;`);
+
+	return await stmt.all();
+}
+
+async function getRestByCuisine(cuisine) {
+	const db = await connect();
+	const stmt =
+		await db.prepare(`SELECT R.restID,R.name , R.address, R.zip , R.city, R.state, R.country from Restaurant R
+inner join CuisineRestaurant C 
+on C.restID = R.restID
+inner join Cuisine F
+on F.cuisineId = C.cuisineId
+where 
+cuisine LIKE :cuisine
+;
+  `);
+
+	stmt.bind({
+		":cuisine": cuisine,
+	});
+
+	return await stmt.all();
+}
+
 async function getCuisineByID(restID) {
 	const db = await connect();
 	const stmt = await db.prepare(`select C.cuisine from Cuisine C
@@ -206,28 +243,30 @@ R.restID = :restID;
 	return await stmt.all();
 }
 
-//async function deleteRestaurant(restID) {
-// 	const db = await connect();
-// 	const stmt = await db.prepare(`DELETE FROM
-// 		Restaurant
-//     WHERE restID = :restID
-//   `);
+async function deleteRestFromCuisine(restID) {
+	const db = await connect();
+	const stmt = await db.prepare(`DELETE FROM
+		CuisineRestaurant
+    WHERE restID = :restID
+  `);
 
-// 	stmt.bind({
-// 		":restID": restID,
-// 	});
+	stmt.bind({
+		":restID": restID,
+	});
 
-// 	return await stmt.run();
-// }
+	return await stmt.run();
+}
 
 module.exports.getRestaurants = getRestaurants;
 module.exports.viewRestaurantsyID = viewRestaurantsyID;
 module.exports.createRestaurant = createRestaurant;
 module.exports.updateRestaurant = updateRestaurant;
-//module.exports.deleteRestaurant = deleteRestaurant;
+module.exports.deleteRestFromCuisine = deleteRestFromCuisine;
 module.exports.viewWorkingDays = viewWorkingDays;
 module.exports.viewPaymentMethod = viewPaymentMethod;
 module.exports.viewFacilities = viewFacilities;
 module.exports.viewServices = viewServices;
 module.exports.getRestaurantCount = getRestaurantCount;
 module.exports.getCuisineByID = getCuisineByID;
+module.exports.getDistinctCuisine = getDistinctCuisine;
+module.exports.getRestByCuisine = getRestByCuisine;

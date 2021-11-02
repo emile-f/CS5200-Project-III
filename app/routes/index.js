@@ -10,15 +10,19 @@ router.get("/", async function (req, res, next) {
 });
 
 router.get("/restaurants", async function (req, res, next) {
+  const zip = req.query.z || "";
   const query = req.query.q || "";
   const page = +req.query.page || 1;
   const pageSize = +req.query.pageSize || 24;
+  const filter = req.query.filter;
+  console.log(filter);
   try {
     let total = await myDB.getRestaurantCount(query);
-    let restaurant = await myDB.getRestaurants(query, page, pageSize);
+    let restaurant = await myDB.getRestaurants(zip, query, page, pageSize);
     res.render("index2", {
       restaurants: restaurant,
       query,
+      zip,
       currentPage: page,
       lastPage: Math.ceil(total / pageSize),
     });
@@ -27,19 +31,34 @@ router.get("/restaurants", async function (req, res, next) {
   }
 });
 
-//router.post("/restaurants/delete", async function (req, res, next) {
-//   const id = req.body;
-//   console.log(id);
-//   await myDB.deleteRestaurant(id);
-//   res.redirect("/restaurants");
-// });
+router.get(
+  "/restaurants/delete/:restID/:cuisine",
+  async function (req, res, next) {
+    const restID = req.params.restID;
+    const cuisine = req.params.cuisine;
+    await myDB.deleteRestFromCuisine(restID);
+    res.redirect("/restaurants/cuisine/" + cuisine);
+  }
+);
 
 router.get("/restaurants/add", async function (req, res, next) {
   res.render("addRestaurant", {});
 });
 
 router.get("/restaurants/cuisine", async function (req, res, next) {
-  res.render("cuisine.ejs", {});
+  const cuisine = await myDB.getDistinctCuisine();
+  console.log(cuisine);
+  res.render("cuisine.ejs", { c: cuisine });
+});
+
+router.get("/restaurants/cuisine/:cuisine", async function (req, res, next) {
+  const cuisine = req.params.cuisine;
+  const rest = await myDB.getRestByCuisine(cuisine);
+  console.log(rest);
+  res.render("restList.ejs", {
+    rs: rest,
+    c: cuisine,
+  });
 });
 
 router.get("/restaurants/:restID", async function (req, res, next) {
@@ -106,9 +125,9 @@ router.post("/restaurants/update/:restID", async function (req, res, next) {
   const rest = req.body;
   console.log(rest);
   await myDB.updateRestaurant(rest);
-  //res.redirect("/restaurants");
+  res.redirect("/restaurants");
 
-  res.render("restaurantByID", { r: rest });
+  //res.render("restaurantByID", { r: rest });
 });
 
 module.exports = router;

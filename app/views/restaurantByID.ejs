@@ -12,6 +12,7 @@ function validate() {
    let btn = document.getElementById("edit").value;
    if(btn == "Save"){
       document.getElementById("editform").submit();
+
    }
    else{
     document.getElementById("edit").value="Save";
@@ -27,6 +28,7 @@ function validate() {
 </head>
 <body>
   <div class="container">
+     <%- include("navBar.ejs") %>
 
   <div class="row">
        <div class="row" style="margin-top: 20px;">
