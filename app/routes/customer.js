@@ -42,14 +42,14 @@ router.post("/edit", async function (req, res, next) {
 
     // Get removed payments
     for (let i = 0; i < originalPaymentsMethods.length; i++) {
-        if (!PaymentsMethods.includes(originalPaymentsMethods[i])) {
+        if (!PaymentsMethods.includes(originalPaymentsMethods[i]) && !removedPayments.includes(originalPaymentsMethods[i])) {
             removedPayments.push(originalPaymentsMethods[i])
         }
     }
 
     // Get added payments
     for (let i = 0; i < PaymentsMethods.length; i++) {
-        if (!originalPaymentsMethods.includes(PaymentsMethods[i])) {
+        if (!originalPaymentsMethods.includes(PaymentsMethods[i]) && !addedPayments.includes(PaymentsMethods[i])) {
             addedPayments.push(PaymentsMethods[i])
         }
     }
@@ -63,14 +63,14 @@ router.post("/edit", async function (req, res, next) {
 
     // Get removed payments
     for (let i = 0; i < originalCuisines.length; i++) {
-        if (!cuisine.includes(originalCuisines[i])) {
+        if (!cuisine.includes(originalCuisines[i]) && !removedCuisine.includes(originalCuisines[i])) {
             removedCuisine.push(originalCuisines[i])
         }
     }
 
     // Get added payments
     for (let i = 0; i < cuisine.length; i++) {
-        if (!originalCuisines.includes(cuisine[i])) {
+        if (!originalCuisines.includes(cuisine[i]) && !addedCuisine.includes(cuisine[i])) {
             addedCuisine.push(cuisine[i])
         }
     }

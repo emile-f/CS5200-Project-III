@@ -159,28 +159,6 @@ async function editCustomer(customer) {
     WHERE customerId = @id;
     `);
 
-    const paymentStmtAdded = await db.prepare(`
-    INSERT INTO
-        PaymentMethodsCustomer(customerId,paymentMethodsID)
-    VALUES (@id, @paymentMethodsID);
-    `);
-
-    const paymentStmtDelete = await db.prepare(`
-    DELETE FROM PaymentMethodsCustomer
-    WHERE customerId = @id AND paymentMethodsID = @paymentId;
-    `);
-
-    const cuisineStmtAdded = await db.prepare(`
-    INSERT INTO
-    CuisineCustomer(customerId,cuisineId)
-    VALUES (@id, @cuisineId);
-    `);
-
-    const cuisineStmtDelete = await db.prepare(`
-    DELETE FROM CuisineCustomer
-    WHERE customerId = @id AND cuisineId = @cuisineId;
-    `);
-
     const query = {
         "@id": customer.customerId,
         "@name": customer.name,
@@ -194,11 +172,11 @@ async function editCustomer(customer) {
     const paymentMethodQueriesAdded = [];
     for (let index = 0; index < customer.addedPayments.length; index++) {
         console.log('add', {
-            "@id": customer.customerId,
+            "@customerId": customer.customerId,
             "@paymentMethodsID": parseInt(customer.addedPayments[index])
         });
         paymentMethodQueriesAdded.push({
-            "@id": customer.customerId,
+            "@customerId": customer.customerId,
             "@paymentMethodsID": parseInt(customer.addedPayments[index])
         });
     }
@@ -206,11 +184,11 @@ async function editCustomer(customer) {
     const paymentMethodQueriesRemoved = [];
     for (let index = 0; index < customer.removedPayments.length; index++) {
         console.log('remove', {
-            "@id": customer.customerId,
+            "@customerId": customer.customerId,
             "@paymentMethodsID": parseInt(customer.removedPayments[index])
         });
         paymentMethodQueriesRemoved.push({
-            "@id": customer.customerId,
+            "@customerId": customer.customerId,
             "@paymentMethodsID": parseInt(customer.removedPayments[index])
         });
     }
@@ -218,7 +196,7 @@ async function editCustomer(customer) {
     const cuisineQueriesAdded = [];
     for (let index = 0; index < customer.addedCuisine.length; index++) {
         cuisineQueriesAdded.push({
-            "@id": customer.customerId,
+            "@customerId": customer.customerId,
             "@cuisineId": parseInt(customer.addedCuisine[index])
         });
     }
@@ -226,49 +204,85 @@ async function editCustomer(customer) {
     const cuisineQueriesRemoved = [];
     for (let index = 0; index < customer.removedCuisine.length; index++) {
         cuisineQueriesRemoved.push({
-            "@id": customer.customerId,
+            "@customerId": customer.customerId,
             "@cuisineId": parseInt(customer.removedCuisine[index])
         });
     }
+
 
     try {
         // update customer
         await stmt.run(query);
         console.log('done updating customer table');
+    } finally {
+        await stmt.finalize();
+    }
 
-        // remove paymentMethods
-        for (let index = 0; index < paymentMethodQueriesRemoved.length; index++) {
-            await paymentStmtDelete.run(paymentMethodQueriesRemoved[index]);
-        }
-        console.log('done removing paymentMethods');
+    const paymentStmtAdded = await db.prepare(`
+    INSERT INTO
+        PaymentMethodsCustomer(customerId,paymentMethodsID)
+    VALUES (@customerId, @paymentMethodsID);
+    `);
 
+    try {
         // insert paymentMethods
         for (let index = 0; index < paymentMethodQueriesAdded.length; index++) {
             await paymentStmtAdded.run(paymentMethodQueriesAdded[index]);
         }
         console.log('done inserting paymentMethods');
+    } finally {
+        await paymentStmtAdded.finalize();
+    }
 
+
+    const paymentStmtDelete = await db.prepare(`
+    DELETE FROM PaymentMethodsCustomer
+    WHERE customerId = @customerId AND paymentMethodsID = @paymentMethodsID;
+    `);
+
+    try {
+        // remove paymentMethods
+        for (let index = 0; index < paymentMethodQueriesRemoved.length; index++) {
+            await paymentStmtDelete.run(paymentMethodQueriesRemoved[index]);
+        }
+        console.log('done removing paymentMethods');
+    } finally {
+        await paymentStmtDelete.finalize();
+    }
+
+    const cuisineStmtDelete = await db.prepare(`
+    DELETE FROM CuisineCustomer
+    WHERE customerId = @customerId AND cuisineId = @cuisineId;
+    `);
+
+    try {
         // remove cuisines
         for (let index = 0; index < cuisineQueriesRemoved.length; index++) {
             await cuisineStmtDelete.run(cuisineQueriesRemoved[index]);
         }
         console.log('done removing cuisines');
+    } finally {
+        await cuisineStmtDelete.finalize();
+    }
 
+    const cuisineStmtAdded = await db.prepare(`
+    INSERT INTO
+    CuisineCustomer(customerId,cuisineId)
+    VALUES (@customerId, @cuisineId);
+    `);
+
+    try {
         // insert cuisines
         for (let index = 0; index < cuisineQueriesAdded.length; index++) {
             await cuisineStmtAdded.run(cuisineQueriesAdded[index]);
         }
         console.log('done inserting cuisines');
-
-        return 'done'
     } finally {
-        await stmt.finalize();
-        await paymentStmtAdded.finalize();
-        await paymentStmtDelete.finalize();
         await cuisineStmtAdded.finalize();
-        await cuisineStmtDelete.finalize();
-        db.close();
     }
+
+    await db.close();
+    return 'done'
 }
 
 async function deleteCustomer(customerId) {
