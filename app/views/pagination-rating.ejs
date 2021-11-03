@@ -1,0 +1,41 @@
+<% if (lastPage> 2) { %>
+
+  <nav aria-label="References Pagination">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link"
+          href="<%= `/rating/?page=${(currentPage - 1)}&cost=${filter.cost}&food=${filter.cost}&service=${filter.service}&parking=${filter.parking}&waiting=${filter.waiting}&overall=${filter.overall}` %>">Previous</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="<%= `/rating/?page=1&cost=${filter.cost}&food=${filter.cost}&service=${filter.service}&parking=${filter.parking}&waiting=${filter.waiting}&overall=${filter.overall}` %>">
+          <%= 1 %>
+        </a>
+      </li>
+      <li>...</li>
+
+      <% for(let p=Math.max(currentPage-5, 2); p <=( (currentPage == lastPage) ? currentPage : currentPage+5); p+=1) { %>
+        <li class="<%= 'page-item' + ( p === currentPage ? ' active' : '') %>">
+          <a class="page-link"
+            href="<%= `/rating/?page=${p}&cost=${filter.cost}&food=${filter.cost}&service=${filter.service}&parking=${filter.parking}&waiting=${filter.waiting}&overall=${filter.overall}` %>">
+            <%= p %>
+          </a>
+        </li>
+        <% } %>
+
+          <li>...</li>
+          <li class="page-item">
+            <a class="page-link"
+              href="<%= `/rating/?page=${lastPage}&cost=${filter.cost}&food=${filter.cost}&service=${filter.service}&parking=${filter.parking}&waiting=${filter.waiting}&overall=${filter.overall}` %>">
+              <%= lastPage %>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link"
+              href="<%= `/rating/?page=${(currentPage + 1)}&cost=${filter.cost}&food=${filter.cost}&service=${filter.service}&parking=${filter.parking}&waiting=${filter.waiting}&overall=${filter.overall}` %>">Next</a>
+          </li>
+    </ul>
+  </nav>
+  <% } else { %>
+    <div>No pagination <%= lastPage %>
+    </div>
+    <% } %>

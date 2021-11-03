@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../templates/head.ejs") %>
+
+  <body>
+
+    <%- include("../templates/navBar.ejs") %>
+
+
+      <div class="container">
+
+        <h1>Customers:</h1>
+
+        <a class="nav-link active" aria-current="page" href="/customer/add">Add Customer</a>
+
+        <div class="list-group">
+          <% for (let c of customers) { %>
+            <div class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between" style="margin-bottom: 15px;">
+                <h5 class="mb-1">
+                  <%= c.id %> : <%= c.name %>
+                </h5>
+              </div>
+              <div class="d-flex w-100 justify-content-between">
+                <a class="btn btn-outline-primary" href="<%= `/customer/edit?id=${c.id}` %>">Edit
+                  customer</a>
+                <a class="btn btn-outline-danger" href="<%= `/customer/delete?id=${c.id}` %>">Delete
+                  customer</a>
+              </div>
+            </div>
+            <% } %>
+        </div>
+
+        <%- include("./pagination-customer.ejs", { currentPage, lastPage }) %>
+
+      </div>
+
+  </body>
+
+</html>

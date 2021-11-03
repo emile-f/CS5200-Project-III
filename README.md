@@ -39,6 +39,13 @@ You will be working in pairs for this project, but the submission must be made i
 - CRUD operation on the ratings provided by customer to the restaurant
 - Query/filter reviews based on cost, service, parking, waiting time, and overall rating
 
+# Installation
+
+1) Clone the repository
+2) `npm install`
+3) `npm start`
+4) goto `http://localhost:2000/` to view the project
+
 # Documents:
 
 - [project document .docx](./docs/CS5200%20project%201.docx)

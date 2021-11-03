@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<%- include("../templates/head.ejs") %>
+
+  <body>
+
+    <%- include("../templates/navBar.ejs") %>
+      <div class="container">
+
+        <h3>Edit Rating</h3>
+
+        <form class="form" id="rating" action="/rating/edit" method="POST">
+          <input hidden value="<%= rating.id %>" required class="form-control" name="id">
+          <input hidden value="<%= rating.reviewId ? rating.reviewId : 'new' %>" required class="form-control"
+            name="reviewId">
+          <div>
+            <label for="customer" class="form-label form-element">
+              Customer name:
+              <input value="<%= rating.customerId %>" required class="form-control" id="customer" name="customer"
+                list="customers" placeholder="Type to search for customer name...">
+              <datalist id="customers">
+                <% for (let customer of customers) { %>
+                  <option value="<%= customer.id %>">
+                    <%= customer.name %>
+                  </option>
+                  <% } %>
+              </datalist>
+            </label>
+          </div>
+
+          <div>
+            <label for="restaurant" class="form-label form-element">
+              Restaurant name:
+              <input value="<%= rating.restaurantId %>" required class="form-control" id="restaurant" name="restaurant"
+                list="restaurants" placeholder="Type to search for restaurant name...">
+              <datalist id="restaurants">
+                <% for (let restaurant of restaurants) { %>
+                  <option value="<%= restaurant.id %>">
+                    <%= restaurant.name %>
+                  </option>
+                  <% } %>
+              </datalist>
+            </label>
+          </div>
+
+          <div>
+            <label class="form-label form-element" for="cost">
+              Cost:
+              <input value="<%= rating.cost %>" required class="form-control" type="number" name="cost" min="0"
+                max="5" />
+            </label>
+          </div>
+          <div>
+            <label class="form-label form-element" for="food">
+              Food:
+              <input value="<%= rating.Food %>" required class="form-control" type="number" name="food" min="0"
+                max="5" />
+            </label>
+          </div>
+
+          <div>
+            <label class="form-label form-element" for="service">
+              Service:
+              <input value="<%= rating.Service %>" required class="form-control" type="number" name="service" min="0"
+                max="5" />
+            </label>
+          </div>
+          <div>
+            <label class="form-label form-element" for="parking">
+              Parking:
+              <input value="<%= rating.parking %>" required class="form-control" type="number" name="parking" min="0"
+                max="5" />
+            </label>
+          </div>
+          <div>
+            <label class="form-label form-element" for="waiting">
+              Waiting time:
+              <input value="<%= rating.waiting %>" required class="form-control" type="number" name="waiting" min="0"
+                max="5" />
+            </label>
+          </div>
+
+          <div>
+            <label class="form-label form-element" for="review">
+              Review:
+              <textarea rows="4" cols="50" form="rating" class="form-control" name="review"
+                placeholder="Optional ..."><%= rating.review ? rating.review : '' %></textarea>
+            </label>
+          </div>
+
+          <div style=" margin-top: 100px;">
+            <button type="submit" class="btn btn-outline-primary">Edit Rating</button>
+          </div>
+        </form>
+      </div>
+  </body>
+
+</html>
