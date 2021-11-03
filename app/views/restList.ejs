@@ -13,7 +13,7 @@
 </head>
 <body>
   <%- include("../templates/navBar.ejs") %>
-  <div class="container">
+  <div style="margin-top: 80px;" class="container">
 
 <h3>Restaurants Serving <%=c%></h3>
  
@@ -45,7 +45,7 @@
   <tr> <!-- data-bs-toggle="collapse"  data-bs-target="#collapse<%=r.restID %>" aria-expanded="true" aria-controls="collapseOne"--> 
       <td><%= r.restID %></td>
       <td></td>
-      <td><a href="/restaurants/view/<%= r.restID %>"> <%= r.name %></a><td>
+      <td><a href="/restaurants/view/<%= r.restID %>"> <%= r.name %> 🔗</a><td>
       <td><%= r.address %></td>
       <td></td>
       <td><%= r.zip %></td>
