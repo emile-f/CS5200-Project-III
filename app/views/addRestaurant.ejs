@@ -11,13 +11,20 @@
   <body>
     <%- include("../templates/navBar.ejs") %>
 
-    <div class="container">
-      <h1>ADD RESTAURANT</h1>
+    <div style="margin-top: 70px;" class="container">
+      <h1 class="text-center">ADD RESTAURANT          
+     
+    </h1>
+
+      <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+          <div style="background: aliceblue;padding: 20px 90px 20px 70px ;width: max-content; margin-left: -30px;" class="shadow-lg rounded">
       <form action="/restaurants/create" method="POST">
         <div>
           <input name="id" type="hidden" class="form-control" />
         </div>
-         <h3 style="margin-top: 20px;">General Information</h3>
+         <h3>General Information  <button type="submit" style="float: right; margin-right: -60px;" class="btn btn-primary">CREATE</button></h3>
         <div>
           <label class="form-label"
             >NAME:
@@ -51,6 +58,8 @@
                 class="form-control"
             /></label>
 
+          </div>
+          <div class="div">
             <label class="form-label"
               >State
               <input
@@ -125,11 +134,14 @@
                 type="time"
                 class="form-control"
             /></label>
-            <div style="margin-top: 20px;">
-              <button type="submit" class="btn btn-primary">CREATE</button>
-          </div>
+
         </div>
       </form>
+    </div>
+    </div>
+    <div class="col-lg-4"></div>
+</div>
+
     </div>
   </body>
 </html>

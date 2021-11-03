@@ -52,7 +52,7 @@ async function getRestaurantCount(query) {
   }
 }
 
-async function viewRestaurantsyID(restID) {
+async function viewRestaurantsByID(restID) {
   const db = await connect();
   const stmt = await db.prepare(`SELECT *
     FROM Restaurant
@@ -258,7 +258,7 @@ async function deleteRestFromCuisine(restID) {
 }
 
 module.exports.getRestaurants = getRestaurants;
-module.exports.viewRestaurantByID = viewRestaurantsyID;
+module.exports.viewRestaurantsByID = viewRestaurantsByID;
 module.exports.createRestaurant = createRestaurant;
 module.exports.updateRestaurant = updateRestaurant;
 module.exports.deleteRestFromCuisine = deleteRestFromCuisine;

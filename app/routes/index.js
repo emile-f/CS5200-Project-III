@@ -96,7 +96,7 @@ router.get("/restaurants/:restID", async function (req, res) {
 
 router.get("/restaurants/view/:restID", async function (req, res) {
   const restID = req.params.restID;
-  const restaurant = await myDB.viewRestaurantsyID(restID);
+  const restaurant = await myDB.viewRestaurantsByID(restID);
   const facilities = await myDB.viewFacilities(restID);
   const services = await myDB.viewServices(restID);
   const payment = await myDB.viewPaymentMethod(restID);

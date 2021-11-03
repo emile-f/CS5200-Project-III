@@ -157,7 +157,7 @@ async function updateRating(rating) {
     if (rating.review) {
       // When we have a review we first update the rating and then update/insert the review
       await stmt.run(query);
-
+      console.log("update rating");
       // when not yet insert
       if (!rating.reviewId) {
         reviewStmt = await db.prepare(`INSERT INTO
