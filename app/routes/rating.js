@@ -44,7 +44,7 @@ router.get("/edit", async function (req, res, next) {
     return;
   }
   const rating = await ratingDatabase.getRating(req.query.id);
-  const customers = await customerDatabase.getCustomers();
+  const customers = await customerDatabase.getCustomersAll();
   const restaurants = await restaurantDatabase.getRestaurants();
   res.render("edit-rating", { rating: rating[0], customers, restaurants });
 });
