@@ -91,6 +91,8 @@ router.post("/edit", async function (req, res, next) {
     reviewId: req.body.reviewId = newLocal ? null : req.body.reviewId
   };
 
+  console.log("rating", rating);
+
   try {
     await ratingDatabase.updateRating(rating);
     res.redirect("/rating");
