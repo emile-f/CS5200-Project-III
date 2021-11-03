@@ -1,9 +1,9 @@
 let express = require("express");
 let router = express.Router();
 
-const myDB = require("../db/MySqliteDBRating");
-const myDBCustomer = require("../db/MySqliteDBCustomer");
-const myDBRestaurant = require("../db/MySqliteDBRestaurant");
+const ratingDatabase = require("../db/MySqliteDBRating");
+const customerDatabase = require("../db/MySqliteDBCustomer");
+const restaurantDatabase = require("../db/MySqliteDBRestaurant");
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
@@ -21,8 +21,8 @@ router.get("/", async function (req, res, next) {
   const pageSize = +req.query.pageSize || 24;
 
   try {
-    let total = await myDB.getRatingsCount(filter);
-    const ratings = await myDB.getRatings(filter, page, pageSize);
+    let total = await ratingDatabase.getRatingsCount(filter);
+    const ratings = await ratingDatabase.getRatings(filter, page, pageSize);
     res.render("ratings", { filter, ratings, currentPage: page, lastPage: Math.ceil(total / pageSize), });
   } catch (err) {
     next(err);
@@ -30,25 +30,26 @@ router.get("/", async function (req, res, next) {
 
 });
 
+/* GET add rating page. */
 router.get("/add", async function (req, res) {
-  const customers = await myDBCustomer.getCustomersAll();
-  const restaurants = await myDBRestaurant.getRestaurants();
+  const customers = await customerDatabase.getCustomersAll();
+  const restaurants = await restaurantDatabase.getRestaurants();
   res.render("add-rating", { customers, restaurants });
 });
 
+/* GET edit rating page. */
 router.get("/edit", async function (req, res, next) {
   if (!req.query.id) {
     next({ message: "Please provide a rating id" });
     return;
   }
-  const ratingId = req.query.id;
-  const rating = await myDB.getRating(ratingId);
-  const customers = await myDBCustomer.getCustomers();
-  const restaurants = await myDBRestaurant.getRestaurants();
-  console.log("sent to edit", rating);
+  const rating = await ratingDatabase.getRating(req.query.id);
+  const customers = await customerDatabase.getCustomers();
+  const restaurants = await restaurantDatabase.getRestaurants();
   res.render("edit-rating", { rating: rating[0], customers, restaurants });
 });
 
+/* POST edit rating page. */
 router.post("/edit", async function (req, res, next) {
 
   if (!req.body.id) {
@@ -90,20 +91,16 @@ router.post("/edit", async function (req, res, next) {
     reviewId: req.body.reviewId = newLocal ? null : req.body.reviewId
   };
 
-  console.log("edit rating", rating);
-
   try {
-    const insertRating = await myDB.updateRating(rating);
-    console.log("Inserted", insertRating);
+    await ratingDatabase.updateRating(rating);
     res.redirect("/rating");
   } catch (err) {
-    console.log("Error Updating", err);
     next(err);
   }
 });
 
+/* POST add rating page. */
 router.post("/add", async function (req, res, next) {
-  console.log("test", req.body);
 
   if (!req.body.customer) {
     next({ message: "Please provide a customer" });
@@ -136,25 +133,21 @@ router.post("/add", async function (req, res, next) {
     review: req.body.review
   };
 
-  console.log("rating", rating);
-
   try {
-    const insertRating = await myDB.insertRating(rating);
-    console.log("Inserted", insertRating);
+    await ratingDatabase.insertRating(rating);
     res.redirect("/rating");
   } catch (err) {
-    console.log("Error inserting", err);
     next(err);
   }
 });
 
+/* GET delete rating. */
 router.get("/delete", async function (req, res, next) {
   if (!req.query.id) {
     next({ message: "Please provide a rating id" });
     return;
   }
-  const ratingId = req.query.id;
-  await myDB.deleteRating(ratingId);
+  await ratingDatabase.deleteRating(req.query.id);
   res.redirect("/rating");
 });
 

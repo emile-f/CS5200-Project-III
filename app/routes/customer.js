@@ -1,7 +1,7 @@
 let express = require("express");
 let router = express.Router();
 
-const myDB = require("../db/MySqliteDBCustomer");
+const customerDatabase = require("../db/MySqliteDBCustomer");
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
@@ -10,8 +10,8 @@ router.get("/", async function (req, res, next) {
   const pageSize = +req.query.pageSize || 24;
 
   try {
-    let total = await myDB.getCustomersCount();
-    const customers = await myDB.getCustomers(page, pageSize);
+    let total = await customerDatabase.getCustomersCount();
+    const customers = await customerDatabase.getCustomers(page, pageSize);
     res.render("customers", { customers, currentPage: page, lastPage: Math.ceil(total / pageSize) });
   } catch (err) {
     next(err);
@@ -19,38 +19,43 @@ router.get("/", async function (req, res, next) {
 
 });
 
+// GET add rating page
 router.get("/add", async function (req, res) {
-  const cuisines = await myDB.getCuisines();
-  const paymentMethods = await myDB.getPaymentMethods();
-  const dressCodes = await myDB.getDressCodes();
+  const cuisines = await customerDatabase.getCuisines();
+  const paymentMethods = await customerDatabase.getPaymentMethods();
+  const dressCodes = await customerDatabase.getDressCodes();
   res.render("add-customer", { cuisines, paymentMethods, dressCodes });
 });
 
+// GET edit rating page
 router.get("/edit", async function (req, res, next) {
+
   if (!req.query.id) {
     next({ message: "Please provide a customer id" });
     return;
   }
-  const customerId = req.query.id;
-  const customer = await myDB.getCustomer(customerId);
-  console.log("customer", customer);
-  const cuisines = await myDB.getCuisines();
-  const paymentMethods = await myDB.getPaymentMethods();
-  const dressCodes = await myDB.getDressCodes();
+
+  const customer = await customerDatabase.getCustomer(req.query.id);
+  const cuisines = await customerDatabase.getCuisines();
+  const paymentMethods = await customerDatabase.getPaymentMethods();
+  const dressCodes = await customerDatabase.getDressCodes();
+
   res.render("edit-customer", { customer: customer[0], cuisines, paymentMethods, dressCodes });
 });
 
+// POST edit rating page
 router.post("/edit", async function (req, res, next) {
-  console.log("test edit", req.body);
 
+  // Create array's to store the added and removed Payment methods
   const removedPayments = [];
   const addedPayments = [];
 
-  // Set variables
+  // Set variables for payment methods
   const originalPaymentsMethods = req.body.originalPaymentMethods.split(",");
   const PaymentsMethods = req.body.paymentMethod;
 
   // Get removed payments
+  // compare the original list with the new one and get the removed items
   for (let i = 0; i < originalPaymentsMethods.length; i++) {
     if (!PaymentsMethods.includes(originalPaymentsMethods[i]) && !removedPayments.includes(originalPaymentsMethods[i])) {
       removedPayments.push(originalPaymentsMethods[i]);
@@ -64,6 +69,7 @@ router.post("/edit", async function (req, res, next) {
     }
   }
 
+  // Create array's to store the added and removed cuisines
   const removedCuisine = [];
   const addedCuisine = [];
 
@@ -85,6 +91,7 @@ router.post("/edit", async function (req, res, next) {
     }
   }
 
+  // Create customer object
   const customer = {
     customerId: parseInt(req.body.customerID),
     name: req.body.name,
@@ -99,28 +106,18 @@ router.post("/edit", async function (req, res, next) {
     removedCuisine
   };
 
-
-
-  console.log("customer", customer);
-
   try {
-    const insertCustomer = await myDB.editCustomer(customer);
-    console.log("Inserted", insertCustomer);
+    await customerDatabase.editCustomer(customer);
     res.redirect("/customer");
   } catch (err) {
-    console.log("Error inserting", err);
     next(err);
   }
 });
 
+// POST add rating page
 router.post("/add", async function (req, res, next) {
-  console.log("test", req.body);
 
-  if (!req.body.name) {
-    next({ message: "Please provide a name for the customer" });
-    return;
-  }
-
+  // create customer object
   const customer = {
     name: req.body.name,
     smoker: req.body.smoker === "smoker" ? 1 : 0,
@@ -132,25 +129,22 @@ router.post("/add", async function (req, res, next) {
     cuisines: req.body.cuisine
   };
 
-  console.log("customer", customer);
-
   try {
-    const insertCustomer = await myDB.insertCustomer(customer);
-    console.log("Inserted", insertCustomer);
+    await customerDatabase.insertCustomer(customer);
     res.redirect("/customer");
   } catch (err) {
-    console.log("Error inserting", err);
     next(err);
   }
 });
 
+// GET delete rating
 router.get("/delete", async function (req, res, next) {
   if (!req.query.id) {
     next({ message: "Please provide a customer id" });
     return;
   }
   const customerId = req.query.id;
-  await myDB.deleteCustomer(customerId);
+  await customerDatabase.deleteCustomer(customerId);
   res.redirect("/customer");
 });
 

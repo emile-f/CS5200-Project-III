@@ -1,14 +1,13 @@
-const sqlite3 = require("sqlite3");
-const { open } = require("sqlite");
+const util = require("./util");
 
 // UPDATE NEEDED in DB SCHEMA 
 // CHANGE THE customerID column from NOT NULL to allow NULL so we can set the customer ID to null when deleting customer
 
+// Function to get all ratings from the Rating table with pagination and filtering
+// used on the Rating list page
 async function getRatings(filter, page, pageSize) {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     SELECT 
@@ -34,8 +33,7 @@ async function getRatings(filter, page, pageSize) {
     AND Rating.overall >= @overall
     ORDER BY Restaurant.name ASC
     LIMIT @pageSize
-    OFFSET @offset;
-    `);
+    OFFSET @offset`);
 
   const params = {
     "@cost": filter.cost,
@@ -56,11 +54,10 @@ async function getRatings(filter, page, pageSize) {
   }
 }
 
+// Function to get a single rating
+// used for the edit page
 async function getRating(id) {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     SELECT 
@@ -78,8 +75,7 @@ async function getRating(id) {
     LEFT JOIN Customer on Customer.customerID=Rating.customerId
     INNER JOIN Restaurant on Restaurant.restID=Rating.restID
     left JOIN review on review.ratingId= Rating.ratingId
-    WHERE Rating.ratingId = @id
-    `);
+    WHERE Rating.ratingId = @id`);
 
   const params = {
     "@id": id
@@ -93,11 +89,10 @@ async function getRating(id) {
   }
 }
 
+// Function to get the size of the rating table with filtering
+// used on the customers list page
 async function getRatingsCount(filter) {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     SELECT COUNT(*) AS count
@@ -107,8 +102,7 @@ async function getRatingsCount(filter) {
     AND Rating.Service >= @service
     AND Rating.parking >= @parking
     AND Rating.waiting >= @waiting
-    AND Rating.overall >= @overall
-    `);
+    AND Rating.overall >= @overall`);
 
   const params = {
     "@cost": filter.cost,
@@ -127,11 +121,10 @@ async function getRatingsCount(filter) {
   }
 }
 
+// Function to edit a single rating
+// used for the edit rating page
 async function updateRating(rating) {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     UPDATE Rating
@@ -143,8 +136,7 @@ async function updateRating(rating) {
         parking = @parking,
         waiting = @waiting, 
         overall = @overall
-    WHERE ratingId = @id;
-    `);
+    WHERE ratingId = @id`);
 
   const query = {
     "@restID": rating.restID,
@@ -163,20 +155,23 @@ async function updateRating(rating) {
 
   try {
     if (rating.review) {
-      const t = await stmt.run(query);
-      console.log("Done with update on rating table", t);
-      if (!rating.reviewId) { // when not set insert
+      // When we have a review we first update the rating and then update/insert the review
+      await stmt.run(query);
+
+      // when not yet insert
+      if (!rating.reviewId) {
         reviewStmt = await db.prepare(`INSERT INTO
                 Review(ratingId, review)
-                VALUES(@id, @review);`);
+                VALUES(@id, @review)`);
         queryReview = {
           "@id": rating.ratingId,
           "@review": rating.review,
         };
       } else {
+        // when we are adding a review to an existing rating
         reviewStmt = await db.prepare(`UPDATE Review
                 SET review = @review
-                WHERE reviewID = @id;`);
+                WHERE reviewID = @id`);
         queryReview = {
           "@review": rating.review,
           "@id": rating.reviewId,
@@ -193,17 +188,15 @@ async function updateRating(rating) {
   }
 }
 
+// Function to add a single rating
+// used for the add rating page
 async function insertRating(rating) {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     INSERT INTO
         Rating(restID, customerID, cost, Food, Service, parking, waiting, overall)
-    VALUES (@restID, @customerID, @cost, @Food, @Service, @parking, @waiting, @overall);
-    `);
+    VALUES (@restID, @customerID, @cost, @Food, @Service, @parking, @waiting, @overall)`);
 
   const query = {
     "@restID": rating.restID,
@@ -222,7 +215,7 @@ async function insertRating(rating) {
       await stmt.run(query);
       reviewStmt = await db.prepare(`INSERT INTO
                 Review(ratingId, review)
-                VALUES((SELECT last_insert_rowid()), @review);`);
+                VALUES((SELECT last_insert_rowid()), @review)`);
       const queryReview = {
         "@review": rating.review,
       };
@@ -237,16 +230,14 @@ async function insertRating(rating) {
   }
 }
 
+// Function to remove a single rating
+// used for the remove rating button
 async function deleteRating(ratingId) {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     DELETE FROM Rating
-    WHERE ratingId = @id;
-    `);
+    WHERE ratingId = @id`);
 
   const query = {
     "@id": ratingId,
@@ -256,11 +247,10 @@ async function deleteRating(ratingId) {
   let queryReview;
 
   try {
-    const t = await stmt.run(query);
-    console.log("Done with deleting on rating table", t);
+    await stmt.run(query);
     reviewStmt = await db.prepare(`
                 DELETE FROM Review
-                WHERE ratingID = @id;`);
+                WHERE ratingID = @id`);
     queryReview = {
       "@id": ratingId,
     };
@@ -273,6 +263,7 @@ async function deleteRating(ratingId) {
   }
 }
 
+// Exports
 module.exports.getRatings = getRatings;
 module.exports.getRating = getRating;
 module.exports.getRatingsCount = getRatingsCount;

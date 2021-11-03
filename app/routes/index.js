@@ -1,6 +1,7 @@
 let express = require("express");
 let router = express.Router();
 
+// Routes
 const customerRoute = require("./customer");
 const ratingRoute = require("./rating");
 

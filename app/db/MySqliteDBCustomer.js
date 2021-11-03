@@ -1,17 +1,13 @@
-const sqlite3 = require("sqlite3");
-const { open } = require("sqlite");
+const util = require("./util");
 
-
+// Function to get all customers from the Customer table without pagination
+// used on the add rating page
 async function getCustomersAll() {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     SELECT name,customerId as id FROM Customer
-    ORDER BY name ASC
-    `);
+    ORDER BY name ASC`);
 
   try {
     return await stmt.all();
@@ -21,18 +17,16 @@ async function getCustomersAll() {
   }
 }
 
+// Function to get all customers from the Customer table with pagination
+// used on the customers list page
 async function getCustomers(page, pageSize) {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     SELECT name,customerId as id FROM Customer
     ORDER BY name ASC
     LIMIT @pageSize
-    OFFSET @offset;
-    `);
+    OFFSET @offset`);
 
   const params = {
     "@pageSize": pageSize,
@@ -47,16 +41,14 @@ async function getCustomers(page, pageSize) {
   }
 }
 
+// Function to get the size of the Customer table
+// used on the customers list page
 async function getCustomersCount() {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     SELECT COUNT(*) AS count
-    FROM Customer
-    `);
+    FROM Customer`);
 
   try {
     return (await stmt.get()).count;
@@ -66,11 +58,10 @@ async function getCustomersCount() {
   }
 }
 
+// Function to get a single customer
+// used for the edit page
 async function getCustomer(customerId) {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     SELECT 
@@ -86,8 +77,7 @@ async function getCustomer(customerId) {
     FROM Customer
     INNER join CuisineCustomer on CuisineCustomer.customerId=Customer.customerId
     INNER join PaymentMethodsCustomer on PaymentMethodsCustomer.customerId=Customer.customerId
-    WHERE Customer.customerId = @id
-    `);
+    WHERE Customer.customerId = @id`);
 
   const query = {
     "@id": customerId,
@@ -101,30 +91,22 @@ async function getCustomer(customerId) {
   }
 }
 
+// Function to add a single customer
+// used for the add customer page
 async function insertCustomer(customer) {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
-    INSERT INTO
-        Customer(name, smoker, drinkLevel, dressCodeID, ambience, budget)
-    VALUES (@name, @smoker, @drinkLevel, @dressCodeID, @ambience, @budget);
-    `);
+    INSERT INTO Customer(name, smoker, drinkLevel, dressCodeID, ambience, budget)
+    VALUES (@name, @smoker, @drinkLevel, @dressCodeID, @ambience, @budget)`);
 
   const paymentStmt = await db.prepare(`
-    INSERT INTO
-        PaymentMethodsCustomer(customerId,paymentMethodsID)
-    VALUES (@customerId, @paymentMethodsID);
-    `);
-
+    INSERT INTO PaymentMethodsCustomer(customerId,paymentMethodsID)
+    VALUES (@customerId, @paymentMethodsID)`);
 
   const cuisineStmt = await db.prepare(`
-    INSERT INTO
-    CuisineCustomer(customerId,cuisineId)
-    VALUES (@customerId, @cuisineId);
-    `);
+    INSERT INTO CuisineCustomer(customerId,cuisineId)
+    VALUES (@customerId, @cuisineId)`);
 
   const query = {
     "@name": customer.name,
@@ -152,7 +134,9 @@ async function insertCustomer(customer) {
   }
 
   try {
+
     // insert customer
+    // get the row id of the just inserted customer
     let returnId = await stmt.run(query);
     if (returnId && returnId.lastID) {
       returnId = returnId.lastID;
@@ -175,11 +159,12 @@ async function insertCustomer(customer) {
       await paymentStmt.run(paymentMethodQueries[index]);
     }
 
+    // insert cuisines
     for (let index = 0; index < cuisineQueries.length; index++) {
       await cuisineStmt.run(cuisineQueries[index]);
     }
 
-    return "done";
+    return;
   } finally {
     await stmt.finalize();
     await paymentStmt.finalize();
@@ -188,11 +173,11 @@ async function insertCustomer(customer) {
   }
 }
 
+
+// Function to edit a single customer
+// used for the edit customer page
 async function editCustomer(customer) {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     UPDATE Customer
@@ -202,8 +187,7 @@ async function editCustomer(customer) {
         dressCodeID =  @dressCodeID,
         ambience = @ambience,
         budget = @budget
-    WHERE customerId = @id;
-    `);
+    WHERE customerId = @id`);
 
   const query = {
     "@id": customer.customerId,
@@ -215,30 +199,25 @@ async function editCustomer(customer) {
     "@budget": customer.budget
   };
 
+  // Prepare added paymentMethods
   const paymentMethodQueriesAdded = [];
   for (let index = 0; index < customer.addedPayments.length; index++) {
-    console.log("add", {
-      "@customerId": customer.customerId,
-      "@paymentMethodsID": parseInt(customer.addedPayments[index])
-    });
     paymentMethodQueriesAdded.push({
       "@customerId": customer.customerId,
       "@paymentMethodsID": parseInt(customer.addedPayments[index])
     });
   }
 
+  // Prepare removed paymentMethods
   const paymentMethodQueriesRemoved = [];
   for (let index = 0; index < customer.removedPayments.length; index++) {
-    console.log("remove", {
-      "@customerId": customer.customerId,
-      "@paymentMethodsID": parseInt(customer.removedPayments[index])
-    });
     paymentMethodQueriesRemoved.push({
       "@customerId": customer.customerId,
       "@paymentMethodsID": parseInt(customer.removedPayments[index])
     });
   }
 
+  // prepare added cuisines
   const cuisineQueriesAdded = [];
   for (let index = 0; index < customer.addedCuisine.length; index++) {
     cuisineQueriesAdded.push({
@@ -247,6 +226,7 @@ async function editCustomer(customer) {
     });
   }
 
+  // prepare removed cuisines
   const cuisineQueriesRemoved = [];
   for (let index = 0; index < customer.removedCuisine.length; index++) {
     cuisineQueriesRemoved.push({
@@ -255,11 +235,9 @@ async function editCustomer(customer) {
     });
   }
 
-
+  // update customer
   try {
-    // update customer
     await stmt.run(query);
-    console.log("done updating customer table");
   } finally {
     await stmt.finalize();
   }
@@ -267,15 +245,13 @@ async function editCustomer(customer) {
   const paymentStmtAdded = await db.prepare(`
     INSERT INTO
         PaymentMethodsCustomer(customerId,paymentMethodsID)
-    VALUES (@customerId, @paymentMethodsID);
-    `);
+    VALUES (@customerId, @paymentMethodsID)`);
 
   try {
     // insert paymentMethods
     for (let index = 0; index < paymentMethodQueriesAdded.length; index++) {
       await paymentStmtAdded.run(paymentMethodQueriesAdded[index]);
     }
-    console.log("done inserting paymentMethods");
   } finally {
     await paymentStmtAdded.finalize();
   }
@@ -283,30 +259,26 @@ async function editCustomer(customer) {
 
   const paymentStmtDelete = await db.prepare(`
     DELETE FROM PaymentMethodsCustomer
-    WHERE customerId = @customerId AND paymentMethodsID = @paymentMethodsID;
-    `);
+    WHERE customerId = @customerId AND paymentMethodsID = @paymentMethodsID`);
 
   try {
     // remove paymentMethods
     for (let index = 0; index < paymentMethodQueriesRemoved.length; index++) {
       await paymentStmtDelete.run(paymentMethodQueriesRemoved[index]);
     }
-    console.log("done removing paymentMethods");
   } finally {
     await paymentStmtDelete.finalize();
   }
 
   const cuisineStmtDelete = await db.prepare(`
     DELETE FROM CuisineCustomer
-    WHERE customerId = @customerId AND cuisineId = @cuisineId;
-    `);
+    WHERE customerId = @customerId AND cuisineId = @cuisineId`);
 
   try {
     // remove cuisines
     for (let index = 0; index < cuisineQueriesRemoved.length; index++) {
       await cuisineStmtDelete.run(cuisineQueriesRemoved[index]);
     }
-    console.log("done removing cuisines");
   } finally {
     await cuisineStmtDelete.finalize();
   }
@@ -314,49 +286,44 @@ async function editCustomer(customer) {
   const cuisineStmtAdded = await db.prepare(`
     INSERT INTO
     CuisineCustomer(customerId,cuisineId)
-    VALUES (@customerId, @cuisineId);
-    `);
+    VALUES (@customerId, @cuisineId)`);
 
   try {
     // insert cuisines
     for (let index = 0; index < cuisineQueriesAdded.length; index++) {
       await cuisineStmtAdded.run(cuisineQueriesAdded[index]);
     }
-    console.log("done inserting cuisines");
   } finally {
     await cuisineStmtAdded.finalize();
   }
 
   await db.close();
-  return "done";
+  return;
 }
 
+// Function to delete a single customer
+// used for the delete customer button
 async function deleteCustomer(customerId) {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
+  // Update Rating and set the customerId to NULL
+  // this is needed so we can keep ratings for delete users
   const ratingStmt = await db.prepare(`
     UPDATE Rating
     SET customerID = NULL
-    WHERE customerID = @id;
-    `);
+    WHERE customerID = @id`);
 
-  const stmt = await db.prepare(`
+  const customerStmt = await db.prepare(`
     DELETE FROM Customer
-    WHERE customerID = @id;
-    `);
+    WHERE customerID = @id`);
 
   const paymentStmt = await db.prepare(`
     DELETE FROM PaymentMethodsCustomer
-    WHERE customerId = @id;
-    `);
+    WHERE customerId = @id`);
 
   const cuisineStmt = await db.prepare(`
     DELETE FROM CuisineCustomer
-    WHERE customerId = @id;
-    `);
+    WHERE customerId = @id`);
 
   const query = {
     "@id": customerId,
@@ -364,28 +331,27 @@ async function deleteCustomer(customerId) {
 
   try {
     await ratingStmt.run(query);
-    await stmt.run(query);
+    await customerStmt.run(query);
     await paymentStmt.run(query);
     await cuisineStmt.run(query);
-    return "done";
+    return;
   } finally {
-    await stmt.finalize();
+    await ratingStmt.finalize();
+    await customerStmt.finalize();
     await paymentStmt.finalize();
     await cuisineStmt.finalize();
     db.close();
   }
 }
 
+// Function to get all the cuisines
+// used for the add/edit customer page
 async function getCuisines() {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     SELECT * FROM Cuisine
-    ORDER BY cuisine
-    `);
+    ORDER BY cuisine`);
 
   try {
     return await stmt.all();
@@ -395,16 +361,14 @@ async function getCuisines() {
   }
 }
 
+// Function to get all the payment methods
+// used for the add/edit customer page
 async function getPaymentMethods() {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     SELECT * FROM PaymentMethods
-    ORDER BY method
-    `);
+    ORDER BY method`);
 
   try {
     return await stmt.all();
@@ -414,11 +378,10 @@ async function getPaymentMethods() {
   }
 }
 
+// Function to get all the dress codes
+// used for the add/edit customer page
 async function getDressCodes() {
-  const db = await open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
+  const db = await util.getDatabase();
 
   const stmt = await db.prepare(`
     SELECT * FROM DressCode
@@ -433,6 +396,7 @@ async function getDressCodes() {
   }
 }
 
+// Exports
 module.exports.getCustomers = getCustomers;
 module.exports.getCustomersAll = getCustomersAll;
 module.exports.getCuisines = getCuisines;
