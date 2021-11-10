@@ -41,10 +41,11 @@ You will be working in pairs for this project, but the submission must be made i
 
 # Installation
 
-1) Clone the repository
-2) `npm install`
-3) `npm start`
-4) goto `http://localhost:2000/` to view the project
+1) Clone the repository 
+2) Move to the folder named "app"
+3) `npm install`
+4) `npm start`
+5) goto `http://localhost:2000/` to view the project
 
 # Documents:
 
