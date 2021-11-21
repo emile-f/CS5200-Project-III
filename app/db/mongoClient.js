@@ -34,7 +34,7 @@ const mongoDb = (uri, dbName) => {
 const initConnection = () => {
   return new Promise((resolve) => {
     // Get uri from the config
-    const uri = 'mongodb://localhost:27017';
+    const uri = "mongodb://localhost:27017";
     // connect to our forum DB
     mongoDb(uri, "restaurant-reviews").then((db) => {
       database = db;

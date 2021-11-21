@@ -6,7 +6,6 @@ const customerRoute = require("./customer");
 const ratingRoute = require("./rating");
 const myDB = require("../db/MySqliteDB");
 
-
 /* GET home page. */
 router.get("/", async function (req, res) {
   res.render("index");
