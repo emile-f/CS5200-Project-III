@@ -12,29 +12,36 @@
         <h3>Edit Rating</h3>
 
         <form class="form" id="rating" action="/rating/edit" method="POST">
-          <input hidden value="<%= rating._id %>" required class="form-control" name="id" name="id">
+          <input hidden value="<%= rating.id %>" required class="form-control" name="id">
+          <input hidden value="<%= rating.reviewId ? rating.reviewId : 'new' %>" required class="form-control"
+            name="reviewId">
           <div>
             <label for="customer" class="form-label form-element">
               Customer name:
-              <input value="<%= rating.customer.name %>" readonly class="form-control" id="customer"
-                name="customer">
+              <input value="<%= rating.customerId %>" required class="form-control" id="customer" name="customer"
+                list="customers" placeholder="Type to search for customer name...">
+              <datalist id="customers">
+                <% for (let customer of customers) { %>
+                  <option value="<%= customer.id %>">
+                    <%= customer.name %>
+                  </option>
+                  <% } %>
+              </datalist>
             </label>
           </div>
 
           <div>
             <label for="restaurant" class="form-label form-element">
               Restaurant name:
-              <input value="<%= rating.restID %>" readonly class="form-control" id="restaurant"
-              name="restaurant">
-              <!-- <input value="<%= rating.restaurantId %>" required class="form-control" id="restaurant" name="restaurant"
-                              list="restaurants" placeholder="Type to search for restaurant name...">
-                            <datalist id="restaurants">
-                              <% for (let restaurant of restaurants) { %>
-                                <option value="<%= restaurant.id %>">
-                                  <%= restaurant.name %>
-                                </option>
-                                <% } %>
-                            </datalist> -->
+              <input value="<%= rating.restaurantId %>" required class="form-control" id="restaurant" name="restaurant"
+                list="restaurants" placeholder="Type to search for restaurant name...">
+              <datalist id="restaurants">
+                <% for (let restaurant of restaurants) { %>
+                  <option value="<%= restaurant.id %>">
+                    <%= restaurant.name %>
+                  </option>
+                  <% } %>
+              </datalist>
             </label>
           </div>
 

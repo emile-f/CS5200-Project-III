@@ -1,20 +1,20 @@
 let express = require("express");
 let router = express.Router();
 
-const ratingDatabase = require("../db/MyMongoDBRating");
-const customerDatabase = require("../db/MyMongoDBCustomer");
+const ratingDatabase = require("../db/MySqliteDBRating");
+const customerDatabase = require("../db/MySqliteDBCustomer");
 const restaurantDatabase = require("../db/MySqliteDBRestaurant");
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
 
   const filter = {
-    cost: parseInt(req.query.cost || "0"),
-    food: parseInt(req.query.food || "0"),
-    service: parseInt(req.query.service || "0"),
-    parking: parseInt(req.query.parking || "0"),
-    waiting: parseInt(req.query.waiting || "0"),
-    overall: parseInt(req.query.overall || "0")
+    cost: req.query.cost || 0,
+    food: req.query.food || 0,
+    service: req.query.service || 0,
+    parking: req.query.parking || 0,
+    waiting: req.query.waiting || 0,
+    overall: req.query.overall || 0
   };
 
   const page = +req.query.page || 1;
@@ -33,7 +33,7 @@ router.get("/", async function (req, res, next) {
 /* GET add rating page. */
 router.get("/add", async function (req, res) {
   const customers = await customerDatabase.getCustomersAll();
-  const restaurants = await restaurantDatabase.getRestaurants(); // TODO CHANGE THIS
+  const restaurants = await restaurantDatabase.getRestaurants();
   res.render("add-rating", { customers, restaurants });
 });
 
@@ -44,13 +44,14 @@ router.get("/edit", async function (req, res, next) {
     return;
   }
   const rating = await ratingDatabase.getRating(req.query.id);
+  const customers = await customerDatabase.getCustomersAll();
   const restaurants = await restaurantDatabase.getRestaurants();
-  console.log('rating', rating);
-  res.render("edit-rating", { rating: rating[0], restaurants });
+  res.render("edit-rating", { rating: rating[0], customers, restaurants });
 });
 
 /* POST edit rating page. */
 router.post("/edit", async function (req, res, next) {
+
   if (!req.body.id) {
     next({ message: "Please provide a rating id" });
     return;
@@ -75,9 +76,11 @@ router.post("/edit", async function (req, res, next) {
     return;
   }
 
+  const newLocal = "new";
   const rating = {
-    ratingId: req.body.id,
+    ratingId: parseInt(req.body.id),
     restID: parseInt(req.body.restaurant),
+    customerID: parseInt(req.body.customer),
     cost: parseInt(req.body.cost),
     Food: parseInt(req.body.food),
     Service: parseInt(req.body.service),
@@ -85,7 +88,10 @@ router.post("/edit", async function (req, res, next) {
     waiting: parseInt(req.body.waiting),
     overall: overall,
     review: req.body.review,
+    reviewId: req.body.reviewId = newLocal ? null : req.body.reviewId
   };
+
+  console.log("rating", rating);
 
   try {
     await ratingDatabase.updateRating(rating);
@@ -103,8 +109,6 @@ router.post("/add", async function (req, res, next) {
     return;
   }
 
-  const customer = await customerDatabase.getCustomer(req.body.customer);
-
   if (!req.body.restaurant) {
     next({ message: "Please provide a restaurant" });
     return;
@@ -121,7 +125,7 @@ router.post("/add", async function (req, res, next) {
 
   const rating = {
     restID: parseInt(req.body.restaurant),
-    customer: customer,
+    customerID: parseInt(req.body.customer),
     cost: parseInt(req.body.cost),
     Food: parseInt(req.body.food),
     Service: parseInt(req.body.service),

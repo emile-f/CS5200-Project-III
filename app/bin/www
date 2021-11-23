@@ -5,8 +5,6 @@
  */
 
 let app = require("../app");
-const mongoClient = require("../db/mongoClient.js");
-
 let debug = require("debug")("restaurantdb:server");
 let http = require("http");
 
@@ -27,11 +25,7 @@ let server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-// On startup make connection with the mongo db
-mongoClient.initConnection().then(() => {
-  server.listen(port);
-});
-
+server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
 

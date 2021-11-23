@@ -11,8 +11,12 @@
       <div class="container">
         <h3>Edit Customer</h3>
         <form action="/customer/edit" method="POST">
-          <input style="display: none;" hidden class="form-control" type="text" name="customerID"
-            value="<%= customer.id %>" />
+          <input required hidden class="form-control" type="text" name="customerID"
+            value="<%= customer.customerID %>" />
+          <input required hidden class="form-control" type="text" name="originalCuisines"
+            value="<%= customer.cuisines %>" />
+          <input required hidden class="form-control" type="text" name="originalPaymentMethods"
+            value="<%= customer.paymentMethods %>" />
           <div>
             <label class="form-label form-element" for="name">
               Name:
@@ -49,9 +53,9 @@
               Preferred dress code:
               <select name="dressCode" required class="form-control" id="dressCode">
                 <% for (let dressCode of dressCodes) { %>
-                  <option <%=customer.dressCodeID==dressCode ? 'selected' : '' %>
-                    value="<%= dressCode %>">
-                      <%= dressCode %>
+                  <option <%=customer.dressCodeID==dressCode.dressCodeID ? 'selected' : '' %>
+                    value="<%= dressCode.dressCodeID %>">
+                      <%= dressCode.dressCode %>
                   </option>
                   <% } %>
               </select>
@@ -94,16 +98,16 @@
           <div>
             <label class="form-label form-element column" for="paymentMethod">
               Preferred payment methods:
-              <% var splitPayments=customer.paymentMethods; %>
+              <% var splitPayments=customer.paymentMethods.split(','); %>
                 <% for (let method of paymentMethods) { %>
                   <% var checked=false; %>
-                    <% for (let index=0; index < splitPayments.length; index++) { if(splitPayments[index]==method){
-                      checked=true; } } %>
+                    <% for (let index=0; index < splitPayments.length; index++) {
+                      if(splitPayments[index]==method.paymentMethodsID){ checked=true; } } %>
                       <div class="form-element">
                         <input <%=checked ? 'checked' : '' %> type="checkbox" name="paymentMethod"
-                        value="<%= method %>">
-                          <label for="<%= method %>">
-                            <%= method %>
+                        value="<%= method.paymentMethodsID %>">
+                          <label for="<%= method.paymentMethodsID %>">
+                            <%= method.method %>
                           </label>
                       </div>
                       <% } %>
@@ -113,15 +117,16 @@
           <div>
             <label class="form-label form-element column" for="cuisine">
               Preferred Cuisines:
-              <% var splitCuisines=customer.cuisine; %>
+              <% var splitCuisines=customer.cuisines.split(','); %>
                 <% for (let cuisine of cuisines) { %>
                   <% var checked=false; %>
-                    <% for (let index=0; index < splitCuisines.length; index++) { if(splitCuisines[index]==cuisine){
-                      checked=true; } } %>
+                    <% for (let index=0; index < splitCuisines.length; index++) {
+                      if(splitCuisines[index]==cuisine.cuisineID){ checked=true; } } %>
                       <div class="form-element">
-                        <input <%=checked ? 'checked' : '' %> type="checkbox" name="cuisine" value="<%= cuisine %>">
-                          <label for="<%= cuisine %>">
-                            <%= cuisine %>
+                        <input <%=checked ? 'checked' : '' %> type="checkbox" name="cuisine" value="<%=
+                          cuisine.cuisineID %>">
+                          <label for="<%= cuisine.cuisineID %>">
+                            <%= cuisine.cuisine %>
                           </label>
                       </div>
                       <% } %>

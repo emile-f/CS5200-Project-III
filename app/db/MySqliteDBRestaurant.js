@@ -1,18 +1,9 @@
-const sqlite3 = require("sqlite3");
-const { open } = require("sqlite");
-
-
-async function getDatabase() {
-  return open({
-    filename: "./db/database.db",
-    driver: sqlite3.Database,
-  });
-}
+const util = require("./util");
 
 // Function to get all restaurants
 // used on the edit/add rating page
 async function getRestaurants() {
-  const db = await getDatabase();
+  const db = await util.getDatabase();
 
   // add some address info so we can see the difference when its is branch
   const stmt = await db.prepare(`
