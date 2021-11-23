@@ -3,15 +3,6 @@
     "ratingId": null,
     "customer": {
       "customerID": null,
-      "dressCode": [
-        [
-          "no preference",
-          "informal",
-          "formal",
-          "elegant",
-          "?"
-        ]
-      ],
       "cuisine": [
         "Chinese",
         "American",

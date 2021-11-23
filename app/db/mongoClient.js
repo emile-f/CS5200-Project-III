@@ -1,4 +1,5 @@
 const MongoClient = require("mongodb").MongoClient;
+const config = require("./config");
 
 // Guide: https://dzone.com/articles/crud-operations-on-mongodb-thru-nodejs
 
@@ -34,7 +35,7 @@ const mongoDb = (uri, dbName) => {
 const initConnection = () => {
   return new Promise((resolve) => {
     // Get uri from the config
-    const uri = "mongodb://localhost:27017";
+    const uri = config.mongo.uri;
     // connect to our forum DB
     mongoDb(uri, "restaurant-reviews").then((db) => {
       database = db;
