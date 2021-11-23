@@ -137,23 +137,49 @@ async function getCustomers(page, pageSize) {
 // Function to get the size of the Customer table
 // used on the customers list page
 async function getCustomersCount() {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
+
+    const query = [
+      {
+        "$match": {
+          "customer": {
+            "$nin": [
+              "", null
+            ]
+          },
+          "ratingId": {
+            "$nin": [
+              "", null
+            ]
+          }
+        }
+      }, {
+        "$group": {
+          "_id": "$customer.customerID",
+          "id": {
+            "$first": "$customer.customerID"
+          },
+          "name": {
+            "$first": "$customer.name"
+          },
+        }
+      },
+      {
+        "$count": "id"
+      }
+    ];
+
     mongoClient
       .getDatabase()
       .connection.collection("Rating")
-      .countDocuments({
-        "customer": {
-          "$nin": [
-            "", null
-          ]
-        }, "ratingId": {
-          "$nin": [
-            "", null
-          ]
-        },
-      })
-      .then((docs) => {
-        resolve(docs);
+      .aggregate(query)
+      .toArray((err, docs) => {
+        if (err) {
+          console.error("error: getCustomersAll", err);
+          reject(err);
+        } else {
+          resolve(docs[0]["id"]);
+        }
       });
   });
 }

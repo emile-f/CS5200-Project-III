@@ -54,7 +54,7 @@
                   <%= rating.restaurantName ? rating.restaurantName : 'Restaurant removed' %>
                 </h5>
                 <small>
-                  <%= rating.customerName ? rating.customerName : 'Customer removed' %>
+                  <%= (rating.customer && rating.customer.name) ? rating.customer.name : 'Customer removed' %>
                 </small>
               </div>
               <small>💵 <%= rating.cost %>/5</small>
@@ -69,11 +69,12 @@
                 </small>
               </div>
               <div class="d-flex w-100 justify-content-between">
-                <a title="<%= (!rating.restaurantName || !rating.customerName) ? 'Customer or restaurant removed no editing possible': '' %>"
-                  class="btn <%= (!rating.restaurantName || !rating.customerName) ? 'disabled': '' %> btn-outline-primary"
-                  href="<%= `/rating/edit?id=${rating.id}` %>">Edit
+                <!-- class="btn <%= (!rating.restaurantName || !(rating.customer && rating.customer.name)) ? 'disabled': '' %> btn-outline-primary" -->
+
+                <a title="<%= (!rating.restaurantName || !(rating.customer && rating.customer.name)) ? 'Customer or restaurant removed no editing possible': '' %>"
+                  class="btn  btn-outline-primary" href="<%= `/rating/edit?id=${rating._id}` %>">Edit
                   rating</a>
-                <a class="btn btn-outline-danger" href="<%= `/rating/delete?id=${rating.id}` %>">Delete
+                <a class="btn btn-outline-danger" href="<%= `/rating/delete?id=${rating._id}` %>">Delete
                   rating</a>
               </div>
             </div>

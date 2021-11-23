@@ -1,7 +1,6 @@
 let express = require("express");
 let router = express.Router();
 
-// const customerDatabase = require("../db/MySqliteDBCustomer");
 const customerDatabase = require("../db/MyMongoDBCustomer");
 
 /* GET home page. */
