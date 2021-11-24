@@ -43,10 +43,6 @@ This work should be completed individually
 4) `npm start`
 5) goto `http://localhost:2000/` to view the project
 
-# Documents:
-
-- [project document .docx](./docs/CS5200%20project%201.docx)
-- [project document .pdf](./docs/CS5200%20project%201.pdf)
 
 # Conceptual Model:
 
