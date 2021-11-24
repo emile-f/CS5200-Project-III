@@ -1,0 +1,91 @@
+[
+  {
+    "_id": {
+      "$oid": "619d76fa1c569872895f1f36"
+    },
+    "address": "524 Soledad de Graciano Sanchez",
+    "city": "Jiutepec",
+    "country": "mexico",
+    "name": "Hamburguesas La perica",
+    "restID": 1,
+    "state": "San Luis Potosi",
+    "zip": 78210,
+    "facilities": {
+      "ambience": "solitary",
+      "parkingSpace": true,
+      "seatingArea": "open"
+    },
+    "services": {
+      "alcohol": false,
+      "smoking": true
+    },
+    "workingDays": [
+      "Thursday",
+      "Friday"
+    ],
+    "payments": [
+      "MasterCard-Eurocard",
+      "cash"
+    ],
+    "cuisine": [
+      "Russian",
+      "Tibetan",
+      "Cuban",
+      "American"
+    ],
+    "priceRange": {
+      "priceRangeMin": 8,
+      "priceRangeMax": 40
+    },
+    "workingHours": {
+      "openHours": "5:48 AM",
+      "closeHours": "6:35 PM"
+    },
+    "dressCode": "formal"
+  },
+  {
+    "_id": {
+      "$oid": "619d76fa1c569872895f1f37"
+    },
+    "address": "69 Tres De Mayo",
+    "city": "s.l.p",
+    "country": "mexico",
+    "name": "Hamburguesas La perica",
+    "restID": 2,
+    "state": "SLP",
+    "zip": 78214,
+    "facilities": {
+      "ambience": "solitary",
+      "parkingSpace": false,
+      "seatingArea": "close"
+    },
+    "services": {
+      "alcohol": false,
+      "smoking": false
+    },
+    "workingDays": [
+      "Sunday"
+    ],
+    "payments": [
+      "VISA",
+      "MasterCard-Eurocard",
+      "bank_debit_cards",
+      "cash"
+    ],
+    "cuisine": [
+      "Tibetan",
+      "Mexican",
+      "Spanish",
+      "Pakistani"
+    ],
+    "priceRange": {
+      "priceRangeMin": 7,
+      "priceRangeMax": 96
+    },
+    "workingHours": {
+      "openHours": "5:53 AM",
+      "closeHours": "7:37 PM"
+    },
+    "dressCode": "informal"
+  }
+]
