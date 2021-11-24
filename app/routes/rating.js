@@ -34,7 +34,6 @@ router.get("/", async function (req, res, next) {
 router.get("/add", async function (req, res) {
   const customers = await customerDatabase.getCustomersAll();
   const restaurants = await restaurantDatabase.getRestaurants();
-  console.log('restaurants', restaurants);
   res.render("add-rating", { customers, restaurants });
 });
 
