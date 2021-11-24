@@ -67,8 +67,8 @@ This work should be completed individually
 - [Restaurant database dump](./db/restaurant.json)
 
 # Define and execute at least five queries that show your database:
-- [Rating Query](.db/query/rating.js)
-- [Restaurant Query](.db/query/restaurant.js)
+- [Rating Query](./query/rating.js)
+- [Restaurant Query](./query/restaurant.js)
 # Made by
 https://github.com/Misha-Mody
 
