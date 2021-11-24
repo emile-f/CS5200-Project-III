@@ -1,0 +1,22 @@
+[
+    {
+        "dressCode": "no preference",
+        "dressCodeID": 1
+    },
+    {
+        "dressCode": "informal",
+        "dressCodeID": 2
+    },
+    {
+        "dressCode": "formal",
+        "dressCodeID": 3
+    },
+    {
+        "dressCode": "elegant",
+        "dressCodeID": 4
+    },
+    {
+        "dressCode": "?",
+        "dressCodeID": 5
+    }
+]
