@@ -173,7 +173,11 @@ async function getRatingsCount(filter) {
           console.error("error: getRatingsCount", err);
           reject(err);
         } else {
-          resolve(docs[0]["ratingId"]);
+          if (docs && docs.length > 0) {
+            resolve(docs[0]["ratingId"]);
+          } else {
+            resolve(0);
+          }
         }
       });
   });

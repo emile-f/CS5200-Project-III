@@ -178,7 +178,11 @@ async function getCustomersCount() {
           console.error("error: getCustomersAll", err);
           reject(err);
         } else {
-          resolve(docs[0]["id"]);
+          if (docs && docs.length > 0) {
+            resolve(docs[0]["id"]);
+          } else {
+            resolve(0);
+          }
         }
       });
   });
