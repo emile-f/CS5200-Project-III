@@ -51,7 +51,7 @@
             <div class="list-group-item list-group-item-action">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">
-                  <%= rating.restaurantName ? rating.restaurantName : 'Restaurant removed' %>
+                  <%= (rating.restaurant && rating.restaurant.name) ? rating.restaurant.name : 'Restaurant removed' %>
                 </h5>
                 <small>
                   <%= (rating.customer && rating.customer.name) ? rating.customer.name : 'Customer removed' %>
@@ -69,12 +69,11 @@
                 </small>
               </div>
               <div class="d-flex w-100 justify-content-between">
-                <!-- class="btn <%= (!rating.restaurantName || !(rating.customer && rating.customer.name)) ? 'disabled': '' %> btn-outline-primary" -->
-
-                <a title="<%= (!rating.restaurantName || !(rating.customer && rating.customer.name)) ? 'Customer or restaurant removed no editing possible': '' %>"
-                  class="btn  btn-outline-primary" href="<%= `/rating/edit?id=${rating._id}` %>">Edit
+                <a class="btn <%= (!(rating.restaurant && rating.restaurant.name)|| !(rating.customer && rating.customer.name)) ? 'disabled': '' %>  btn-outline-primary"
+                  href="<%= `/rating/edit?id=${rating._id}` %>">Edit
                   rating</a>
-                <a class="btn btn-outline-danger" href="<%= `/rating/delete?id=${rating._id}` %>">Delete
+                <a class="btn <%= (!(rating.restaurant && rating.restaurant.name)|| !(rating.customer && rating.customer.name)) ? 'disabled': '' %> btn-outline-danger"
+                  href="<%= `/rating/delete?id=${rating._id}` %>">Delete
                   rating</a>
               </div>
             </div>

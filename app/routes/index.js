@@ -21,9 +21,9 @@ router.get("/restaurants", async function (req, res, next) {
   const page = +req.query.page || 1;
   const pageSize = +req.query.pageSize || 24;
   const filter = req.query.filter;
-  console.log(filter);
+  console.log("filter", filter);
   try {
-    let total = await myDB.getRestaurantCount(query,zip);
+    let total = await myDB.getRestaurantCount(query, zip);
     let restaurant = await myDB.getRestaurants(zip, query, page, pageSize);
     res.render("index2", {
       restaurants: restaurant,
@@ -53,14 +53,14 @@ router.get("/restaurants/add", async function (req, res) {
 
 router.get("/restaurants/cuisine", async function (req, res) {
   const cuisine = await myDB.getDistinctCuisine();
-  console.log(cuisine);
+  console.log("cuisine", cuisine);
   res.render("cuisine.ejs", { c: cuisine });
 });
 
 router.get("/restaurants/cuisine/:cuisine", async function (req, res) {
   const cuisine = req.params.cuisine;
   const rest = await myDB.getRestByCuisine(cuisine);
-  console.log(rest);
+  console.log("cuisine", rest);
   res.render("restList.ejs", {
     rs: rest,
     c: cuisine,
@@ -116,7 +116,7 @@ router.post("/restaurants/create", async function (req, res) {
   res.redirect("/restaurants");
 });
 
-router.post("/restaurants/update/:restID", async function (req,res) {
+router.post("/restaurants/update/:restID", async function (req, res) {
   const rest = req.body;
   //console.log(rest);
   await myDB.updateRestaurant(rest);

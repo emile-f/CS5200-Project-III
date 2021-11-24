@@ -42,7 +42,7 @@ async function getRatings(filter, page, pageSize) {
     },
     {
       $lookup: {
-        from: "Restaurant",
+        from: "restaurantDB",
         localField: "restID",
         foreignField: "restID",
         as: "restaurant"
@@ -94,7 +94,7 @@ async function getRating(id) {
         }
       }, {
         "$lookup": {
-          "from": "Restaurant",
+          "from": "restaurantDB",
           "localField": "restID",
           "foreignField": "restID",
           "as": "restaurant"

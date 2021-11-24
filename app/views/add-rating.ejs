@@ -34,7 +34,7 @@
                 placeholder="Type to search for restaurant name...">
               <datalist id="restaurants">
                 <% for (let restaurant of restaurants) { %>
-                  <option value="<%= restaurant.id %>">
+                  <option value="<%= restaurant.restID %>">
                     <%= restaurant.name %>
                   </option>
                   <% } %>
