@@ -20,8 +20,8 @@ router.get("/restaurants", async function (req, res, next) {
   const query = req.query.q || "";
   const page = +req.query.page || 1;
   const pageSize = +req.query.pageSize || 24;
-  const filter = req.query.filter;
-  console.log(filter);
+  // const filter = req.query.filter;
+  // console.log(filter);
   try {
     let total = await myDB.getRestaurantCount(query,zip);
     let restaurant = await myDB.getRestaurants(zip, query, page, pageSize);
@@ -71,7 +71,7 @@ router.get("/restaurants/:restID", async function (req, res) {
   const restID = req.params.restID;
   const restaurantArr = await myDB.viewRestaurantsByID(restID);
   const restaurant = restaurantArr[0];
-
+  console.log(restaurant,"here");
   res.render("restaurantByID", {
     r: restaurant,
     f: restaurant.facilities,
