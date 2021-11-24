@@ -59,7 +59,7 @@ This work should be completed individually
 # SQL sample data statements:
 
 - [Rating](./db/rating-example.json)
-- [Restaurant](./db/restaurant-example.json)
+- [Restaurant](./db/restaurant-sample.json) 
 
 # Populate the tables with test data:
 
