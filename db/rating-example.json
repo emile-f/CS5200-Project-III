@@ -1,0 +1,96 @@
+[
+  {
+    "_id": {
+      "$oid": "619c6815cdad7af34c0e3e2b"
+    },
+    "Food": 5,
+    "Service": 4,
+    "cost": 4,
+    "overall": 4.2,
+    "parking": 4,
+    "ratingId": 1,
+    "restID": 160,
+    "waiting": 4,
+    "customer": {
+      "ambience": "family",
+      "budget": "low",
+      "customerID": 282,
+      "drinkLevel": "casual drinker",
+      "name": "Alix Bowering",
+      "smoker": false,
+      "dressCode": "informal",
+      "cuisine": [
+        "Lebanese",
+        "Thai",
+        "Malaysian",
+        "Greek",
+        "French",
+        "Tibetan",
+        "Spanish",
+        "Pakistani",
+        "American",
+        "Cuban",
+        "Indian",
+        "Italian",
+        "Russian",
+        "Japanese",
+        "Continental"
+      ],
+      "paymentMethods": [
+        "VISA",
+        "American_Express",
+        "MasterCard-Eurocard"
+      ]
+    }
+  },
+  {
+    "_id": {
+      "$oid": "619c6815cdad7af34c0e3e2c"
+    },
+    "Food": 5,
+    "Service": 3,
+    "cost": 3,
+    "overall": 3.6,
+    "parking": 3,
+    "ratingId": 2,
+    "restID": 225,
+    "waiting": 4,
+    "customer": {
+      "ambience": "friends",
+      "budget": "low",
+      "customerID": 162,
+      "drinkLevel": "casual drinker",
+      "name": "Carola Gras",
+      "smoker": false,
+      "dressCode": "no preference",
+      "cuisine": [
+        "Tibetan",
+        "Singapore",
+        "American",
+        "French",
+        "Vietnamese",
+        "Lebanese",
+        "Continental",
+        "Malaysian",
+        "Spanish",
+        "Russian",
+        "Pakistani",
+        "Indian",
+        "Thai",
+        "Japanese",
+        "Cuban",
+        "Greek",
+        "Indonesian",
+        "Mexican",
+        "Italian"
+      ],
+      "paymentMethods": [
+        "MasterCard-Eurocard",
+        "bank_debit_cards",
+        "American_Express",
+        "VISA"
+      ]
+    },
+    "review": "Just spicy enough.. Perfect actually."
+  }
+]

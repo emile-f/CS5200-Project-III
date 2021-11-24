@@ -3,7 +3,7 @@ let router = express.Router();
 
 const ratingDatabase = require("../db/MyMongoDBRating");
 const customerDatabase = require("../db/MyMongoDBCustomer");
-const restaurantDatabase = require("../db/MySqliteDBRestaurant");
+const restaurantDatabase = require("../db/MyMongoDBRestaurant");
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
@@ -33,7 +33,7 @@ router.get("/", async function (req, res, next) {
 /* GET add rating page. */
 router.get("/add", async function (req, res) {
   const customers = await customerDatabase.getCustomersAll();
-  const restaurants = await restaurantDatabase.getRestaurants(); // TODO CHANGE THIS
+  const restaurants = await restaurantDatabase.getRestaurants();
   res.render("add-rating", { customers, restaurants });
 });
 
@@ -45,7 +45,6 @@ router.get("/edit", async function (req, res, next) {
   }
   const rating = await ratingDatabase.getRating(req.query.id);
   const restaurants = await restaurantDatabase.getRestaurants();
-  console.log('rating', rating);
   res.render("edit-rating", { rating: rating[0], restaurants });
 });
 

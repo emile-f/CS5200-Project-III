@@ -84,7 +84,7 @@ async function viewRestaurantsByID(restID) {
   // });
   try {
     const list = await coll.find({ "restID": parseInt(restID) }).toArray();
-    console.log(list);
+    console.log("list", list);
     return list;
   } finally {
     await close();

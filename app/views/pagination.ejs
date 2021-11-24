@@ -1,5 +1,4 @@
-
-<% if (lastPage > 2) { %>
+<% if (lastPage> 2) { %>
 
   <nav aria-label="Restaurant Pagination">
     <ul class="pagination">
@@ -7,35 +6,37 @@
         <a class="page-link" href="<%= '/restaurants/?page=' + (currentPage - 1) %>">Previous</a>
       </li>
       <li class="page-item">
-        <a class="page-link" href="<%= '/restaurants/?page=' + 1 %>"><%= 1 %></a>
+        <a class="page-link" href="<%= '/restaurants/?page=' + 1 %>">
+          <%= 1 %>
+        </a>
       </li>
       <li>...</li>
 
-      <% for(let p = Math.max(currentPage-5, 2);
-        p <= (currentPage+5);
-        p+=1) { %>
+      <% for(let p=Math.max(currentPage-5, 2); p <=(currentPage+5); p+=1) { %>
         <li class="<%= 'page-item' + ( p === currentPage ? ' active' : '') %>">
-          <a class="page-link" href="<%= '/restaurants/?page=' + p %>"><%= p %></a>
+          <a class="page-link" href="<%= '/restaurants/?page=' + p %>">
+            <%= p %>
+          </a>
         </li>
-      <% } %>
+        <% } %>
 
-      <!-- <li class="page-item active" aria-current="page">
+          <!-- <li class="page-item active" aria-current="page">
           <span class="page-link">2</span>
         </li>
         <li class="page-item"><a class="page-link" href="#">3</a></li>
      -->
-      <li>...</li>
-      <li class="page-item">
-        <a class="page-link" href="<%= '/restaurants/?page=' + lastPage %>"
-          ><%= lastPage %></a
-        >
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="<%= '/restaurants/?page=' + (currentPage + 1) %>">Next</a>
-      </li>
+          <li>...</li>
+          <li class="page-item">
+            <a class="page-link" href="<%= '/restaurants/?page=' + lastPage %>">
+              <%= lastPage %>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="<%= '/restaurants/?page=' + (currentPage + 1) %>">Next</a>
+          </li>
     </ul>
   </nav>
-<% } else { %>
-  <div>No pagination <%= lastPage %> </div>
-<% } %>
-
+  <% } else { %>
+    <div>No pagination <%= lastPage %>
+    </div>
+    <% } %>
