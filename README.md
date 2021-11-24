@@ -58,7 +58,7 @@ This work should be completed individually
 
 # SQL sample data statements:
 
-- [Rating](./db/rating-example.json)
+- [Rating](./db/rating-example.json) [Script that creates this collection](./scripts/create-restaurantDB-coll.js)
 - [Restaurant](./db/restaurant-sample.json) 
 
 # Populate the tables with test data:
