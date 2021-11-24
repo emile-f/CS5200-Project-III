@@ -54,8 +54,8 @@ This work should be completed individually
 
 # SQL sample data statements:
 
-- [Rating](./db/rating-example.json) : [ [Script that creates this collection](./scripts/create-restaurantDB-coll.js) ]
-- [Restaurant](./db/restaurant-sample.json) 
+- [Rating](./db/rating-example.json)
+- [Restaurant](./db/restaurant-sample.json) : [ [Script that creates this collection](./scripts/create-restaurantDB-coll.js) ]
 
 # Populate the tables with test data:
 
@@ -65,6 +65,7 @@ This work should be completed individually
 # Define and execute at least five queries that show your database:
 - [Rating Query](./query/rating.js)
 - [Restaurant Query](./query/restaurant.js)
+
 # Made by
 https://github.com/Misha-Mody
 
