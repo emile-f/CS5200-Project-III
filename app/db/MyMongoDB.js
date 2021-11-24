@@ -1,19 +1,19 @@
 // const sqlite3 = require("sqlite3");
 // const { open } = require("sqlite");
 const { MongoClient } = require("mongodb");
-
+const config = require("./config");
 
 async function connect() {
-  const url = "mongodb://localhost:27017";
+  const url = config.mongo.uri;
   const client = new MongoClient(url);
   await client.connect();
-  const db = client.db("Restaurants");
-  const coll = db.collection("restaurantsDB");
+  const db = client.db("restaurant-reviews");
+  const coll = db.collection("restaurantDB");
   return coll;
 }
 
 async function close() {
-  const url = "mongodb://localhost:27017";
+  const url = config.mongo.uri;
   const client = new MongoClient(url);
   await client.close();
 }
@@ -33,21 +33,21 @@ async function getRestaurants(zip, name, page, pageSize) {
   //   "@pageSize": pageSize,
   //   "@offset": (page - 1) * pageSize,
   // };
-  try {  
-    if(zip == null){
-      const list = await coll.find({"name":new RegExp(name)}).skip((page - 1) * pageSize).limit(pageSize).toArray();
+  try {
+    if (zip == null) {
+      const list = await coll.find({ "name": new RegExp(name) }).skip((page - 1) * pageSize).limit(pageSize).toArray();
       return list;
-    }else{
-      const list = await coll.find({"name":new RegExp(name), "zip":parseInt(zip)}).skip((page - 1) * pageSize).limit(pageSize).toArray();
-      return list; 
+    } else {
+      const list = await coll.find({ "name": new RegExp(name), "zip": parseInt(zip) }).skip((page - 1) * pageSize).limit(pageSize).toArray();
+      return list;
     }
-    
+
   } finally {
     await close();
   }
 }
 
-async function getRestaurantCount(name,zip) {
+async function getRestaurantCount(name, zip) {
   const coll = await connect();
   // const stmt = await db.prepare(`
   //   SELECT COUNT(*) AS count
@@ -59,11 +59,11 @@ async function getRestaurantCount(name,zip) {
   //   "@query": query + "%",
   // };
   try {
-    if(zip == null){
-      const count = await coll.find({"name": new RegExp(name)}).count();
+    if (zip == null) {
+      const count = await coll.find({ "name": new RegExp(name) }).count();
       return count;
-    }else{
-      const count = await coll.find({"name":new RegExp(name), "zip":parseInt(zip)}).count();
+    } else {
+      const count = await coll.find({ "name": new RegExp(name), "zip": parseInt(zip) }).count();
       return count;
     }
   } finally {
@@ -82,8 +82,8 @@ async function viewRestaurantsByID(restID) {
   // stmt.bind({
   //   ":restID": restID,
   // });
-  try{
-    const list = await coll.find({"restID":parseInt(restID)}).toArray();
+  try {
+    const list = await coll.find({ "restID": parseInt(restID) }).toArray();
     console.log(list);
     return list;
   } finally {
@@ -115,7 +115,8 @@ async function createRestaurant(r) {
   // });
   try {
     coll.insertOne(
-      { "restID": await getRestaurantCount("",null)+1,
+      {
+        "restID": await getRestaurantCount("", null) + 1,
         "name": r.name,
         "address": r.address,
         "zip": parseInt(r.zip),
@@ -123,11 +124,11 @@ async function createRestaurant(r) {
         "state": r.state,
         "country": r.country,
         "dressCode": r.dressCodeID,
-        "priceRange":{
+        "priceRange": {
           "priceRangeMin": parseInt(r.priceRangeMin),
           "priceRangeMax": parseInt(r.priceRangeMax),
         },
-        "workingHours":{
+        "workingHours": {
           "openHours": r.openHours,
           "closeHours": r.closeHours,
         }
@@ -138,63 +139,64 @@ async function createRestaurant(r) {
     await close();
   }
 
-  
+
 }
 
 async function updateRestaurant(r) {
   const coll = await connect();
   try {
-  //   db = await connect();
-  //   stmt = await db.prepare(`UPDATE 
-  //   Restaurant SET
-  //   restID = :restID,
-  //   name=:name,
-  //   address=:address,
-  //   zip=:zip,
-  //   city=:city,
-  //   state=:state,
-  //   country=:country,
-  //   dressCodeID=:dressCodeID,
-  //   priceRangeMin=:priceRangeMin,
-  //   priceRangeMax=:priceRangeMax,
-  //   openHours=:openHours,
-  //   closeHours=:closeHours
-  //   WHERE
-  //   restID = :restID
-  // `);
-  //   stmt.bind({
-  //     ":restID": r.restID,
-  //     ":name": r.name,
-  //     ":address": r.address,
-  //     ":zip": r.zip,
-  //     ":city": r.city,
-  //     ":state": r.state,
-  //     ":country": r.country,
-  //     ":dressCodeID": r.dressCodeID,
-  //     ":priceRangeMin": r.priceRangeMin,
-  //     ":priceRangeMax": r.priceRangeMax,
-  //     ":openHours": r.openHours,
-  //     ":closeHours": r.closeHours,
-  //   });
+    //   db = await connect();
+    //   stmt = await db.prepare(`UPDATE 
+    //   Restaurant SET
+    //   restID = :restID,
+    //   name=:name,
+    //   address=:address,
+    //   zip=:zip,
+    //   city=:city,
+    //   state=:state,
+    //   country=:country,
+    //   dressCodeID=:dressCodeID,
+    //   priceRangeMin=:priceRangeMin,
+    //   priceRangeMax=:priceRangeMax,
+    //   openHours=:openHours,
+    //   closeHours=:closeHours
+    //   WHERE
+    //   restID = :restID
+    // `);
+    //   stmt.bind({
+    //     ":restID": r.restID,
+    //     ":name": r.name,
+    //     ":address": r.address,
+    //     ":zip": r.zip,
+    //     ":city": r.city,
+    //     ":state": r.state,
+    //     ":country": r.country,
+    //     ":dressCodeID": r.dressCodeID,
+    //     ":priceRangeMin": r.priceRangeMin,
+    //     ":priceRangeMax": r.priceRangeMax,
+    //     ":openHours": r.openHours,
+    //     ":closeHours": r.closeHours,
+    //   });
 
-    coll.updateOne({"restID" : parseInt(r.restID)},
-      {$set:
+    coll.updateOne({ "restID": parseInt(r.restID) },
       {
-        "name": r.name,
-        "address": r.address,
-        "zip": parseInt(r.zip),
-        "city": r.city,
-        "state": r.state,
-        "country": r.country,
-        "dressCode": r.dressCodeID,
-        "priceRange.priceRangeMin": parseInt(r.priceRangeMin),
-        "priceRange.priceRangeMax": parseInt(r.priceRangeMax),
-        "workingHours.openHours": r.openHours,
-        "workingHours.closeHours": r.closeHours,
-      }
+        $set:
+        {
+          "name": r.name,
+          "address": r.address,
+          "zip": parseInt(r.zip),
+          "city": r.city,
+          "state": r.state,
+          "country": r.country,
+          "dressCode": r.dressCodeID,
+          "priceRange.priceRangeMin": parseInt(r.priceRangeMin),
+          "priceRange.priceRangeMax": parseInt(r.priceRangeMax),
+          "workingHours.openHours": r.openHours,
+          "workingHours.closeHours": r.closeHours,
+        }
       }
     );
-  
+
   } finally {
     await close();
   }
@@ -205,11 +207,11 @@ async function updateRestaurant(r) {
 
 async function getDistinctCuisine() {
   const coll = await connect();
-  try{
+  try {
     const list = await coll.distinct("cuisine");
     return list;
   }
-  finally{
+  finally {
     await close();
   }
 
@@ -218,11 +220,11 @@ async function getDistinctCuisine() {
 async function getRestByCuisine(cuisine) {
 
   const coll = await connect();
-  try{
+  try {
     const list = await coll.find({ cuisine: cuisine }).toArray();
     return list;
   }
-  finally{
+  finally {
     close();
   }
 
@@ -237,9 +239,9 @@ async function getRestByCuisine(cuisine) {
   // ;
   //   `);
 
-//   stmt.bind({
-//     ":cuisine": cuisine,
-//   });
+  //   stmt.bind({
+  //     ":cuisine": cuisine,
+  //   });
   // return await stmt.all();
 }
 
@@ -269,14 +271,14 @@ async function deleteRestFromCuisine(restID) {
   // stmt.bind({
   //   ":restID": restID,
   // });
-  try{
-    await coll.deleteOne({"restID":parseInt(restID)});
+  try {
+    await coll.deleteOne({ "restID": parseInt(restID) });
   }
-  finally{
+  finally {
     close();
   }
 
-  
+
 }
 
 module.exports.getRestaurants = getRestaurants;
