@@ -2,6 +2,7 @@ let express = require("express");
 let router = express.Router();
 
 const ratingDatabase = require("../db/MyMongoDBRating");
+const ratingCache = require("../db/MyRedisDBRating");
 const customerDatabase = require("../db/MyMongoDBCustomer");
 const restaurantDatabase = require("../db/MyMongoDBRestaurant");
 
@@ -43,7 +44,19 @@ router.get("/edit", async function (req, res, next) {
     next({ message: "Please provide a rating id" });
     return;
   }
-  const rating = await ratingDatabase.getRating(req.query.id);
+
+
+  let rating;
+  const cachedRating = await ratingCache.checkAndGetRating(req.query.id);
+  if (cachedRating) {
+    rating = [cachedRating];
+    console.log("returning rating from cache");
+  } else {
+    rating = await ratingDatabase.getRating(req.query.id);
+    await ratingCache.setRating(req.query.id, rating);
+    console.log("returning rating from mongo and caching result");
+  }
+
   const restaurants = await restaurantDatabase.getRestaurants();
   res.render("edit-rating", { rating: rating[0], restaurants });
 });
@@ -88,6 +101,10 @@ router.post("/edit", async function (req, res, next) {
 
   try {
     await ratingDatabase.updateRating(rating);
+
+    // edit redis cache
+    await ratingCache.setRating(rating.ratingId, rating);
+
     res.redirect("/rating");
   } catch (err) {
     next(err);
@@ -145,6 +162,10 @@ router.get("/delete", async function (req, res, next) {
     return;
   }
   await ratingDatabase.deleteRating(req.query.id);
+
+  // delete redis cache
+  await ratingCache.deleteRating(req.query.id);
+
   res.redirect("/rating");
 });
 
