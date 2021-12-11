@@ -3,7 +3,7 @@ const config = require("./config");
 
 // Guide: https://dzone.com/articles/crud-operations-on-mongodb-thru-nodejs
 
-let database;
+let mongoDatabase;
 
 const mongoDb = (uri, dbName) => {
   const currentMongo = {};
@@ -38,7 +38,7 @@ const initConnection = () => {
     const uri = config.mongo.uri;
     // connect to our forum DB
     mongoDb(uri, "restaurant-reviews").then((db) => {
-      database = db;
+      mongoDatabase = db;
       // Resolve the connection
       resolve();
     });
@@ -48,7 +48,7 @@ const initConnection = () => {
 // Return the database
 // This will be used in the controllers
 const getDatabase = () => {
-  return database;
+  return mongoDatabase;
 };
 
 // Export the init and the database connection
