@@ -21,7 +21,7 @@ This work should be completed individually
 
 - CRUD operations on the Restaurant Table
 - CRUD operations on the Services and Facilities provided by the restaurant
-- Query/filter restaurants based on name, food type, working hours, accepted payment methods, Facilities 
+- Query/filter restaurants based on cuisines
 
 ## @Emile Ferrand will be working on:
 
@@ -35,7 +35,7 @@ This work should be completed individually
 2) Move to the folder named "app"
 3) `npm install`
 4) `npm start`
-5) goto `http://localhost:2000/` to view the project
+5) goto  http://localhost:2000/restaurants  to view the project
 
 
 # Conceptual Model:
