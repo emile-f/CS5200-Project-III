@@ -22,6 +22,9 @@ Adding a caching layer to the application that caches reviews/restaurant details
 
 @Misha Mody  will be working on:
 Add a new feature similar to leaderboard which shows the restaurants with max reviews and users that have given max reviews. Allows CRUD operations on this leaderboard.
+- CRUD operations on the Restaurant Table
+- CRUD operations on the Services and Facilities provided by the restaurant
+- Query/filter restaurants based on cuisines
 
 # Installation
 
@@ -29,7 +32,7 @@ Add a new feature similar to leaderboard which shows the restaurants with max re
 2) Move to the folder named "app"
 3) `npm install`
 4) `npm start`
-5) goto `http://localhost:2000/` to view the project
+5) goto  http://localhost:2000/restaurants  to view the project
 
 
 # Conceptual Model:
@@ -40,19 +43,27 @@ Add a new feature similar to leaderboard which shows the restaurants with max re
 
 ![Logical Model](./diagrams/ERD.png)
 
-# sample data:
+# Data-Structure Used:
+![Data Structure](./datastructures/ds.docx)
 
-- [Rating](./db/rating-example.json)
-- [Restaurant](./db/restaurant-sample.json) : [ [Script that creates this collection](./scripts/create-restaurantDB-coll.js) ]
+# How to Load the Data:
 
-# Populate the tables with test data:
+For the restaurant data:
 
-- [Rating database dump](./db/rating.json)
-- [Restaurant database dump](./db/restaurant.json)
+1) Start Mongo and create a DB called Restaurants in Mongo and add the Collection as ![restaurantsDB](./db/restaurant.json)
+2) Start Redis and Move to folder called ![MongoToRedisData](./MongoToRedisData) and run 
+```node
+node convertData.js
+```
+3) This will create the redis database needed for the project. 
+4) Move to the app folder and run
+```node
+npm install
+npm start
+```
+5)View results on local http://localhost:2000/restaurants
+   
 
-# Define and execute at least five queries that show your database:
-- [Rating Query](./query/rating.js)
-- [Restaurant Query](./query/restaurant.js)
 
 # Made by
 https://github.com/Misha-Mody

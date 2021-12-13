@@ -41,7 +41,7 @@
 
         </div>
 
-        <form action="<%= '/restaurants/update/' + r.restID %>" id="editform" method="POST">
+        <form action="/restaurants/update/<%=r.restID %>" id="editform" method="POST">
 
           <div class="row">
             <input disabled="true" value="<%=r.restID %>" name="restID" type="hidden" class="form-control fn" />
@@ -111,12 +111,12 @@
                 <div class="row">
                   <div class="col-lg-6 col-sm-6">
                     <label class="form-label">OPEN HOURS
-                      <input disabled="true" value="<%=r.workingHours.openHours%>" required="true" name="openHours"
+                      <input disabled="true" value="<%=r.openHours%>" required="true" name="openHours"
                         type="text" class="form-control fn"></label>
                   </div>
                   <div class="col-lg-6 col-sm-6">
                     <label class="form-label">CLOSE HOURS
-                      <input disabled="true" value="<%=r.workingHours.closeHours%>" required="true" name="closeHours"
+                      <input disabled="true" value="<%=r.closeHours%>" required="true" name="closeHours"
                         type="text" class="form-control fn"></label>
                   </div>
                 </div>
@@ -128,12 +128,12 @@
                 <div class="row">
                   <div class="col-lg-6 col-sm-6">
                     <label class="form-label">MINIMUM PRICE RANGE
-                      <input disabled="true" value="<%=r.priceRange.priceRangeMin%>" required="true"
+                      <input disabled="true" value="<%=r.priceRangeMin%>" required="true"
                         name="priceRangeMin" type="number" class="form-control fn" /></label>
                   </div>
                   <div class="col-lg-6 col-sm-6">
                     <label class="form-label">MAXIMUM PRICE RANGE
-                      <input disabled="true" value="<%=r.priceRange.priceRangeMax%>" required="true"
+                      <input disabled="true" value="<%=r.priceRangeMax%>" required="true"
                         name="priceRangeMax" type="number" class="form-control fn" /></label>
                   </div>
                 </div>
@@ -141,48 +141,47 @@
             </div>
 
             <div style="margin-top: 20px;" class="row">
-              <h5>DRESS PREFERENCE <%= r.dressCodeID %>
-              </h5>
+              <h5>DRESS PREFERENCE:</h5>
 
               <div class="col-lg-3">
-                <% if(r.dressCode=="no preference" ){%>
-                  <input disabled="true" type="radio" name="dressCodeID" id="gridRadios1" value="no preference" checked
+                <% if(r.dresscode=="no preference" ){%>
+                  <input disabled="true" type="radio" name="dresscode" id="gridRadios1" value="no preference" checked
                     class="fn" />
                   <label for="gridRadios1"> No Preference </label>
                   <% } else {%>
-                    <input disabled="true" type="radio" name="dressCodeID" id="gridRadios1" value="no preference"
+                    <input disabled="true" type="radio" name="dresscode" id="gridRadios1" value="no preference"
                       class="fn" />
                     <label for="gridRadios1"> No Preference </label>
                     <% }%>
               </div>
               <div class="col-lg-3">
-                <% if(r.dressCode=="informal" ){%>
-                  <input disabled="true" type="radio" name="dressCodeID" id="gridRadios2" value="informal" checked
+                <% if(r.dresscode=="informal" ){%>
+                  <input disabled="true" type="radio" name="dresscode" id="gridRadios2" value="informal" checked
                     class="fn" />
                   <label for="gridRadios2"> Informal </label>
                   <% }else{%>
-                    <input disabled="true" type="radio" name="dressCodeID" id="gridRadios2" value="informal"
+                    <input disabled="true" type="radio" name="dresscode" id="gridRadios2" value="informal"
                       class="fn" />
                     <label for="gridRadios2"> Informal </label>
                     <% }%>
               </div>
               <div class="col-lg-3">
-                <% if(r.dressCode=="formal" ){%>
-                  <input disabled="true" type="radio" name="dressCodeID" id="gridRadios3" value="formal" checked
+                <% if(r.dresscode=="formal" ){%>
+                  <input disabled="true" type="radio" name="dresscode" id="gridRadios3" value="formal" checked
                     class="fn" />
                   <label for="gridRadios3"> Formal </label>
                   <% }else{%>
-                    <input disabled="true" type="radio" name="dressCodeID" id="gridRadios3" value="formal" class="fn" />
+                    <input disabled="true" type="radio" name="dresscode" id="gridRadios3" value="formal" class="fn" />
                     <label for="gridRadios3"> Formal </label>
                     <% }%>
               </div>
               <div class="col-lg-3">
-                <% if(r.dressCode=="elegant" ){%>
-                  <input disabled="true" type="radio" name="dressCodeID" id="gridRadios3" value="elegant" checked
+                <% if(r.dresscode=="elegant" ){%>
+                  <input disabled="true" type="radio" name="dresscode" id="gridRadios3" value="elegant" checked
                     class="fn" />
                   <label for="gridRadios3"> Elegant </label>
                   <% }else{%>
-                    <input disabled="true" type="radio" name="dressCodeID" id="gridRadios3" value="elegant"
+                    <input disabled="true" type="radio" name="dresscode" id="gridRadios3" value="elegant"
                       class="fn" />
                     <label for="gridRadios3"> Elegant </label>
                     <% }%>
