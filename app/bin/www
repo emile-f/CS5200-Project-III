@@ -6,6 +6,7 @@
 
 let app = require("../app");
 const mongoClient = require("../db/mongoClient.js");
+const redisClient = require("../db/redisClient.js");
 
 let debug = require("debug")("restaurantdb:server");
 let http = require("http");
@@ -28,8 +29,11 @@ let server = http.createServer(app);
  */
 
 // On startup make connection with the mongo db
+
 mongoClient.initConnection().then(() => {
-  server.listen(port);
+  redisClient.initConnection().then(() => {
+    server.listen(port);
+  });
 });
 
 server.on("error", onError);

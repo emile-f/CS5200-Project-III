@@ -2,6 +2,7 @@ let express = require("express");
 let router = express.Router();
 
 const customerDatabase = require("../db/MyMongoDBCustomer");
+const customerCache = require("../db/MyRedisDBCustomer");
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
@@ -27,7 +28,17 @@ router.get("/edit", async function (req, res, next) {
     return;
   }
 
-  const customer = await customerDatabase.getCustomer(req.query.id);
+  let customer;
+  const cachedCustomer = await customerCache.checkAndGetCustomer(req.query.id);
+  if (cachedCustomer) {
+    customer = cachedCustomer;
+    console.log("returning customer from cache");
+  } else {
+    customer = await customerDatabase.getCustomer(req.query.id);
+    await customerCache.setCustomer(req.query.id, customer);
+    console.log("returning customer from mongo and caching result");
+  }
+
   const cuisines = await customerDatabase.getCuisines();
   const paymentMethods = await customerDatabase.getPaymentMethods();
   const dressCodes = await customerDatabase.getDressCodes();
@@ -51,6 +62,10 @@ router.post("/edit", async function (req, res, next) {
 
   try {
     await customerDatabase.editCustomer(customer);
+
+    // edit redis cache
+    await customerCache.setCustomer(customer.customerId, customer);
+
     res.redirect("/customer");
   } catch (err) {
     next(err);
@@ -65,6 +80,10 @@ router.get("/delete", async function (req, res, next) {
   }
   const customerId = req.query.id;
   await customerDatabase.deleteCustomer(customerId);
+
+  // delete redis cache
+  await customerCache.deleteCustomer(customerId);
+
   res.redirect("/customer");
 });
 

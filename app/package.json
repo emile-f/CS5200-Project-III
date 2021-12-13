@@ -12,10 +12,10 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "lodash.keys": "^4.2.0",
     "mongodb": "^4.2.0",
     "morgan": "~1.9.1",
-    "sqlite": "^4.0.23",
-    "sqlite3": "^5.0.2"
+    "redis": "^4.0.0"
   },
   "devDependencies": {
     "eslint": "^8.1.0",
