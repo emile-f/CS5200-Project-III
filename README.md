@@ -49,6 +49,25 @@ This work should be completed individually
 # Data-Structure Used:
 ![Data Structure](./datastructures/ds.docx)
 
+# How to Load the Data:
+
+For the restaurant data:
+
+1) Start Mongo and create a DB called Restaurants in Mongo and add the Collection as ![restaurantsDB](./db/restaurant.json)
+2) Start Redis and Move to folder called ![MongoToRedisData](./MongoToRedisData) and run 
+```node
+node convertData.js
+```
+3) This will create the redis database needed for the project. 
+4) Move to the app folder and run
+```node
+npm install
+npm start
+```
+5)View results on local http://localhost:2000/restaurants
+   
+
+
 # Made by
 https://github.com/Misha-Mody
 
