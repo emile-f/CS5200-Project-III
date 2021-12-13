@@ -12,7 +12,7 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 
-  <title>Restaurants</title>
+  <title>rs</title>
 
   <script type="text/javascript">
     function validate() {
@@ -136,12 +136,12 @@
                 <div class="row">
                   <div class="col-lg-6 col-sm-6">
                     <label class="form-label">OPEN HOURS
-                      <input disabled="true" value="<%=r.workingHours.openHours%>" required="true" name="openHours"
+                      <input disabled="true" value="<%=r.openHours%>" required="true" name="openHours"
                         type="text" class="form-control fn"></label>
                   </div>
                   <div class="col-lg-6 col-sm-6">
                     <label class="form-label">CLOSE HOURS
-                      <input disabled="true" value="<%=r.workingHours.closeHours%>" required="true" name="closeHours"
+                      <input disabled="true" value="<%=r.closeHours%>" required="true" name="closeHours"
                         type="text" class="form-control fn"></label>
                   </div>
                 </div>
@@ -153,12 +153,12 @@
                 <div class="row">
                   <div class="col-lg-6 col-sm-6">
                     <label class="form-label">MINIMUM PRICE RANGE
-                      <input disabled="true" value="<%=r.priceRange.priceRangeMin%>" required="true"
+                      <input disabled="true" value="<%=r.priceRangeMin%>" required="true"
                         name="priceRangeMin" type="number" class="form-control fn" /></label>
                   </div>
                   <div class="col-lg-6 col-sm-6">
                     <label class="form-label">MAXIMUM PRICE RANGE
-                      <input disabled="true" value="<%=r.priceRange.priceRangeMax%>" required="true"
+                      <input disabled="true" value="<%=r.priceRangeMax%>" required="true"
                         name="priceRangeMax" type="number" class="form-control fn" /></label>
                   </div>
                 </div>
@@ -166,48 +166,48 @@
             </div>
 
             <div style="margin-top: 20px;" class="row">
-              <h5>DRESS PREFERENCE <%= r.dressCodeID %>
+              <h5>DRESS PREFERENCE 
               </h5>
 
               <div class="col-lg-3">
-                <% if(r.dressCode=="no preference" ){%>
-                  <input disabled="true" type="radio" name="dressCodeID" id="gridRadios1" value="no preference" checked
+                <% if(r.dresscode=="no preference" ){%>
+                  <input disabled="true" type="radio" name="dresscode" id="gridRadios1" value="no preference" checked
                     class="fn" />
                   <label for="gridRadios1"> No Preference </label>
                   <% } else {%>
-                    <input disabled="true" type="radio" name="dressCodeID" id="gridRadios1" value="no preference"
+                    <input disabled="true" type="radio" name="dresscode" id="gridRadios1" value="no preference"
                       class="fn" />
                     <label for="gridRadios1"> No Preference </label>
                     <% }%>
               </div>
               <div class="col-lg-3">
-                <% if(r.dressCode=="informal" ){%>
-                  <input disabled="true" type="radio" name="dressCodeID" id="gridRadios2" value="informal" checked
+                <% if(r.dresscode=="informal" ){%>
+                  <input disabled="true" type="radio" name="dresscode" id="gridRadios2" value="informal" checked
                     class="fn" />
                   <label for="gridRadios2"> Informal </label>
                   <% }else{%>
-                    <input disabled="true" type="radio" name="dressCodeID" id="gridRadios2" value="informal"
+                    <input disabled="true" type="radio" name="dresscode" id="gridRadios2" value="informal"
                       class="fn" />
                     <label for="gridRadios2"> Informal </label>
                     <% }%>
               </div>
               <div class="col-lg-3">
-                <% if(r.dressCode=="formal" ){%>
-                  <input disabled="true" type="radio" name="dressCodeID" id="gridRadios3" value="formal" checked
+                <% if(r.dresscode=="formal" ){%>
+                  <input disabled="true" type="radio" name="dresscode" id="gridRadios3" value="formal" checked
                     class="fn" />
                   <label for="gridRadios3"> Formal </label>
                   <% }else{%>
-                    <input disabled="true" type="radio" name="dressCodeID" id="gridRadios3" value="formal" class="fn" />
+                    <input disabled="true" type="radio" name="dresscode" id="gridRadios3" value="formal" class="fn" />
                     <label for="gridRadios3"> Formal </label>
                     <% }%>
               </div>
               <div class="col-lg-3">
-                <% if(r.dressCode=="elegant" ){%>
-                  <input disabled="true" type="radio" name="dressCodeID" id="gridRadios3" value="elegant" checked
+                <% if(r.dresscode=="elegant" ){%>
+                  <input disabled="true" type="radio" name="dresscode" id="gridRadios3" value="elegant" checked
                     class="fn" />
                   <label for="gridRadios3"> Elegant </label>
                   <% }else{%>
-                    <input disabled="true" type="radio" name="dressCodeID" id="gridRadios3" value="elegant"
+                    <input disabled="true" type="radio" name="dresscode" id="gridRadios3" value="elegant"
                       class="fn" />
                     <label for="gridRadios3"> Elegant </label>
                     <% }%>
@@ -237,7 +237,7 @@
                       data-bs-parent="#accordionExample">
                       <div class="accordion-body">
 
-                        <% if(s.alcohol==1){%>
+                        <% if(r.services_alcohol == "true"){%>
                           <div class="form-check sw fn form-switch form-check-inline">
                             <input disabled="true" readonly class="form-check-input" type="checkbox" role="switch"
                               id="flexSwitchCheckChecked" value="1" name="alcohol" checked>
@@ -253,7 +253,7 @@
                             </div>
                             <%}%>
 
-                              <% if(s.smoking==1){%>
+                              <% if(r.services_smoking=="true"){%>
 
                                 <div class="form-check sw form-switch form-check-inline">
                                   <input disabled="true" class="form-check-input" type="checkbox" role="switch"
@@ -271,7 +271,7 @@
 
                                   <%}%>
 
-                                    <% if(f.parkingSpace==1){%>
+                                    <% if(r.facilities_parkingSpace =="true"){%>
 
                                       <div class="form-check sw form-switch form-check-inline">
                                         <input disabled="true" class="form-check-input" type="checkbox" role="switch"
@@ -306,7 +306,7 @@
                   <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                      <% if(f.seatingArea=="open" ){%>
+                      <% if(r.facilities_seatingArea=="open" ){%>
                         <input disabled type="radio" class="btn-check" name="options-outlined" id="f" checked
                           autocomplete="off">
                         <label class="btn btn-outline-success" for="f">Open</label>
@@ -341,19 +341,19 @@
                     <div class="accordion-body">
                       <div class="col-lg-6">
                         <select class="form-select" aria-label="Ambience" disabled>
-                          <% if(f.ambience==="Family" ){%>
+                          <% if(r.facilities_ambience=="Family" ){%>
                             <option value="1" selected>Family</option>
                             <% } else {%>
                               <option value="1">Family</option>
                               <%}%>
 
-                                <% if(f.ambience==="Friends" ){%>
+                                <% if(r.facilities_ambience=="Friends" ){%>
                                   <option value="2" selected>Friends</option>
                                   <% } else {%>
                                     <option value="2">Friends</option>
                                     <%}%>
 
-                                      <% if(f.ambience==="Solitary" ){%>
+                                      <% if(r.facilities_ambience=="Solitary" ){%>
                                         <option value="3" selected>Solitary</option>
                                         <% } else {%>
                                           <option value="3">Solitary</option>

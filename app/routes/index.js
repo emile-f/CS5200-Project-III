@@ -4,7 +4,7 @@ let router = express.Router();
 // Routes
 const customerRoute = require("./customer");
 const ratingRoute = require("./rating");
-const myDB = require("../db/MyMongoDB");
+const myDB = require("../db/MyRedisDB");
 
 
 /* GET home page. */
@@ -16,19 +16,18 @@ router.use("/customer", customerRoute);
 router.use("/rating", ratingRoute);
 
 router.get("/restaurants", async function (req, res, next) {
-  const zip = req.query.z || null;
-  const query = req.query.q || "";
+
   const page = +req.query.page || 1;
   const pageSize = +req.query.pageSize || 24;
   // const filter = req.query.filter;
   // console.log(filter);
   try {
-    let total = await myDB.getRestaurantCount(query, zip);
-    let restaurant = await myDB.getRestaurants(zip, query, page, pageSize);
+    let total = await myDB.getRestaurantCount();
+    
+    let restaurant = await myDB.getRestaurants(page, pageSize);
+    //console.log(restaurant);
     res.render("index2", {
       restaurants: restaurant,
-      query,
-      zip,
       currentPage: page,
       lastPage: Math.ceil(total / pageSize),
     });
@@ -54,14 +53,12 @@ router.get("/restaurants/add", async function (req, res) {
 router.get("/restaurants/cuisine", async function (req, res) {
   const cuisine = await myDB.getDistinctCuisine();
   cuisine.shift();
-  console.log("cuisine", cuisine);
   res.render("cuisine.ejs", { c: cuisine });
 });
 
 router.get("/restaurants/cuisine/:cuisine", async function (req, res) {
   const cuisine = req.params.cuisine;
   const rest = await myDB.getRestByCuisine(cuisine);
-  console.log("cuisine", rest);
   res.render("restList.ejs", {
     rs: rest,
     c: cuisine,
@@ -70,44 +67,27 @@ router.get("/restaurants/cuisine/:cuisine", async function (req, res) {
 
 router.get("/restaurants/:restID", async function (req, res) {
   const restID = req.params.restID;
-  const restaurantArr = await myDB.viewRestaurantsByID(restID);
-  const restaurant = restaurantArr[0];
-  console.log(restaurant,"here");
+  const restaurant = await myDB.viewRestaurantsByID(restID);
   res.render("restaurantByID", {
     r: restaurant,
-    f: restaurant.facilities,
-    s: restaurant.services,
-    p: restaurant.payments,
-    w: restaurant.workingDays,
-    c: restaurant.cuisine,
+    f: restaurant.facilities_ambience,
+    s: restaurant.services_alcohol,
+    p: restaurant.payments?restaurant.payments:[],
+    w: restaurant.workingDays? restaurant.workingDays.split(",") : [],
+    c: restaurant.cuisine? restaurant.cuisine.split(","): [],
   });
 });
 
 router.get("/restaurants/view/:restID", async function (req, res) {
   const restID = req.params.restID;
-  const restaurantArr = await myDB.viewRestaurantsByID(restID);
-  const restaurant = restaurantArr[0];
-  // const facilities = await myDB.viewFacilities(restID);
-  // const services = await myDB.viewServices(restID);
-  // const payment = await myDB.viewPaymentMethod(restID);
-  // const working = await myDB.viewWorkingDays(restID);
-  // const cuisine = await myDB.getCuisineByID(restID);
-  // const days = [];
-  // working.forEach((r) => {
-  //   days.push(r.days);
-  // });
-  // console.log(cuisine);
-  // const pays = [];
-  // payment.forEach((r) => {
-  //   pays.push(r.method);
-  // });
+  const restaurant = await myDB.viewRestaurantsByID(restID);
   res.render("viewDetails", {
     r: restaurant,
-    f: restaurant.facilities,
-    s: restaurant.services,
-    p: restaurant.payments,
-    w: restaurant.workingDays,
-    c: restaurant.cuisine,
+    f: restaurant.facilities_ambience,
+    s: restaurant.services_alcohol,
+    p: restaurant.payments?restaurant.payments:[],
+    w: restaurant.workingDays? restaurant.workingDays.split(",") : [],
+    c: restaurant.cuisine? restaurant.cuisine.split(","): [],
   });
 });
 
@@ -119,19 +99,16 @@ router.post("/restaurants/create", async function (req, res) {
 
 router.post("/restaurants/update/:restID", async function (req, res) {
   const rest = req.body;
-  //console.log(rest);
   await myDB.updateRestaurant(rest);
   //res.redirect("/restaurants");
-  const restaurantArr = await myDB.viewRestaurantsByID(rest.restID);
-  const restaurant = restaurantArr[0];
-
+  const restaurant = await myDB.viewRestaurantsByID(rest.restID);
   res.render("restaurantByID", {
     r: restaurant,
-    f: restaurant.facilities,
-    s: restaurant.services,
-    p: restaurant.payments,
-    w: restaurant.workingDays,
-    c: restaurant.cuisine,
+    f: restaurant.facilities_ambience,
+    s: restaurant.services_alcohol,
+    p: restaurant.payments?restaurant.payments:[],
+    w: restaurant.workingDays? restaurant.workingDays.split(",") : [],
+    c: restaurant.cuisine? restaurant.cuisine.split(","): [],
   });
 });
 
