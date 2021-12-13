@@ -48,7 +48,7 @@ Adding a caching layer to the application that caches reviews/restaurant details
 - [Restaurant database dump](./db/restaurant.json)
 
 # Data-Structure Used:
-- ![Data Structure](./datastructures/ds.docx)
+- ![Data Structure](./datastructures/ds.pdf)
 
 # Installation & Loading data:
 
