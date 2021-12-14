@@ -48,7 +48,7 @@ Adding a caching layer to the application that caches reviews/restaurant details
 - [Restaurant database dump](./db/restaurant.json)
 
 # Data-Structure Used:
-- ![Data Structure](./datastructures/ds.docx)
+- ![Data Structure](./datastructures/ds.pdf)
 
 # Installation & Loading data:
 
@@ -62,19 +62,19 @@ Load Mongo data:
 1) Start by running mongodb locally
 2) Create new database called `restaurant-reviews`
 3) create 2 new collections called `restaurantDB` and `Rating`
-4) import ![restaurantsDB](./db/restaurant.json) to the `restaurantDB` collection
-4) import ![Rating](./db/rating.json) to the `Rating` collection
+4) import [restaurantsDB](./db/restaurant.json) to the `restaurantDB` collection
+4) import [Rating](./db/rating.json) to the `Rating` collection
 
 Load Redis data:
 
 1) Start redis-server locally
-2) run `node MongoToRedisData/convertData.js`
+2) Move to folder `app` to install the dependencies using `npm install`
+3) run the file ![convertData](./app/MongoToRedisData) `node MongoToRedisData/convertData.js`
 
 Start application:
 
-1) Move to the folder named "app"
-2) `npm start`
-3) goto  http://localhost:2000/  to view the project
+1) `npm start`
+2) goto  http://localhost:2000/  to view the project
 
 # Made by
 https://github.com/Misha-Mody
