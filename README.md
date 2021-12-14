@@ -68,14 +68,13 @@ Load Mongo data:
 Load Redis data:
 
 1) Start redis-server locally
-2) Move to folder app to install the dependencies using `npm install`
-3) run the file ![convertData](./MongoToRedisData) `node MongoToRedisData/convertData.js`
+2) Move to folder `app` to install the dependencies using `npm install`
+3) run the file ![convertData](./app/MongoToRedisData) `node MongoToRedisData/convertData.js`
 
 Start application:
 
-1) Move to the folder named "app"
-2) `npm start`
-3) goto  http://localhost:2000/  to view the project
+1) `npm start`
+2) goto  http://localhost:2000/  to view the project
 
 # Made by
 https://github.com/Misha-Mody
