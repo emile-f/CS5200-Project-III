@@ -23,7 +23,7 @@ async function makeHashes() {
 
   try{
     client = await connectMongo();
-    const db = client.db("Restaurants");
+    const db = client.db("restaurant-reviews");
     const coll = db.collection("restaurantsDB");
     const redis = await connectRedis();
     const tweetlist = await coll.find().toArray();
