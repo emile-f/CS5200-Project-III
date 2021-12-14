@@ -61,9 +61,9 @@ Load Mongo data:
 
 1) Start by running mongodb locally
 2) Create new database called `restaurant-reviews`
-3) create 2 new collections called `restaurantsDB` and `Rating`
-4) import ![restaurantsDB](./db/restaurant.json) to the `restaurantsDB` collection
-4) import ![Rating](./db/rating.json) to the `Rating` collection
+3) create 2 new collections called `restaurantDB` and `Rating`
+4) import [restaurantsDB](./db/restaurant.json) to the `restaurantDB` collection
+4) import [Rating](./db/rating.json) to the `Rating` collection
 
 Load Redis data:
 
