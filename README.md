@@ -21,7 +21,7 @@ This work should be completed individually
 
 - CRUD operations on the Restaurant Table
 - CRUD operations on the Services and Facilities provided by the restaurant
-- Query/filter restaurants based on name, food type, working hours, accepted payment methods, Facilities 
+- Query/filter restaurants based on cuisines
 
 ## @Emile Ferrand will be working on:
 
@@ -35,7 +35,7 @@ This work should be completed individually
 2) Move to the folder named "app"
 3) `npm install`
 4) `npm start`
-5) goto `http://localhost:2000/` to view the project
+5) goto  http://localhost:2000/restaurants  to view the project
 
 
 # Conceptual Model:
@@ -48,6 +48,25 @@ This work should be completed individually
 
 # Data-Structure Used:
 ![Data Structure](./datastructures/ds.docx)
+
+# How to Load the Data:
+
+For the restaurant data:
+
+1) Start Mongo and create a DB called Restaurants in Mongo and add the Collection as ![restaurantsDB](./db/restaurant.json)
+2) Start Redis and Move to folder called ![MongoToRedisData](./MongoToRedisData) and run 
+```node
+node convertData.js
+```
+3) This will create the redis database needed for the project. 
+4) Move to the app folder and run
+```node
+npm install
+npm start
+```
+5)View results on local http://localhost:2000/restaurants
+   
+
 
 # Made by
 https://github.com/Misha-Mody
