@@ -153,9 +153,31 @@ async function deleteRestFromCuisine(restID) {
   catch(e) {
     console.log(e);
   }
-
-
 }
+
+async function getReviewCount() {
+  const redis = await connectRedis();
+  try {
+    const list = await redis.zRangeWithScores("reviewCount",0,20,{
+      BY: "score",
+      REV: true
+    }
+    );
+    console.log(list);
+    let restList=[];
+    for(let id of list){
+      console.log(id);
+      if(id != "NaN")
+      {restList.push({"rest":await viewRestaurantsByID(id.value), "count":id.score});
+      }
+    }
+    return restList;
+  }
+  catch(e) {
+    console.log(e);
+  }
+}
+
 
 module.exports.getRestaurants = getRestaurants;
 module.exports.viewRestaurantsByID = viewRestaurantsByID;
@@ -165,3 +187,5 @@ module.exports.deleteRestFromCuisine = deleteRestFromCuisine;
 module.exports.getRestaurantCount = getRestaurantCount;
 module.exports.getDistinctCuisine = getDistinctCuisine;
 module.exports.getRestByCuisine = getRestByCuisine;
+module.exports.getReviewCount = getReviewCount;
+

@@ -88,7 +88,7 @@ async function getAllRestID(){
   let client;
   try{
     client = await connectMongo();
-    const db = client.db("Restaurants");
+    const db = client.db("restaurant-reviews");
     const coll = db.collection("restaurantsDB");
     const redis = await connectRedis();
     try{
@@ -123,7 +123,7 @@ async function restaurantCuisine(){
   let client;
   try{
     client = await connectMongo();
-    const db = client.db("Restaurants");
+    const db = client.db("restaurant-reviews");
     const coll = db.collection("restaurantsDB");
     const redis = await connectRedis();
     try{
@@ -217,7 +217,7 @@ async function getCuisines(){
   let client;
   try{
     client = await connectMongo();
-    const db = client.db("Restaurants");
+    const db = client.db("restaurant-reviews");
     const coll = db.collection("restaurantsDB");
     const redis = await connectRedis();
     try{
@@ -237,9 +237,53 @@ async function getCuisines(){
 }
 
 
+//sorted set to store the count of reviews a restarant has received
+async function countRating(){
+  let client;
+  try{
+    client = await connectMongo();
+    const db = client.db("restaurant-reviews");
+    const coll = db.collection("Rating");
+    const redis = await connectRedis();
+    try{
+      const list = await coll.aggregate([
+        {
+          "$group": {
+            "_id": "$restID", 
+            "restID": {
+              "$first": "$restID"
+            }, 
+            "count": {
+              "$sum": 1
+            }
+          }
+        }, {
+          "$project": {
+            "_id": 0
+          }
+        }
+      ]).toArray();
+
+      for(let l of list){
+
+        await redis.ZADD("reviewCount",{score:String(l.count),value:String(l.restID)});
+      }
+     
+    }catch(e){
+      console.log(e);
+    }
+      
+  } finally {
+    await client.close();
+  }
+
+}
+
+
 //module.exports.query = query;
 makeHashes();
 getAllRestID();
 restaurantCuisine();
 getCuisines();
+countRating();
 

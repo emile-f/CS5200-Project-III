@@ -91,6 +91,18 @@ router.get("/restaurants/view/:restID", async function (req, res) {
   });
 });
 
+
+router.get("/leaderboard", async function (req, res, next) {
+  try {
+    let restaurant = await myDB.getReviewCount();
+    res.render("leaderboard", {
+      restaurants:restaurant
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post("/restaurants/create", async function (req, res) {
   const rest = req.body;
   await myDB.createRestaurant(rest);

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+
+  <title>Restaurants</title>
+</head>
+
+<body>
+
+  <%- include("../templates/navBar.ejs") %>
+
+    <div class="container">
+
+      <h1 style="margin-top: 90px;">LeaderBoard</h1>
+
+      <h3>Top 20 Restaurants with Highest Reviews</h3>
+
+      <table class="table table-striped table-bordered table-hover table-responsive ">
+        <thead class="thead-dark">
+          <tr>
+            <th>REVIEW COUNT</th>
+            <th></th>
+            <th>NAME</th>
+            <th></th>
+            <th>ADDRESS</th>
+            <th></th>
+            <th>ZIP</th>
+            <th></th>
+            <th>CITY</th>
+            <th></th>
+            <th>STATE</th>
+            <th></th>
+            <th>COUNTRY</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% restaurants.forEach((r)=>{ %>
+            <tr>
+              <!-- data-bs-toggle="collapse"  data-bs-target="#collapse<%=r.restID %>" aria-expanded="true" aria-controls="collapseOne"-->
+              <td>
+                <%= r.count %>
+              </td>
+              <td></td>
+              <td><a href="/restaurants/view/<%= r.rest.restID %>">
+                  <%= r.rest.name %> 🔗
+                </a>
+              <td>
+              <td>
+                <%= r.rest.address %>
+              </td>
+              <td></td>
+              <td>
+                <%= r.rest.zip %>
+              </td>
+              <td></td>
+              <td>
+                <%= r.rest.city %>
+              </td>
+              <td></td>
+              <td>
+                <%= r.rest.state %>
+              </td>
+              <td></td>
+              <td>
+                <%= r.rest.country %>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+              </td>
+            </tr>
+
+            <!--        <tr  class="fold">
+        <td colspan="15" ><div class="accordian-body collapse" id="collapse<%=r.restID %>"> Demo1 </div> </td>
+    </tr> -->
+            <% }) %>
+        </tbody>
+      </table>
+    
+      
+
+</body>
+
+
+</html>
