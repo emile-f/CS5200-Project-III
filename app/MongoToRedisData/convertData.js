@@ -24,7 +24,7 @@ async function makeHashes() {
   try{
     client = await connectMongo();
     const db = client.db("restaurant-reviews");
-    const coll = db.collection("restaurantsDB");
+    const coll = db.collection("restaurantDB");
     const redis = await connectRedis();
     const tweetlist = await coll.find().toArray();
     try{
@@ -89,7 +89,7 @@ async function getAllRestID(){
   try{
     client = await connectMongo();
     const db = client.db("restaurant-reviews");
-    const coll = db.collection("restaurantsDB");
+    const coll = db.collection("restaurantDB");
     const redis = await connectRedis();
     try{
       const list = await coll.aggregate([
@@ -124,7 +124,7 @@ async function restaurantCuisine(){
   try{
     client = await connectMongo();
     const db = client.db("restaurant-reviews");
-    const coll = db.collection("restaurantsDB");
+    const coll = db.collection("restaurantDB");
     const redis = await connectRedis();
     try{
       const list = await coll.aggregate([
@@ -218,7 +218,7 @@ async function getCuisines(){
   try{
     client = await connectMongo();
     const db = client.db("restaurant-reviews");
-    const coll = db.collection("restaurantsDB");
+    const coll = db.collection("restaurantDB");
     const redis = await connectRedis();
     try{
       const list = await coll.distinct("cuisine");
