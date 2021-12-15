@@ -61,15 +61,15 @@ Load Mongo data:
 
 1) Start by running mongodb locally
 2) Create new database called `restaurant-reviews`
-3) create 2 new collections called `restaurantsDB` and `Rating`
-4) import ![restaurantsDB](./db/restaurant.json) to the `restaurantsDB` collection
-4) import ![Rating](./db/rating.json) to the `Rating` collection
+3) create 2 new collections called `restaurantDB` and `Rating`
+4) import [restaurantsDB](./db/restaurant.json) to the `restaurantDB` collection
+4) import [Rating](./db/rating.json) to the `Rating` collection
 
 Load Redis data:
 
 1) Start redis-server locally
 2) Move to folder `app` to install the dependencies using `npm install`
-3) run the file ![convertData](./app/MongoToRedisData) `node MongoToRedisData/convertData.js`
+3) run the file [convertData](./app/MongoToRedisData) `node MongoToRedisData/convertData.js`
 
 Start application:
 
