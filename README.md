@@ -26,6 +26,7 @@ Adding a caching layer to the application that caches reviews/restaurant details
 - CRUD operations on the Restaurant Table 
 - Query/filter restaurants based on cuisines
 - Leaderboard for restaurants with the highest reviews
+- Leaderboard for users that have given the most reviews/ratings
 
 # Installation
 
