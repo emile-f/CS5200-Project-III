@@ -22,9 +22,10 @@ My split would be:
 Adding a caching layer to the application that caches reviews/restaurant details for a certain amount of time. We will apply CRUD operations to this data.
 
 @Misha Mody  will be working on:
-- CRUD operations on the Restaurant Table
-- CRUD operations on the Services and Facilities provided by the restaurant
+- Converting the restaurant table from mongoDB to redis DB
+- CRUD operations on the Restaurant Table 
 - Query/filter restaurants based on cuisines
+- Leaderboard for restaurants with the highest reviews
 
 # Installation
 
