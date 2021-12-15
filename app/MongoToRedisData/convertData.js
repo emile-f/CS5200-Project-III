@@ -279,6 +279,47 @@ async function countRating(){
 
 }
 
+//sorted set to store the count of reviews a restarant has received
+async function customerRating(){
+  let client;
+  try{
+    client = await connectMongo();
+    const db = client.db("restaurant-reviews");
+    const coll = db.collection("Rating");
+    const redis = await connectRedis();
+    try{
+      const list = await coll.aggregate([
+        {
+          "$group": {
+            "_id": "$customer.customerID", 
+            "customer": {
+              "$first": "$customer"
+            }, 
+            "count": {
+              "$sum": 1
+            }
+          }
+        }
+      ]).toArray();
+
+      for(let l of list){
+        if(l.customer != null)
+        {
+          await redis.ZADD("customerRatingCount",{score:String(l.count),
+            value:String(l.customer.name)});
+        }
+      }
+     
+    }catch(e){
+      console.log(e);
+    }
+      
+  } finally {
+    await client.close();
+  }
+
+}
+
 
 //module.exports.query = query;
 makeHashes();
@@ -286,4 +327,5 @@ getAllRestID();
 restaurantCuisine();
 getCuisines();
 countRating();
+customerRating();
 

@@ -95,8 +95,10 @@ router.get("/restaurants/view/:restID", async function (req, res) {
 router.get("/leaderboard", async function (req, res, next) {
   try {
     let restaurant = await myDB.getReviewCount();
+    let cust = await myDB.getCustomerRatingCount();
     res.render("leaderboard", {
-      restaurants:restaurant
+      restaurants:restaurant,
+      customer : cust
     });
   } catch (err) {
     next(err);
